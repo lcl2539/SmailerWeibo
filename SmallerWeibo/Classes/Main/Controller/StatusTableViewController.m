@@ -14,25 +14,16 @@
 
 @implementation StatusTableViewController
 
-- (NSArray *)dataArr{
-    if (!_dataArr) {
-        _dataArr = [[NSArray alloc]init];
-    }
-    return _dataArr;
-}
-
-- (void)setdataArr:(NSArray *)dataArr{
+- (void)setDataArr:(NSArray *)dataArr{
     _dataArr = dataArr;
     [self.tableView reloadData];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"放开加载"];
     [self.refreshControl endRefreshing];
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSomeSetting];
-    [self.tableView reloadData];
     [self.refreshControl beginRefreshing];
 }
 
@@ -56,6 +47,9 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
@@ -78,5 +72,7 @@
     return cell;
 }
 
-
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+    NSLog(@"%@",NSStringFromCGPoint(velocity));
+}
 @end

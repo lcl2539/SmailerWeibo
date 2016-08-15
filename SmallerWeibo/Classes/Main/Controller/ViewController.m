@@ -165,7 +165,7 @@
     if (vc) {
         [self.reusedTableViewControllers removeObject:vc];
     }else{
-        StatusTableViewController *childVc = [[StatusTableViewController alloc]init];
+        StatusTableViewController *childVc = [[StatusTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
         vc = childVc;
         vc.reloadDate = ^(StatusTableViewController *vc){
             [weakSelf tableViewLoadData:vc];
@@ -187,4 +187,5 @@
 - (void)navigationScrollValueDidChange:(NSInteger)value{
     [_mainScroll setContentOffset:CGPointMake(value * self.view.frame.size.width, 0) animated:YES];
 }
+
 @end
