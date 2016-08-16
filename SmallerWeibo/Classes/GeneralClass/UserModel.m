@@ -65,7 +65,6 @@
     [dictTemp setObject:dict[@"avatar_large"] forKey:@"avatar_large"];
     [dictTemp setObject:dict[@"avatar_hd"] forKey:@"avatar_hd"];
     NSString *file = [NSString filePathWithfile:@"user.plist"];
-    NSLog(@"%@",file);
     [dictTemp writeToFile:file atomically:YES];
 }
 

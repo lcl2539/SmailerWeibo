@@ -14,6 +14,8 @@
 #import "StatusTableViewController.h"
 #import "HttpRequest.h"
 #import "StatusModel.h"
+#import "PrefixHeader.pch"
+#import <WeiboSDK.h>
 @interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate>
 {
     __weak NavigationScroll *_navigationScroll;
@@ -50,13 +52,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSomeSetting];
-    [self loadNavgationBarSetting];
-    [self loadMianScrollView];
-    [_navigationScroll changeNavgationScrollValue:0];
+    [self judgeLogin];
+}
+
+- (void)judgeLogin{
+    NSString *access_token = myToken;
+    if (!access_token) {
+        WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+        request.redirectURI = redirect_Url;
+        request.scope = @"all";
+        [WeiboSDK sendRequest:request];
+    }else{
+        [self loadNavgationBarSetting];
+        [self loadMianScrollView];
+        [_navigationScroll changeNavgationScrollValue:0];
+    }
 }
 
 - (void)loadSomeSetting{
     self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+    [self.view setBackgroundColor:[UIColor darkGrayColor]];
     self.view.backgroundColor=[UIColor darkGrayColor];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.shadowImage = nil;
@@ -174,8 +189,8 @@
         };
     }
     vc.index = index;
-    vc.dataArr = nil;
     [self addChildViewController:vc];
+    vc.dataArr = nil;
     [_mainScroll addSubview:vc.tableView];
     vc.tableView.frame = tableViewFrame(index);
     [self.visibleTabViewControllers addObject:vc];
@@ -187,4 +202,11 @@
     [_mainScroll setContentOffset:CGPointMake(value * self.view.frame.size.width, 0) animated:YES];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"%s",__func__);
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"%s",__func__);
+}
 @end

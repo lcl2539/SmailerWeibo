@@ -8,25 +8,34 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "LoginViewController.h"
-@interface AppDelegate ()
+#import <WeiboSDK.h>
+#import "PrefixHeader.pch"
+@interface AppDelegate ()<WeiboSDKDelegate>
 
 @end
 
 @implementation AppDelegate
 
+-(void)didReceiveWeiboRequest:(WBBaseRequest *)request{
+    
+}
+
+-(void)didReceiveWeiboResponse:(WBBaseResponse *)response{
+    WBAuthorizeResponse *userInfo = (WBAuthorizeResponse *)response;
+    [[NSUserDefaults standardUserDefaults]setObject:userInfo.accessToken forKey:@"access_token"];
+    [[NSUserDefaults standardUserDefaults]setObject:userInfo.userID forKey:@"userID"];
+    [[NSUserDefaults standardUserDefaults]setObject:userInfo.expirationDate forKey:@"expirationDate"];
+    [[NSUserDefaults standardUserDefaults]setObject:userInfo.refreshToken forKey:@"refreshToken"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self loadMainViewController];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    NSString *access_token = [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"];
-    UIViewController *rootViewController;
-    if (!access_token) {
-        rootViewController = [[LoginViewController alloc]init];
-    }else{
-        rootViewController = [[ViewController alloc]init];
-    }
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:rootViewController];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
     [self.window makeKeyAndVisible];
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:client_Id];
     return YES;
 }
 
@@ -59,5 +68,12 @@
 
 - (void)loadMainViewController{
     [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]]];
+}
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
+    return [WeiboSDK handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [WeiboSDK handleOpenURL:url delegate:self];
 }
 @end

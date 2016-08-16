@@ -7821,6 +7821,7 @@
 			baseConfigurationReference = 4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
@@ -7838,6 +7839,7 @@
 			baseConfigurationReference = E87709EF3301DB26FA66DE96 /* Pods-SmallerWeibo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
