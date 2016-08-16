@@ -49,31 +49,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadMianScrollView];
-    [self loadNavgationBarSetting];
     [self loadSomeSetting];
+    [self loadNavgationBarSetting];
+    [self loadMianScrollView];
     [_navigationScroll changeNavgationScrollValue:0];
 }
 
 - (void)loadSomeSetting{
     self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
-    self.view.backgroundColor=[UIColor whiteColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.view.backgroundColor=[UIColor darkGrayColor];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.shadowImage = nil;
 }
 
 - (void)loadNavgationBarSetting{
-    NavigationScroll *scroll = [[NavigationScroll alloc]initWithFrame:CGRectMake(20, 10, navFrame.size.width-40,navFrame.size.height-20)];
-    [self.navigationController.navigationBar insertSubview:scroll atIndex:10];
+    NavigationScroll *scroll = [[NavigationScroll alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,30)];
+    [self.view addSubview:scroll];
     _navigationScroll = scroll;
     _navigationScroll.delegate = self;
 }
 
 - (void)loadMianScrollView{
-    UIScrollView *mainScrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+    UIScrollView *mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width,self.view.frame.size.height)];
     [self.view addSubview:mainScrollView];
-    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width*7, 0);
+    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width * 7, 0);
     mainScrollView.pagingEnabled = YES;
     mainScrollView.showsVerticalScrollIndicator = NO;
     mainScrollView.showsHorizontalScrollIndicator = NO;
@@ -175,10 +174,10 @@
         };
     }
     vc.index = index;
-    vc.tableView.frame = tableViewFrame(index);
     vc.dataArr = nil;
     [self addChildViewController:vc];
     [_mainScroll addSubview:vc.tableView];
+    vc.tableView.frame = tableViewFrame(index);
     [self.visibleTabViewControllers addObject:vc];
     [vc.refreshControl beginRefreshing];
     [self loadVisibleTableViewData:index];

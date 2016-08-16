@@ -8,7 +8,6 @@ target 'SmallerWeibo' do
   # use_frameworks
 pod 'AFNetworking'
 pod 'Masonry'
-
  # Pods for SmallerWeibo
 
 end

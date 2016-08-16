@@ -28,13 +28,14 @@
 }
 
 - (void)loadSomeSetting{
-    self.navigationController.hidesBarsOnSwipe = NO;
     self.refreshControl = [[UIRefreshControl alloc]init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"放开加载"];
     [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     self.tableView.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
     self.tableView.estimatedRowHeight = 100;
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.sectionHeaderHeight = 3;
+    self.tableView.sectionFooterHeight = 3;
+    self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 3)];
 }
 
 - (void)loadData{
@@ -47,32 +48,25 @@
 
 #pragma mark - Table view data source
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 0;
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.dataArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataArr.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-    StatusModel *model = self.dataArr[indexPath.row];
+    StatusModel *model = self.dataArr[indexPath.section];
     cell.model = model;
     if (indexPath.row == self.dataArr.count-3) {
         if (self.loadMoreDate) {
             self.loadMoreDate(self);
         }
     }
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ID"];
-//    if (!cell) {
-//        cell = [[UITableViewCell alloc]init];
-//    }
-//    cell.textLabel.text = self.dataArr[indexPath.row];
     return cell;
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-    NSLog(@"%@",NSStringFromCGPoint(velocity));
-}
 @end
