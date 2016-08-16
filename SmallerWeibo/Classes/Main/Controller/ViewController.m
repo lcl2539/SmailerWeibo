@@ -16,14 +16,17 @@
 #import "StatusModel.h"
 #import "PrefixHeader.pch"
 #import <WeiboSDK.h>
+#import <Masonry.h>
 @interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate>
 {
     __weak NavigationScroll *_navigationScroll;
     __weak UIScrollView *_mainScroll;
+    __weak UIView *_contentView;
 }
 @property (nonatomic,strong)NSMutableSet *visibleTabViewControllers;
 @property (nonatomic,strong)NSMutableSet *reusedTableViewControllers;
 @property (nonatomic,strong)NSMutableDictionary *allData;
+@property (nonatomic,assign)NSInteger top;
 @end
 
 @implementation ViewController
@@ -72,28 +75,43 @@
 - (void)loadSomeSetting{
     self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
-    self.view.backgroundColor=[UIColor darkGrayColor];
-    self.navigationController.navigationBar.translucent = NO;
+    self.view.backgroundColor=[UIColor whiteColor];
     self.navigationController.navigationBar.shadowImage = nil;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)loadNavgationBarSetting{
-    NavigationScroll *scroll = [[NavigationScroll alloc]initWithFrame:CGRectMake(0, 0,self.view.frame.size.width,30)];
+    NavigationScroll *scroll = [[NavigationScroll alloc]init];
     [self.view addSubview:scroll];
+    [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + navFrame.size.height + 30);
+    }];
     _navigationScroll = scroll;
     _navigationScroll.delegate = self;
 }
 
 - (void)loadMianScrollView{
-    UIScrollView *mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width,self.view.frame.size.height)];
+    UIScrollView *mainScrollView = [[UIScrollView alloc]init];
     [self.view addSubview:mainScrollView];
-    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width * 7, 0);
+    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_navigationScroll.mas_bottom);
+        make.leading.trailing.bottom.equalTo(self.view);
+    }];
     mainScrollView.pagingEnabled = YES;
     mainScrollView.showsVerticalScrollIndicator = NO;
     mainScrollView.showsHorizontalScrollIndicator = NO;
     mainScrollView.delegate = self;
     mainScrollView.bounces = NO;
     _mainScroll = mainScrollView;
+    UIView *contentView = [[UIView alloc]init];
+    [_mainScroll addSubview:contentView];
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.bottom.equalTo(_mainScroll);
+        make.centerY.equalTo(_mainScroll.mas_centerY);
+        make.width.mas_equalTo(self.view.frame.size.width*7);
+    }];
+    _contentView = contentView;
     [self showSatusViewAtIndex:0];
     [self loadVisibleTableViewData:0];
 }
@@ -187,12 +205,32 @@
         vc.loadMoreDate = ^(StatusTableViewController *vc){
             
         };
+        vc.changeTop = ^(NSInteger value,NSInteger vcIndex){
+            if ((NSInteger)floorf(_mainScroll.contentOffset.x/self.view.frame.size.width) != vcIndex) return ;
+            if(value == 0)return;
+            if (self.top+value >= 0) {
+                self.top = 0;
+            }else if(self.top+value <= -50){
+                self.top = -50;
+            }else{
+                self.top += value;
+            }
+            [_navigationScroll mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view.mas_top).offset(self.top);
+                make.leading.trailing.equalTo(self.view);
+                make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + navFrame.size.height + 30);
+            }];
+        };
     }
     vc.index = index;
     [self addChildViewController:vc];
     vc.dataArr = nil;
-    [_mainScroll addSubview:vc.tableView];
-    vc.tableView.frame = tableViewFrame(index);
+    [_contentView addSubview:vc.tableView];
+    [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.equalTo(_contentView);
+        make.width.mas_equalTo(self.view.frame.size.width);
+        make.leading.mas_equalTo(index * self.view.frame.size.width);
+    }];
     [self.visibleTabViewControllers addObject:vc];
     [vc.refreshControl beginRefreshing];
     [self loadVisibleTableViewData:index];
@@ -202,11 +240,4 @@
     [_mainScroll setContentOffset:CGPointMake(value * self.view.frame.size.width, 0) animated:YES];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSLog(@"%s",__func__);
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSLog(@"%s",__func__);
-}
 @end

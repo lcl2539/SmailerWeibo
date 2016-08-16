@@ -14,6 +14,7 @@
 #import "NSString+Extend.h"
 #import "StatusText.h"
 #import "MLLinkLabel.h"
+#import "ButtonImage.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 30 - offset)/lineCount;
 #define constants(layout) layout.constant
@@ -90,10 +91,11 @@
     NSInteger count = arr.count;
     NSInteger width = imgSize(offset);
     for (NSInteger index = 0; index<count; index++) {
-        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(3+index % lineCount * (width+3), 3 + index / lineCount * (width+3), width, width)];
+        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(3+index % lineCount * (width+3), 3 + index / lineCount * (width+3), width, width)];
         NSMutableString *strImg = [[NSMutableString alloc]initWithString:arr[index][@"thumbnail_pic"]];
-        [strImg replaceOccurrencesOfString:@"bmiddle" withString:@"thumbnail" options:0 range:NSMakeRange(0, strImg.length)];
-        [image sd_setImageWithURL:[NSURL URLWithString:strImg]];
+        [image sd_setImageWithURL:[NSURL URLWithString:strImg] forState:UIControlStateNormal];
+        [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
+        image.tag = index;
         image.clipsToBounds = YES;
         [view addSubview:image];
     }
@@ -102,6 +104,18 @@
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
     NSLog(@"%@\n%@\n%@",link,linkText,linkLabel);
+}
+
+- (void)imgDidTouch:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(showImgWithArr:index:)]) {
+        NSArray *arr;
+        if (self.model.arrPicUrls) {
+            arr = self.model.arrPicUrls;
+        }else {
+            arr = self.model.retweetedStatus.arrPicUrls;
+        }
+        [self.delegate showImgWithArr:arr index:btn.tag];
+    }
 }
 
 @end

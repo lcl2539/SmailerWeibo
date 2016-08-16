@@ -13,4 +13,5 @@
 @property (nonatomic,copy)NSArray *dataArr;
 @property (nonatomic,copy)void (^reloadDate)(StatusTableViewController *);
 @property (nonatomic,copy)void (^loadMoreDate)(StatusTableViewController *);
+@property (nonatomic,copy)void (^changeTop)(NSInteger,NSInteger);
 @end

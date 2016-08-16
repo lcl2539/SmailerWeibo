@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @class StatusModel;
+@protocol StatusCellDelegate <NSObject>
+
+- (void)showImgWithArr:(NSArray *)imgArr index:(NSInteger)index;
+
+@end
 @interface StatusCell : UITableViewCell
 @property (nonatomic,strong)StatusModel *model;
+@property (nonatomic,weak)id <StatusCellDelegate> delegate;
 + (instancetype)statusCellWithTableView:(UITableView *)tableView;
 @end

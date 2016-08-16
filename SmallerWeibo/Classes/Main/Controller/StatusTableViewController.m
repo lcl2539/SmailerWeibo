@@ -8,11 +8,16 @@
 
 #import "StatusTableViewController.h"
 #import "StatusCell.h"
-@interface StatusTableViewController ()
-
+#import "ReviewImgController.h"
+@interface StatusTableViewController ()<StatusCellDelegate>
+@property (nonatomic,assign)NSInteger lastOffsetY;
 @end
 
 @implementation StatusTableViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    self.lastOffsetY = 0;
+}
 
 - (void)setDataArr:(NSArray *)dataArr{
     _dataArr = dataArr;
@@ -61,23 +66,28 @@
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     StatusModel *model = self.dataArr[indexPath.section];
     cell.model = model;
-    if (indexPath.row == self.dataArr.count-3) {
-        if (self.loadMoreDate) {
-            self.loadMoreDate(self);
-        }
-    }
+    cell.delegate = self;
     return cell;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    self.lastOffsetY = scrollView.contentOffset.y;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
+    if (scrollView.contentOffset.y < 0) return;
+    NSInteger value = self.lastOffsetY - scrollView.contentOffset.y;
+    if (self.changeTop) {
+        self.changeTop(value,self.index);
+    }
+    self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSLog(@"%s",__func__);
+- (void)showImgWithArr:(NSArray *)imgArr index:(NSInteger)index{
+    ReviewImgController *vc = [[ReviewImgController alloc]init];
+    vc.picArr = imgArr;
+    vc.showWhichImg = index;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSLog(@"%s",__func__);
-}
 @end

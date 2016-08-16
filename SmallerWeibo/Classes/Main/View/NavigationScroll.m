@@ -9,6 +9,7 @@
 #import "NavigationScroll.h"
 #import "NavigationCollectionViewCell.h"
 #import "NSString+Extend.h"
+#import <Masonry.h>
 @interface NavigationScroll ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     __weak UICollectionView *_collectionView;
@@ -39,10 +40,10 @@
 
 - (void)loadCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.minimumLineSpacing = 0;
+    layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *scroll = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:layout];
+    UICollectionView *scroll = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     scroll.delegate = self;
     scroll.dataSource = self;
     [scroll registerNib:[UINib nibWithNibName:@"NavigationCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NavigationCell"];
@@ -50,6 +51,10 @@
     scroll.showsHorizontalScrollIndicator = NO;
     _collectionView = scroll;
     [self addSubview:scroll];
+    [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.bottom.equalTo(self);
+        make.height.mas_equalTo(50);
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
