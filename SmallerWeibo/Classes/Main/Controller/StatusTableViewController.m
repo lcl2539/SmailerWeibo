@@ -76,6 +76,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView.contentOffset.y < 0) return;
+    if (scrollView.contentOffset.y >= scrollView.contentSize.height-[UIScreen mainScreen].bounds.size.height)return;
     NSInteger value = self.lastOffsetY - scrollView.contentOffset.y;
     if (self.changeTop) {
         self.changeTop(value,self.index);

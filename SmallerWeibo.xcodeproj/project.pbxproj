@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 360256EB1D5E065F006C8EF8 /* StatusTableViewController.m */; };
-		361C369D1D58820A0064E76C /* StatusTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 361C369C1D58820A0064E76C /* StatusTableView.m */; };
-		361C36A21D58869E0064E76C /* MainScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 361C36A11D58869E0064E76C /* MainScrollView.m */; };
 		361C36B01D589C660064E76C /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 361C36AF1D589C660064E76C /* UserModel.m */; };
 		363C0A7B1D6310A000CED9DB /* ReviewImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C0A7A1D6310A000CED9DB /* ReviewImgController.m */; };
 		363C0A7E1D632D0800CED9DB /* ButtonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C0A7D1D632D0800CED9DB /* ButtonImage.m */; };
@@ -1834,10 +1832,6 @@
 /* Begin PBXFileReference section */
 		360256EA1D5E065F006C8EF8 /* StatusTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewController.h; sourceTree = "<group>"; };
 		360256EB1D5E065F006C8EF8 /* StatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewController.m; sourceTree = "<group>"; };
-		361C369B1D58820A0064E76C /* StatusTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableView.h; sourceTree = "<group>"; };
-		361C369C1D58820A0064E76C /* StatusTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableView.m; sourceTree = "<group>"; };
-		361C36A01D58869E0064E76C /* MainScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScrollView.h; sourceTree = "<group>"; };
-		361C36A11D58869E0064E76C /* MainScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScrollView.m; sourceTree = "<group>"; };
 		361C36AE1D589C660064E76C /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserModel.h; path = ../../GeneralClass/UserModel.h; sourceTree = "<group>"; };
 		361C36AF1D589C660064E76C /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserModel.m; path = ../../GeneralClass/UserModel.m; sourceTree = "<group>"; };
 		363C0A791D6310A000CED9DB /* ReviewImgController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewImgController.h; sourceTree = "<group>"; };
@@ -3740,10 +3734,6 @@
 		361C369F1D5886650064E76C /* MainScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				361C36A01D58869E0064E76C /* MainScrollView.h */,
-				361C36A11D58869E0064E76C /* MainScrollView.m */,
-				361C369B1D58820A0064E76C /* StatusTableView.h */,
-				361C369C1D58820A0064E76C /* StatusTableView.m */,
 				368E17431D5ABA630006234D /* StatusCell.h */,
 				368E17441D5ABA630006234D /* StatusCell.m */,
 				368E17451D5ABA630006234D /* StatusCell.xib */,
@@ -5832,7 +5822,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 7U6N45WL2E;
 						DevelopmentTeamName = "成龙 鲁 (Personal Team)";
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -7695,7 +7685,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				361C36A21D58869E0064E76C /* MainScrollView.m in Sources */,
 				36C5EF861D5716BA006511B9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36C5EF7A1D5716BA006511B9 /* NSData+ImageContentType.m in Sources */,
 				363C0A7E1D632D0800CED9DB /* ButtonImage.m in Sources */,
@@ -7706,7 +7695,6 @@
 				3687B24A1D5C46BF0084887F /* MLLinkLabel.m in Sources */,
 				36C5EF981D571A13006511B9 /* HttpRequest.m in Sources */,
 				368E17461D5ABA630006234D /* StatusCell.m in Sources */,
-				361C369D1D58820A0064E76C /* StatusTableView.m in Sources */,
 				36C5EF8F1D571936006511B9 /* LoginViewController.m in Sources */,
 				36C5EF851D5716BA006511B9 /* UIImage+WebP.m in Sources */,
 				36C5EF881D5716BA006511B9 /* UIView+WebCacheOperation.m in Sources */,
@@ -7851,15 +7839,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LcL.SmallerWeibo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "47da411d-5e0a-45c8-ae0c-ffe9e4c3ef01";
-				PROVISIONING_PROFILE_SPECIFIER = 7U6N45WL2E/ProFile_Distribution_Com.LcL.SmaillerWeibo;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -7869,15 +7857,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LcL.SmallerWeibo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "47da411d-5e0a-45c8-ae0c-ffe9e4c3ef01";
-				PROVISIONING_PROFILE_SPECIFIER = 7U6N45WL2E/ProFile_Distribution_Com.LcL.SmaillerWeibo;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

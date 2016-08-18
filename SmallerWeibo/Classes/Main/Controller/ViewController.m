@@ -10,7 +10,6 @@
 #define dictKey(index) [NSString stringWithFormat:@"%ld",index]
 #import "ViewController.h"
 #import "NavigationScroll.h"
-#import "MainScrollView.h"
 #import "StatusTableViewController.h"
 #import "HttpRequest.h"
 #import "StatusModel.h"

@@ -27,7 +27,6 @@
     __weak IBOutlet MLLinkLabel *_status;
     __weak IBOutlet UIView *_imgView;
     __weak IBOutlet NSLayoutConstraint *_statusImgViewHeight;
-    __weak IBOutlet UILabel *_repeatNickName;
     __weak IBOutlet MLLinkLabel *_repeatStatus;
     __weak IBOutlet UIView *_repeatImgView;
     __weak IBOutlet NSLayoutConstraint *_repeatImgViewHeight;
@@ -75,13 +74,11 @@
         [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:model.arrPicUrls];
     }
     if (model.retweetedStatus) {
-        _repeatNickName.text = [NSString stringWithFormat:@"@%@",model.retweetedStatus.user.strScreenName];
-        _repeatStatus.attributedText = [StatusText changStrToStatusText:model.retweetedStatus.strText fontSize:14];
+        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",model.retweetedStatus.user.strName,model.retweetedStatus.strText] fontSize:14];
         if (model.retweetedStatus.arrPicUrls){
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:model.retweetedStatus.arrPicUrls];
         }
     }else{
-        _repeatNickName.text = nil;
         _repeatStatus.attributedText = nil;
         
     }
