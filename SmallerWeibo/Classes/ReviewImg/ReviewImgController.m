@@ -42,8 +42,13 @@
         [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
+        UIProgressView *progress = [self creatProgress];
+        [ImgScroll addSubview:progress];
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
+            [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
+            if (progress.progress == 1) {
+                [progress removeFromSuperview];
+            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
         }];
@@ -71,7 +76,12 @@
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-    return [scrollView.subviews firstObject];
+    for (UIView *view in scrollView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            return view;
+        }
+    }
+    return nil;
 }
 
 - (UIScrollView *)creatImgScroll:(NSInteger)index{
@@ -152,6 +162,12 @@
         offsetY = (scrollView.bounds.size.height- scrollView.contentSize.height)/2;
     }
     view.center=CGPointMake(scrollView.contentSize.width/2+offsetX,scrollView.contentSize.height/2+offsetY);
+}
+
+- (UIProgressView *)creatProgress{
+    UIProgressView *progress = [[UIProgressView alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height/2, self.view.frame.size.width-100, 0)];
+    progress.trackTintColor = [UIColor darkGrayColor];
+    return progress;
 }
 
 - (void)back{

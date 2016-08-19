@@ -231,7 +231,6 @@
         make.leading.mas_equalTo(index * self.view.frame.size.width);
     }];
     [self.visibleTabViewControllers addObject:vc];
-    [vc.refreshControl beginRefreshing];
     [self loadVisibleTableViewData:index];
 }
 
