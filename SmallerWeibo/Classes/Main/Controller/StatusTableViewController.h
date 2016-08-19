@@ -11,7 +11,6 @@
 @interface StatusTableViewController : UITableViewController
 @property (nonatomic,assign)NSInteger index;
 @property (nonatomic,copy)NSArray *dataArr;
-@property (nonatomic,copy)void (^reloadDate)(StatusTableViewController *);
-@property (nonatomic,copy)void (^loadMoreDate)(StatusTableViewController *);
+@property (nonatomic,copy)void (^reloadDate)(StatusTableViewController *,BOOL);
 @property (nonatomic,copy)void (^changeTop)(NSInteger,NSInteger);
 @end

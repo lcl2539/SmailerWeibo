@@ -21,39 +21,39 @@
 }
 
 - (void)setDataArr:(NSArray *)dataArr{
+    if (_dataArr.count == dataArr.count) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
     _dataArr = dataArr;
     [self.tableView reloadData];
-    [self.tableView.mj_footer endRefreshing];
     [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSomeSetting];
-    //[self.refreshControl beginRefreshing];
-    
 }
 
 - (void)loadSomeSetting{
-    //self.refreshControl = [[UIRefreshControl alloc]init];
-    //self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"放开加载"];
-    //[self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     self.tableView.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
     self.tableView.estimatedRowHeight = 100;
     self.tableView.sectionHeaderHeight = 3;
     self.tableView.sectionFooterHeight = 3;
     self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 3)];
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadData];
-    }];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    //[self.tableView.mj_header beginRefreshing];
 }
 
 - (void)loadData{
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"正在加载"];
+    BOOL isReLoad = NO;
+    if (self.tableView.contentOffset.y <= 100) {
+        isReLoad = YES;
+    }
     if (self.reloadDate) {
-        self.reloadDate(self);
+        self.reloadDate(self,isReLoad);
     }
 }
 

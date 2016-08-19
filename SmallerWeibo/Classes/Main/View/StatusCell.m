@@ -14,7 +14,6 @@
 #import "NSString+Extend.h"
 #import "StatusText.h"
 #import "MLLinkLabel.h"
-#import "ButtonImage.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 30 - offset)/lineCount;
 #define constants(layout) layout.constant

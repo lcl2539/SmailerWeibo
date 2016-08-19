@@ -10,7 +10,6 @@
 		360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 360256EB1D5E065F006C8EF8 /* StatusTableViewController.m */; };
 		361C36B01D589C660064E76C /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 361C36AF1D589C660064E76C /* UserModel.m */; };
 		363C0A7B1D6310A000CED9DB /* ReviewImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C0A7A1D6310A000CED9DB /* ReviewImgController.m */; };
-		363C0A7E1D632D0800CED9DB /* ButtonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C0A7D1D632D0800CED9DB /* ButtonImage.m */; };
 		3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687B22B1D5C46BF0084887F /* NSAttributedString+MLLabel.m */; };
 		3687B2421D5C46BF0084887F /* NSMutableAttributedString+MLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687B22D1D5C46BF0084887F /* NSMutableAttributedString+MLLabel.m */; };
 		3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687B22F1D5C46BF0084887F /* NSString+MLLabel.m */; };
@@ -1826,6 +1825,7 @@
 		36C5EFA31D572378006511B9 /* NavigationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5EFA11D572378006511B9 /* NavigationCollectionViewCell.m */; };
 		36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36C5EFA21D572378006511B9 /* NavigationCollectionViewCell.xib */; };
 		36D925F11D59C664003BC4E5 /* StatusText.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D925F01D59C664003BC4E5 /* StatusText.m */; };
+		36FECD981D674092005C525F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FECD971D674092005C525F /* UIView+Toast.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
 /* End PBXBuildFile section */
 
@@ -1836,8 +1836,6 @@
 		361C36AF1D589C660064E76C /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserModel.m; path = ../../GeneralClass/UserModel.m; sourceTree = "<group>"; };
 		363C0A791D6310A000CED9DB /* ReviewImgController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewImgController.h; sourceTree = "<group>"; };
 		363C0A7A1D6310A000CED9DB /* ReviewImgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewImgController.m; sourceTree = "<group>"; };
-		363C0A7C1D632D0800CED9DB /* ButtonImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonImage.h; sourceTree = "<group>"; };
-		363C0A7D1D632D0800CED9DB /* ButtonImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonImage.m; sourceTree = "<group>"; };
 		3687B22A1D5C46BF0084887F /* NSAttributedString+MLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MLLabel.h"; sourceTree = "<group>"; };
 		3687B22B1D5C46BF0084887F /* NSAttributedString+MLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MLLabel.m"; sourceTree = "<group>"; };
 		3687B22C1D5C46BF0084887F /* NSMutableAttributedString+MLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MLLabel.h"; sourceTree = "<group>"; };
@@ -3694,6 +3692,8 @@
 		36C5EFA21D572378006511B9 /* NavigationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCollectionViewCell.xib; sourceTree = "<group>"; };
 		36D925EF1D59C664003BC4E5 /* StatusText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusText.h; sourceTree = "<group>"; };
 		36D925F01D59C664003BC4E5 /* StatusText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusText.m; sourceTree = "<group>"; };
+		36FECD961D674092005C525F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		36FECD971D674092005C525F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.debug.xcconfig"; sourceTree = "<group>"; };
 		C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmallerWeibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E87709EF3301DB26FA66DE96 /* Pods-SmallerWeibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.release.xcconfig"; sourceTree = "<group>"; };
@@ -3737,8 +3737,6 @@
 				368E17431D5ABA630006234D /* StatusCell.h */,
 				368E17441D5ABA630006234D /* StatusCell.m */,
 				368E17451D5ABA630006234D /* StatusCell.xib */,
-				363C0A7C1D632D0800CED9DB /* ButtonImage.h */,
-				363C0A7D1D632D0800CED9DB /* ButtonImage.m */,
 			);
 			name = MainScrollView;
 			sourceTree = "<group>";
@@ -5773,6 +5771,8 @@
 				36C5EF971D571A13006511B9 /* NSString+Extend.m */,
 				36D925EF1D59C664003BC4E5 /* StatusText.h */,
 				36D925F01D59C664003BC4E5 /* StatusText.m */,
+				36FECD961D674092005C525F /* UIView+Toast.h */,
+				36FECD971D674092005C525F /* UIView+Toast.m */,
 			);
 			path = GeneralClass;
 			sourceTree = "<group>";
@@ -7687,7 +7687,6 @@
 			files = (
 				36C5EF861D5716BA006511B9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36C5EF7A1D5716BA006511B9 /* NSData+ImageContentType.m in Sources */,
-				363C0A7E1D632D0800CED9DB /* ButtonImage.m in Sources */,
 				36C5EF991D571A13006511B9 /* NSString+Extend.m in Sources */,
 				36C5EF801D5716BA006511B9 /* SDWebImageManager.m in Sources */,
 				36C5EF9F1D571B2B006511B9 /* NavigationScroll.m in Sources */,
@@ -7701,6 +7700,7 @@
 				36D925F11D59C664003BC4E5 /* StatusText.m in Sources */,
 				36C5EF7B1D5716BA006511B9 /* SDImageCache.m in Sources */,
 				3697C37D1D5849D100C2DD01 /* StatusModel.m in Sources */,
+				36FECD981D674092005C525F /* UIView+Toast.m in Sources */,
 				36C5EF791D5716BA006511B9 /* MKAnnotationView+WebCache.m in Sources */,
 				36C5EF7D1D5716BA006511B9 /* SDWebImageDecoder.m in Sources */,
 				36C5EF841D5716BA006511B9 /* UIImage+MultiFormat.m in Sources */,

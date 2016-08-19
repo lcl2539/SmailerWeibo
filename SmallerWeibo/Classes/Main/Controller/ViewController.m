@@ -131,15 +131,22 @@
             if (arr) {
                 vc.dataArr = arr;
             }else{
-                [self tableViewLoadData:vc];
+                [self tableViewLoadData:vc isReLoad:NO];
             }
         }
     }
 }
 
-- (void)tableViewLoadData:(StatusTableViewController *)vc{
+- (void)tableViewLoadData:(StatusTableViewController *)vc isReLoad:(BOOL)isReLoad{
     __weak typeof(self) weakSelf = self;
-    [HttpRequest statusHttpRequestWithType:vc.index success:^(id Object) {
+    NSInteger page = 0;
+    NSArray *arrTemp = self.allData[[NSString stringWithFormat:@"%ld",vc.index]];
+    page = arrTemp.count/20 + 1;
+    if (isReLoad && page >= 1) {
+        page = 1;
+        [self.allData setObject:[NSArray array] forKey:dictKey(vc.index)];
+    }
+    [HttpRequest statusHttpRequestWithType:vc.index page:page success:^(id Object) {
         [weakSelf loadDataWithArr:Object[@"statuses"] tableView:vc];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -147,13 +154,17 @@
 }
 
 - (void)loadDataWithArr:(NSArray *)arr tableView:(StatusTableViewController *)vc {
-    NSMutableArray *arrTemp = [[NSMutableArray alloc]init];
+    NSArray *arrOrigin = self.allData[dictKey(vc.index)];
+    NSMutableArray *arrTemp = [arrOrigin mutableCopy];
+    if (!arrTemp || arrTemp.count == 0) {
+        arrTemp = [[NSMutableArray alloc]init];
+    }
     for (NSDictionary *dict in arr) {
         StatusModel *model = [StatusModel statusModelWithDictionary:dict];
         [arrTemp addObject:model];
     }
     [self.allData setObject:arrTemp forKey:dictKey(vc.index)];
-    vc.dataArr = arrTemp;
+    vc.dataArr = [arrTemp copy];
 }
 
 - (void)judgeStatusScrollIndex{
@@ -198,11 +209,8 @@
     }else{
         StatusTableViewController *childVc = [[StatusTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
         vc = childVc;
-        vc.reloadDate = ^(StatusTableViewController *vc){
-            [weakSelf tableViewLoadData:vc];
-        };
-        vc.loadMoreDate = ^(StatusTableViewController *vc){
-            
+        vc.reloadDate = ^(StatusTableViewController *vc,BOOL isReLoad){
+            [weakSelf tableViewLoadData:vc isReLoad:isReLoad];
         };
         vc.changeTop = ^(NSInteger value,NSInteger vcIndex){
             if ((NSInteger)floorf(_mainScroll.contentOffset.x/self.view.frame.size.width) != vcIndex) return ;

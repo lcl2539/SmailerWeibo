@@ -40,7 +40,7 @@
     }
 }
 
-+ (void)statusHttpRequestWithType:(NSInteger)type success:(void (^) (id Object))success failure:(void (^) (NSError *error))failure{
++ (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(void (^) (id Object))success failure:(void (^) (NSError *error))failure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/statuses/home_timeline.json",//我的微博主页
                @"https://api.weibo.com/2/statuses/user_timeline.json",//我发表的微博
@@ -50,7 +50,9 @@
                @"https://api.weibo.com/2/comments/mentions.json",//@我的评论
                @"https://api.weibo.com/2/statuses/mentions.json",//@我的微博
                ];
-    [self httpRequestWithUrl:urlArr[type] parameter:nil success:^(id object) {
+    NSDictionary *dict = @{@"page":[NSNumber numberWithInteger:page],
+                           @"count":@20};
+    [self httpRequestWithUrl:urlArr[type] parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
         
