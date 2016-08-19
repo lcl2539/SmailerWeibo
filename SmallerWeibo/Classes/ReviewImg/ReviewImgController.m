@@ -48,6 +48,8 @@
             [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
         }];
         UITapGestureRecognizer *tap = [self creatGeature];
+        UILongPressGestureRecognizer *lp = [self creatLongPressGeature];
+        [ImgScroll addGestureRecognizer:lp];
         [ImgScroll addGestureRecognizer:tap];
     }
     _imageScroll = scroll;
@@ -74,7 +76,6 @@
 
 - (UIScrollView *)creatImgScroll:(NSInteger)index{
     UIScrollView *ImgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(index * self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    //ImgScroll.contentSize = CGSizeZero;
     ImgScroll.bouncesZoom = YES;
     ImgScroll.minimumZoomScale = 1;
     ImgScroll.maximumZoomScale = 2;
@@ -108,6 +109,29 @@
     return tap;
 }
 
+- (UILongPressGestureRecognizer *)creatLongPressGeature{
+    UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage:)];
+    lp.minimumPressDuration = 1;
+    return lp;
+}
+
+- (void)saveImage:(UILongPressGestureRecognizer *)lp{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"是否保存图片到相册？" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        dispatch_queue_t queue = dispatch_queue_create("saveImg", NULL);
+        dispatch_async(queue, ^{
+            UIImage *img = ((UIImageView *)lp.view.subviews.firstObject).image;
+            UIImageWriteToSavedPhotosAlbum(img, self, nil, nil);
+        });
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)didDoubleTap:(UITapGestureRecognizer *)tap{
     UIScrollView *scroll = (UIScrollView *)tap.view;
     if(scroll.zoomScale>1){
@@ -121,16 +145,12 @@
     CGFloat offsetX=0.0;
     CGFloat offsetY=0.0;
     UIView *view = scrollView.subviews.firstObject;
-    NSLog(@"%@",scrollView);
     if (scrollView.bounds.size.width> scrollView.contentSize.width){
-        
         offsetX = (scrollView.bounds.size.width- scrollView.contentSize.width)/2;
     }
     if (scrollView.bounds.size.height> scrollView.contentSize.height){
-        
         offsetY = (scrollView.bounds.size.height- scrollView.contentSize.height)/2;
     }
-    
     view.center=CGPointMake(scrollView.contentSize.width/2+offsetX,scrollView.contentSize.height/2+offsetY);
 }
 
