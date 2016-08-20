@@ -51,6 +51,7 @@
     _userImg.layer.borderColor = [UIColor grayColor].CGColor;
     _status.delegate = self;
     _status.lineSpacing = 5;
+    _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
 }
 

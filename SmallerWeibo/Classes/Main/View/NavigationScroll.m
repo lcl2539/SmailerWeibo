@@ -28,6 +28,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
+        [self loadTopView];
         [self loadCollectionView];
         [self loadSomeSetting];
     }
@@ -36,6 +37,28 @@
 
 - (void)loadSomeSetting{
     self.backgroundColor = [UIColor darkGrayColor];
+}
+
+- (void)loadTopView{
+    UIButton *user =[UIButton buttonWithType:UIButtonTypeSystem];
+    [user addTarget:self action:@selector(userBtn) forControlEvents:UIControlEventTouchUpInside];
+    [user setImage:[UIImage imageNamed:@"More"] forState:UIControlStateNormal];
+    [self addSubview:user];
+    [user setTintColor:[UIColor whiteColor]];
+    [user mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.equalTo(self).offset(8);
+        make.width.height.equalTo(@30);
+    }];
+    UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
+    [search setTintColor:[UIColor whiteColor]];
+    [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
+    [search addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:search];
+    [search mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(user.mas_top).offset(1);
+        make.trailing.equalTo(self.mas_trailing).offset(-8);
+        make.width.height.equalTo(@28);
+    }];
 }
 
 - (void)loadCollectionView{
@@ -53,7 +76,7 @@
     [self addSubview:scroll];
     [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.trailing.bottom.equalTo(self);
-        make.height.mas_equalTo(50);
+        make.height.mas_equalTo(30);
     }];
 }
 
@@ -81,6 +104,14 @@
 
 - (void)changeNavgationScrollValue:(NSInteger)value{
     [_collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:value inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+}
+
+- (void)userBtn{
+    
+}
+
+- (void)search{
+    
 }
 
 @end

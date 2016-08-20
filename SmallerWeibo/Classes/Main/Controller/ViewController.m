@@ -21,6 +21,7 @@
     __weak NavigationScroll *_navigationScroll;
     __weak UIScrollView *_mainScroll;
     __weak UIView *_contentView;
+    __weak UIView *_placeHoldView;
 }
 @property (nonatomic,strong)NSMutableSet *visibleTabViewControllers;
 @property (nonatomic,strong)NSMutableSet *reusedTableViewControllers;
@@ -54,6 +55,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSomeSetting];
+    [self loadPlaceHoldView];
     [self judgeLogin];
 }
 
@@ -68,6 +70,7 @@
         [self loadNavgationBarSetting];
         [self loadMianScrollView];
         [_navigationScroll changeNavgationScrollValue:0];
+        [self.view bringSubviewToFront:_placeHoldView];
     }
 }
 
@@ -79,12 +82,24 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)loadPlaceHoldView{
+    UIView *view = [[UIView alloc]init];
+    view.backgroundColor = [UIColor darkGrayColor];
+    [self.view addSubview:view];
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height);
+    }];
+    _placeHoldView = view;
+}
+
 - (void)loadNavgationBarSetting{
     NavigationScroll *scroll = [[NavigationScroll alloc]init];
     [self.view addSubview:scroll];
     [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.leading.trailing.equalTo(self.view);
-        make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + navFrame.size.height + 30);
+        make.top.equalTo(_placeHoldView.mas_bottom);
+        make.leading.trailing.equalTo(_placeHoldView);
+        make.height.mas_equalTo(navFrame.size.height + 30);
     }];
     _navigationScroll = scroll;
     _navigationScroll.delegate = self;
@@ -142,6 +157,9 @@
     NSInteger page = 0;
     NSArray *arrTemp = self.allData[[NSString stringWithFormat:@"%ld",vc.index]];
     page = arrTemp.count/20 + 1;
+    if (arrTemp.count>0 && page == 1) {
+        page += 1;
+    }
     if (isReLoad && page >= 1) {
         page = 1;
         [self.allData setObject:[NSArray array] forKey:dictKey(vc.index)];
@@ -214,18 +232,19 @@
         };
         vc.changeTop = ^(NSInteger value,NSInteger vcIndex){
             if ((NSInteger)floorf(_mainScroll.contentOffset.x/self.view.frame.size.width) != vcIndex) return ;
-            if(value == 0)return;
+            if (value >= 38 || value <= -38) return;
+            if(value == 0) return;
             if (self.top+value >= 0) {
                 self.top = 0;
-            }else if(self.top+value <= -50){
-                self.top = -50;
+            }else if(self.top+value <= -38){
+                self.top = -38;
             }else{
                 self.top += value;
             }
             [_navigationScroll mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self.view.mas_top).offset(self.top);
+                make.top.equalTo(_placeHoldView.mas_bottom).offset(self.top);
                 make.leading.trailing.equalTo(self.view);
-                make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + navFrame.size.height + 30);
+                make.height.mas_equalTo(navFrame.size.height + 30);
             }];
         };
     }
