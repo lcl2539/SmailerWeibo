@@ -25,7 +25,9 @@
     lab.textColor = [UIColor whiteColor];
     lab.alpha = 0.8;
     lab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:lab];
+    UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+    [keyWindow addSubview:lab];
+    [keyWindow bringSubviewToFront:lab];
     [self performSelector:@selector(removeToast:) withObject:lab afterDelay:2];
 }
 

@@ -10,6 +10,7 @@
 #import "ViewController.h"
 #import <WeiboSDK.h>
 #import "PrefixHeader.pch"
+#import "UIView+Toast.h"
 @interface AppDelegate ()<WeiboSDKDelegate>
 
 @end
@@ -67,7 +68,9 @@
 }
 
 - (void)loadMainViewController{
-    [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]]];
+    UIViewController *vc= [[ViewController alloc]init];
+    [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:vc]];
+    [vc.view toastWithString:@"登陆成功"];
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
     return [WeiboSDK handleOpenURL:url delegate:self];
