@@ -15,7 +15,7 @@
 #import "StatusText.h"
 #import "MLLinkLabel.h"
 #define lineCount 3
-#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 30 - offset)/lineCount;
+#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 24 - offset)/lineCount;
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -51,6 +51,8 @@
     _userImg.layer.borderColor = [UIColor grayColor].CGColor;
     _status.delegate = self;
     _status.lineSpacing = 5;
+    _repeatStatus.lineSpacing = 3;
+    _repeatStatus.textInsets = UIEdgeInsetsMake(4, 0, 0, 0);
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
 }
@@ -74,7 +76,7 @@
         [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:model.arrPicUrls];
     }
     if (model.retweetedStatus) {
-        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",model.retweetedStatus.user.strName,model.retweetedStatus.strText] fontSize:14];
+        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",model.retweetedStatus.user.strName,model.retweetedStatus.strText] fontSize:15];
         if (model.retweetedStatus.arrPicUrls){
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:model.retweetedStatus.arrPicUrls];
         }
@@ -88,7 +90,7 @@
     NSInteger count = arr.count;
     NSInteger width = imgSize(offset);
     for (NSInteger index = 0; index<count; index++) {
-        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(3+index % lineCount * (width+3), 3 + index / lineCount * (width+3), width, width)];
+        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(index % lineCount * (width+3), 3 + index / lineCount * (width+3), width, width)];
         NSMutableString *strImg = [[NSMutableString alloc]initWithString:arr[index][@"thumbnail_pic"]];
         [image sd_setImageWithURL:[NSURL URLWithString:strImg] forState:UIControlStateNormal];
         [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
@@ -112,6 +114,12 @@
             arr = self.model.retweetedStatus.arrPicUrls;
         }
         [self.delegate showImgWithArr:arr index:btn.tag];
+    }
+}
+
+- (IBAction)btnAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(cellBtnActionWithIndex:withStatusId:)]) {
+        [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[self.model.strIdstr integerValue]];
     }
 }
 

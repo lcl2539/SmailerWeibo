@@ -59,4 +59,30 @@
     } isGET:YES type:type_json];
 }
 
++ (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
+    static NSString *baseURL;
+    baseURL = @"http://api.weibo.cn/2/search/users";
+    NSDictionary *dict = @{@"s":@"dd9d1bb3",
+                           @"source":@"211160679",
+                           @"c":@"weicoandroid",
+                           @"q":key,
+                           @"gais":@"_2A256vv5sDeTxGeNN6VQZ8SrKwzuIHXVX6nakrDV6PUJbjdANLWn1kWo72BLwKYt4hWH0_gChyfOL9-sCzQ.."};
+    [self httpRequestWithUrl:baseURL parameter:dict success:^(id object) {
+        sucess(object);
+    } failure:^(NSError *error) {
+        faliure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
+    static NSString *baseURL;
+    baseURL = @"https://api.weibo.com/2/favorites/create.json";
+    NSDictionary *dict = @{@"id":[NSNumber numberWithInteger:statusId]};
+    [self httpRequestWithUrl:baseURL parameter:dict success:^(id object) {
+        sucess(object);
+    } failure:^(NSError *error) {
+        faliure(error);
+    } isGET:NO type:type_json];
+}
+
 @end

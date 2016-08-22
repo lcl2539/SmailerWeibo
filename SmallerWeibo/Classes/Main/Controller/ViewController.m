@@ -80,6 +80,7 @@
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBarHidden = YES;
+    
 }
 
 - (void)loadPlaceHoldView{

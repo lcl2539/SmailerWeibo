@@ -10,6 +10,7 @@
 #import "StatusCell.h"
 #import "ReviewImgController.h"
 #import <MJRefresh.h>
+#import "HttpRequest.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -96,6 +97,24 @@
     vc.picArr = imgArr;
     vc.showWhichImg = index;
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{
+    switch (index) {
+        case 1:
+            [HttpRequest likeStatusHttpRequestWithStatusId:statusId success:^(id object) {
+                NSLog(@"%@",object);
+            } failure:^(NSError *error) {
+                NSLog(@"%@",error);
+            }];
+            break;
+        case 2:
+        case 3:
+            
+            break;
+        default:
+            break;
+    }
 }
 
 @end
