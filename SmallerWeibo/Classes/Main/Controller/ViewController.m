@@ -16,6 +16,7 @@
 #import "PrefixHeader.pch"
 #import <WeiboSDK.h>
 #import <Masonry.h>
+#import "CommentsStatusModel.h"
 @interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate>
 {
     __weak NavigationScroll *_navigationScroll;
@@ -166,7 +167,25 @@
         [self.allData setObject:[NSArray array] forKey:dictKey(vc.index)];
     }
     [HttpRequest statusHttpRequestWithType:vc.index page:page success:^(id Object) {
-        [weakSelf loadDataWithArr:Object[@"statuses"] tableView:vc];
+        NSArray *arr;
+        switch (vc.index) {
+            case 0:
+            case 1:
+            case 2:
+            case 6:
+                arr = Object[@"statuses"];
+                break;
+            case 3:
+                arr = Object[@"favorites"];
+                break;
+            case 4:
+            case 5:
+                arr = Object[@"comments"];
+                break;
+            default:
+                break;
+        }
+        [weakSelf loadDataWithArr:arr tableView:vc];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -179,7 +198,24 @@
         arrTemp = [[NSMutableArray alloc]init];
     }
     for (NSDictionary *dict in arr) {
-        StatusModel *model = [StatusModel statusModelWithDictionary:dict];
+        NSObject *model;
+        switch (vc.index) {
+            case 0:
+            case 1:
+            case 2:
+            case 6:
+                model = [StatusModel statusModelWithDictionary:dict];
+                break;
+            case 3:
+            case 4:
+                model = [StatusModel statusModelWithDictionary:dict[@"status"]];
+                break;
+            case 5:
+                model = [CommentsStatusModel commentsModelWithDictionary:dict];
+                break;
+            default:
+                break;
+        }
         [arrTemp addObject:model];
     }
     [self.allData setObject:arrTemp forKey:dictKey(vc.index)];

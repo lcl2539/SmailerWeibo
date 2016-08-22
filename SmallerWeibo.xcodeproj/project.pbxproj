@@ -1825,6 +1825,8 @@
 		36C5EFA31D572378006511B9 /* NavigationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5EFA11D572378006511B9 /* NavigationCollectionViewCell.m */; };
 		36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36C5EFA21D572378006511B9 /* NavigationCollectionViewCell.xib */; };
 		36CF1F611D6ACF0C0098EB09 /* CommentsStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CF1F601D6ACF0C0098EB09 /* CommentsStatusModel.m */; };
+		36CF1F651D6B33010098EB09 /* CommentsStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CF1F631D6B33010098EB09 /* CommentsStatusCell.m */; };
+		36CF1F661D6B33010098EB09 /* CommentsStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36CF1F641D6B33010098EB09 /* CommentsStatusCell.xib */; };
 		36D925F11D59C664003BC4E5 /* StatusText.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D925F01D59C664003BC4E5 /* StatusText.m */; };
 		36FECD981D674092005C525F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FECD971D674092005C525F /* UIView+Toast.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
@@ -3693,6 +3695,9 @@
 		36C5EFA21D572378006511B9 /* NavigationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationCollectionViewCell.xib; sourceTree = "<group>"; };
 		36CF1F5F1D6ACF0C0098EB09 /* CommentsStatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsStatusModel.h; sourceTree = "<group>"; };
 		36CF1F601D6ACF0C0098EB09 /* CommentsStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsStatusModel.m; sourceTree = "<group>"; };
+		36CF1F621D6B33010098EB09 /* CommentsStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsStatusCell.h; sourceTree = "<group>"; };
+		36CF1F631D6B33010098EB09 /* CommentsStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsStatusCell.m; sourceTree = "<group>"; };
+		36CF1F641D6B33010098EB09 /* CommentsStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsStatusCell.xib; sourceTree = "<group>"; };
 		36D925EF1D59C664003BC4E5 /* StatusText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusText.h; sourceTree = "<group>"; };
 		36D925F01D59C664003BC4E5 /* StatusText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusText.m; sourceTree = "<group>"; };
 		36FECD961D674092005C525F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -3740,6 +3745,9 @@
 				368E17431D5ABA630006234D /* StatusCell.h */,
 				368E17441D5ABA630006234D /* StatusCell.m */,
 				368E17451D5ABA630006234D /* StatusCell.xib */,
+				36CF1F621D6B33010098EB09 /* CommentsStatusCell.h */,
+				36CF1F631D6B33010098EB09 /* CommentsStatusCell.m */,
+				36CF1F641D6B33010098EB09 /* CommentsStatusCell.xib */,
 			);
 			name = MainScrollView;
 			sourceTree = "<group>";
@@ -6070,6 +6078,7 @@
 				369E725F1D5B56DE007ED09C /* [ali嘘嘘嘘] in Resources */,
 				369E757C1D5B56E1007ED09C /* [nonokiss] in Resources */,
 				369E75621D5B56E1007ED09C /* [moc弹跳] in Resources */,
+				36CF1F661D6B33010098EB09 /* CommentsStatusCell.xib in Resources */,
 				369E784A1D5B56E5007ED09C /* [瞄] in Resources */,
 				369E76871D5B56E3007ED09C /* [发表言论] in Resources */,
 				369E75E81D5B56E2007ED09C /* [xkl奔跑] in Resources */,
@@ -7728,6 +7737,7 @@
 				3687B2461D5C46BF0084887F /* NSAttributedString+MLExpression.m in Sources */,
 				361C36B01D589C660064E76C /* UserModel.m in Sources */,
 				3687B2481D5C46BF0084887F /* MLLabelLayoutManager.m in Sources */,
+				36CF1F651D6B33010098EB09 /* CommentsStatusCell.m in Sources */,
 				36C5EF831D5716BA006511B9 /* UIImage+GIF.m in Sources */,
 				36994D481D57136C0078372C /* main.m in Sources */,
 				363C0A7B1D6310A000CED9DB /* ReviewImgController.m in Sources */,

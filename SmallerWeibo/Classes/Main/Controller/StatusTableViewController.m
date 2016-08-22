@@ -71,10 +71,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-    StatusModel *model = self.dataArr[indexPath.section];
-    cell.model = model;
-    cell.delegate = self;
+    UITableViewCell *cell;
+    switch (self.index) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            break;
+            
+        default:
+            break;
+    }
     return cell;
 }
 
