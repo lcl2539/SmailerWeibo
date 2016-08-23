@@ -11,6 +11,9 @@
 #import "ReviewImgController.h"
 #import <MJRefresh.h>
 #import "HttpRequest.h"
+#import "StatusModel.h"
+#import "CommentsStatusModel.h"
+#import "CommentsStatusCell.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -71,21 +74,29 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
     switch (self.index) {
         case 0:
         case 1:
         case 2:
         case 3:
-        case 4:
         case 5:
-        case 6:
+            {
+                StatusModel *model = self.dataArr[indexPath.row];
+                StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
+                cell.model = model;
+                return cell;
+            }
             break;
-            
-        default:
+        case 4:
+        case 6:
+            {
+                CommentsStatusModel *model = self.dataArr[indexPath.row];
+                CommentsStatusCell *cell;
+                return cell;
+            }
             break;
     }
-    return cell;
+    return nil;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

@@ -55,7 +55,7 @@
     [self httpRequestWithUrl:urlArr[type] parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
-        
+        failure(error);
     } isGET:YES type:type_json];
 }
 
