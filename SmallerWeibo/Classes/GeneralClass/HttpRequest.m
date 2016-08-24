@@ -63,11 +63,13 @@
     
 }
 
-+ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
-    static NSString *baseURL;
-    baseURL = @"https://api.weibo.com/2/favorites/create.json";
++ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
+    static NSArray *urlArr;
+    urlArr = @[@"https://api.weibo.com/2/favorites/create.json",//收藏
+               @"https://api.weibo.com/2/statuses/repost.json"//转发
+               ];
     NSDictionary *dict = @{@"id":[NSNumber numberWithInteger:statusId]};
-    [self httpRequestWithUrl:baseURL parameter:dict success:^(id object) {
+    [self httpRequestWithUrl:urlArr[type - 1] parameter:dict success:^(id object) {
         sucess(object);
     } failure:^(NSError *error) {
         faliure(error);

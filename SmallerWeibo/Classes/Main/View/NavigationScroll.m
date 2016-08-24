@@ -49,7 +49,7 @@
         make.top.leading.equalTo(self).offset(8);
         make.width.height.equalTo(@30);
     }];
-    UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
+    /*UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
     [search setTintColor:[UIColor whiteColor]];
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
     [search addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +58,7 @@
         make.top.equalTo(user.mas_top).offset(1);
         make.trailing.equalTo(self.mas_trailing).offset(-8);
         make.width.height.equalTo(@28);
-    }];
+    }];*/
 }
 
 - (void)loadCollectionView{
@@ -110,8 +110,5 @@
     
 }
 
-- (void)search{
-    
-}
 
 @end

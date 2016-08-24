@@ -12,5 +12,5 @@
 + (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(void (^)(id object))success failure:(void (^)(NSError *error))failure isGET:(BOOL)isget type:(NSString *)type;
 + (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(void (^) (id Object))success failure:(void (^) (NSError *error))failure;
 + (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure;
-+ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure;
++ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure;
 @end

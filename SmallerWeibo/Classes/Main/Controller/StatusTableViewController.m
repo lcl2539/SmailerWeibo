@@ -13,6 +13,7 @@
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
+#import "UIView+Toast.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -102,21 +103,28 @@
 }
 
 - (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{
+    __weak typeof(self) weakSelf = self;
     switch (index) {
         case 1:
-            [HttpRequest likeStatusHttpRequestWithStatusId:statusId success:^(id object) {
-                NSLog(@"%@",object);
+        case 2:{
+            [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:index success:^(id object) {
+                NSString *toast = (index == 1) ? @"收藏成功" : @"转发成功";
+                [weakSelf toastWithString:toast];
             } failure:^(NSError *error) {
                 NSLog(@"%@",error);
             }];
+        }
             break;
-        case 2:
         case 3:
             
             break;
         default:
             break;
     }
+}
+
+- (void)toastWithString:(NSString *)str{
+    [self.view toastWithString:str];
 }
 
 @end
