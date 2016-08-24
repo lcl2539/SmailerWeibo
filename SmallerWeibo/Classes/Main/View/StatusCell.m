@@ -14,8 +14,9 @@
 #import "NSString+Extend.h"
 #import "StatusText.h"
 #import "MLLinkLabel.h"
+#import "CommentsStatusModel.h"
 #define lineCount 3
-#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 24 - offset)/lineCount;
+#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 27 - offset)/lineCount;
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -57,13 +58,8 @@
     _repeatStatus.delegate = self;
 }
 
-- (void)setModel:(StatusModel *)model{
+- (void)setModel:(id)model{
     _model = model;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strProfileImageUrl] forState:UIControlStateNormal];
-    _creatTime.text = [NSString dateFromString:model.strCreatedAt];
-    _nicknName.text = model.user.strName;
-    _from.text = model.strSourceDes;
-    _status.attributedText = [StatusText changStrToStatusText:model.strText fontSize:17];
     _statusImgViewHeight.constant = 0;
     _repeatImgViewHeight.constant = 0;
     for (UIView *view in _imgView.subviews) {
@@ -72,17 +68,36 @@
     for (UIView *view in _repeatImgView.subviews) {
         [view removeFromSuperview];
     }
-    if (model.arrPicUrls){
-        [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:model.arrPicUrls];
-    }
-    if (model.retweetedStatus) {
-        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",model.retweetedStatus.user.strName,model.retweetedStatus.strText] fontSize:15];
-        if (model.retweetedStatus.arrPicUrls){
-            [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:model.retweetedStatus.arrPicUrls];
+    if ([model isKindOfClass:[StatusModel class]]) {
+        StatusModel *modelTemp = (StatusModel *)model;
+        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strProfileImageUrl] forState:UIControlStateNormal];
+        _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
+        _nicknName.text = modelTemp.user.strName;
+        _from.text = modelTemp.strSourceDes;
+        _status.attributedText = [StatusText changStrToStatusText:modelTemp.strText fontSize:17];
+        if (modelTemp.arrPicUrls){
+            [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:modelTemp.arrPicUrls];
+        }
+        if (modelTemp.retweetedStatus) {
+            _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.retweetedStatus.user.strName,modelTemp.retweetedStatus.strText] fontSize:15];
+            if (modelTemp.retweetedStatus.arrPicUrls){
+                [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
+            }
+        }else{
+            _repeatStatus.attributedText = nil;
+            
         }
     }else{
-        _repeatStatus.attributedText = nil;
-        
+        CommentsStatusModel *modelTemp = (CommentsStatusModel *)model;
+        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strProfileImageUrl] forState:UIControlStateNormal];
+        _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
+        _nicknName.text = modelTemp.user.strScreenName;
+        _from.text = modelTemp.strSource;
+        _status.attributedText = [StatusText changStrToStatusText:modelTemp.commentText fontSize:17];
+        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.status.user.strScreenName,modelTemp.status.strText] fontSize:15];
+        if (modelTemp.status.arrPicUrls) {
+            [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:modelTemp.status.arrPicUrls];
+        }
     }
 }
 
@@ -108,18 +123,30 @@
 - (void)imgDidTouch:(UIButton *)btn{
     if ([self.delegate respondsToSelector:@selector(showImgWithArr:index:)]) {
         NSArray *arr;
-        if (self.model.arrPicUrls) {
-            arr = self.model.arrPicUrls;
-        }else {
-            arr = self.model.retweetedStatus.arrPicUrls;
+        if ([self.model isKindOfClass:[StatusModel class]]) {
+            StatusModel *modelTemp = (StatusModel *)self.model;
+            if (modelTemp.arrPicUrls) {
+                arr = modelTemp.arrPicUrls;
+            }else {
+                arr = modelTemp.retweetedStatus.arrPicUrls;
+            }
+            [self.delegate showImgWithArr:arr index:btn.tag];
+        }else{
+            CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
+            [self.delegate showImgWithArr:modelTemp.status.arrPicUrls index:btn.tag];
         }
-        [self.delegate showImgWithArr:arr index:btn.tag];
     }
 }
 
 - (IBAction)btnAction:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(cellBtnActionWithIndex:withStatusId:)]) {
-        [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[self.model.strIdstr integerValue]];
+        NSString *statusId;
+        if ([self.model isKindOfClass:[StatusModel class]]) {
+            statusId = ((StatusModel *)self.model).strIdstr;
+        }else{
+            statusId = ((CommentsStatusModel *)self.model).status.strIdstr;
+        }
+        [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[statusId integerValue]];
     }
 }
 

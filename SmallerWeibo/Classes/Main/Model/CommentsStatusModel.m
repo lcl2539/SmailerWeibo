@@ -17,9 +17,10 @@
     model.strCreatedAt = [NSString dateFromString:dicData[@"created_at"]];
     model.commentID = [dicData[@""] integerValue];
     model.commentText = dicData[@"text"];
-    model.status = [StatusModel statusModelWithDictionary:dicData[@"ststus"]];
+    model.status = [StatusModel statusModelWithDictionary:dicData[@"status"]];
     model.user = [UserModel userModelWithDictionary:dicData[@"user"]];
-    model.strCreatedAt = dicData[@"source"];
+    model.strCreatedAt = dicData[@"created_at"];
+    model.strSource = dicData[@"source"];
     return model;
 }
 

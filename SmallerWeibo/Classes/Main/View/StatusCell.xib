@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="441" height="280"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="441" height="279"/>
+                <frame key="frameInset" width="441" height="279.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2P-cB-Qjd">
@@ -139,7 +139,7 @@
                 <outlet property="_statusImgViewHeight" destination="pyZ-oe-9bt" id="uwU-OZ-CUG"/>
                 <outlet property="_userImg" destination="N2P-cB-Qjd" id="asv-ag-k7A"/>
             </connections>
-            <point key="canvasLocation" x="-761" y="-422"/>
+            <point key="canvasLocation" x="-540" y="-506"/>
         </tableViewCell>
     </objects>
 </document>

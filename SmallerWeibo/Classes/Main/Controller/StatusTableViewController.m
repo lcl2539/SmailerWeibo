@@ -13,7 +13,6 @@
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
-#import "CommentsStatusCell.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -74,29 +73,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (self.index) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 5:
-            {
-                StatusModel *model = self.dataArr[indexPath.row];
-                StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-                cell.model = model;
-                return cell;
-            }
-            break;
-        case 4:
-        case 6:
-            {
-                CommentsStatusModel *model = self.dataArr[indexPath.row];
-                CommentsStatusCell *cell;
-                return cell;
-            }
-            break;
-    }
-    return nil;
+    id model = self.dataArr[indexPath.section];
+    StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
+    cell.model = model;
+    cell.delegate = self;
+    return cell;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

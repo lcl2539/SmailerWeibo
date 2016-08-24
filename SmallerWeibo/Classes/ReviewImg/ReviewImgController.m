@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "SDWebImageDownloader.h"
 #import <Masonry.h>
+#import "UIView+Toast.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
 @interface ReviewImgController ()<UIScrollViewDelegate>
 {
@@ -46,10 +47,8 @@
         [ImgScroll addSubview:progress];
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
-            if (progress.progress == 1) {
-                [progress removeFromSuperview];
-            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            [progress removeFromSuperview];
             [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
         }];
         UITapGestureRecognizer *tap = [self creatGeature];
@@ -126,6 +125,7 @@
 }
 
 - (void)saveImage:(UILongPressGestureRecognizer *)lp{
+    __weak typeof(self) weakSelf = self;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"是否保存图片到相册？" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
@@ -134,7 +134,7 @@
         dispatch_queue_t queue = dispatch_queue_create("saveImg", NULL);
         dispatch_async(queue, ^{
             UIImage *img = ((UIImageView *)lp.view.subviews.firstObject).image;
-            UIImageWriteToSavedPhotosAlbum(img, self, nil, nil);
+            UIImageWriteToSavedPhotosAlbum(img, weakSelf, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void * _Nullable)(lp.view));
         });
     }];
     [alert addAction:cancelAction];
@@ -178,4 +178,7 @@
     return YES;
 }
 
+- (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
+    [self.view toastWithString:@"保存完成"];
+}
 @end

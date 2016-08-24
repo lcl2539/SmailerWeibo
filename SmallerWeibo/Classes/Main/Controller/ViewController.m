@@ -172,14 +172,14 @@
             case 0:
             case 1:
             case 2:
-            case 5:
+            case 6:
                 arr = Object[@"statuses"];
                 break;
             case 3:
                 arr = Object[@"favorites"];
                 break;
             case 4:
-            case 6:
+            case 5:
                 arr = Object[@"comments"];
                 break;
             default:
@@ -207,9 +207,9 @@
                 model = [StatusModel statusModelWithDictionary:dict];
                 break;
             case 3:
-            case 4:
                 model = [StatusModel statusModelWithDictionary:dict[@"status"]];
                 break;
+            case 4:
             case 5:
                 model = [CommentsStatusModel commentsModelWithDictionary:dict];
                 break;

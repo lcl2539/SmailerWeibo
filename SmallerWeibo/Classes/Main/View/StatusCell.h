@@ -15,7 +15,7 @@
 
 @end
 @interface StatusCell : UITableViewCell
-@property (nonatomic,strong)StatusModel *model;
+@property (nonatomic,strong)id model;
 @property (nonatomic,weak)id <StatusCellDelegate> delegate;
 + (instancetype)statusCellWithTableView:(UITableView *)tableView;
 @end

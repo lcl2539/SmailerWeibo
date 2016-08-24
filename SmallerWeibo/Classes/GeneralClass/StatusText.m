@@ -16,6 +16,7 @@
 + (NSAttributedString *)changStrToStatusText:(NSString *)originalString fontSize:(CGFloat)size{
     NSArray *arrTemp = [self getImgRange:originalString];
     UIFont *font = [UIFont systemFontOfSize:size];
+    CGFloat offsetY = (size == 17) ? -5 : -3;
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:@"" attributes:@{NSFontAttributeName:font}];
     for (NSValue *value in arrTemp) {
         NSRange range = [value rangeValue];
@@ -23,7 +24,7 @@
         if ([subStr containsString:@"["] && [subStr containsString:@"]"]) {
             NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
             attachment.image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:subStr ofType:nil]];
-            attachment.bounds = CGRectMake(0, -5, font.lineHeight, font.lineHeight);
+            attachment.bounds = CGRectMake(0, offsetY, font.lineHeight, font.lineHeight);
             [string appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
         }else{
             [string appendAttributedString:[[NSAttributedString alloc]initWithString:subStr attributes:@{NSFontAttributeName:font}]];
