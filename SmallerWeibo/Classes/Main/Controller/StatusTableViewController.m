@@ -95,11 +95,17 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)showImgWithArr:(NSArray *)imgArr index:(NSInteger)index{
+- (void)showImgWithArr:(NSArray *)imgArr button:(UIButton *)btn{
     ReviewImgController *vc = [[ReviewImgController alloc]init];
     vc.picArr = imgArr;
-    vc.showWhichImg = index;
-    [self presentViewController:vc animated:YES completion:nil];
+    vc.showWhichImg = btn.tag;
+    UIImageView *view = [[UIImageView alloc]init];
+    view.image = btn.currentImage;
+    CGRect frame = [self.view.window convertRect:btn.frame fromView:btn.superview];
+    view.frame = frame;
+    vc.placeHoldimageView = view;
+    [self presentViewController:vc animated:NO completion:nil];
+
 }
 
 - (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{

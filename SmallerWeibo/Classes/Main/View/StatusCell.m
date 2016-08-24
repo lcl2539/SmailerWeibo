@@ -121,7 +121,7 @@
 }
 
 - (void)imgDidTouch:(UIButton *)btn{
-    if ([self.delegate respondsToSelector:@selector(showImgWithArr:index:)]) {
+    if ([self.delegate respondsToSelector:@selector(showImgWithArr:button:)]) {
         NSArray *arr;
         if ([self.model isKindOfClass:[StatusModel class]]) {
             StatusModel *modelTemp = (StatusModel *)self.model;
@@ -130,10 +130,10 @@
             }else {
                 arr = modelTemp.retweetedStatus.arrPicUrls;
             }
-            [self.delegate showImgWithArr:arr index:btn.tag];
+            [self.delegate showImgWithArr:arr button:btn];
         }else{
             CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
-            [self.delegate showImgWithArr:modelTemp.status.arrPicUrls index:btn.tag];
+            [self.delegate showImgWithArr:modelTemp.status.arrPicUrls button:btn];
         }
     }
 }
@@ -149,5 +149,6 @@
         [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[statusId integerValue]];
     }
 }
+
 
 @end

@@ -25,17 +25,42 @@
     [self loadSomeSetting];
     [self loadScrollView];
     [self loadBackBtn];
+    [self.view addSubview:self.placeHoldimageView];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self changePlaceHoldViewFrame];
 }
 
 - (void)loadSomeSetting{
     [self.view setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+}
+
+- (void)changePlaceHoldViewFrame{
+    CGRect frame = self.placeHoldimageView.frame;
+    frame.origin.x = 0;
+    frame.size = self.placeHoldimageView.image.size;
+    frame.size.width = screenSize.width;
+    frame.size.height = (CGFloat)screenSize.width / self.placeHoldimageView.image.size.width * frame.size.height;
+    if (frame.size.height >= screenSize.height) {
+        frame.origin.y = 0;
+    }else{
+        frame.origin.y = screenSize.height/2 - frame.size.height/2;
+    }
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        self.placeHoldimageView.frame = frame;
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)loadScrollView{
     UIScrollView *scroll = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     scroll.contentSize = CGSizeMake(self.picArr.count * self.view.frame.size.width, 0);
     scroll.pagingEnabled = YES;
+    scroll.backgroundColor = [UIColor clearColor];
     __weak typeof(self) weakSelf = self;
     for (NSInteger index = 0; index <self.picArr.count ; index++) {
         UIScrollView *ImgScroll = [self creatImgScroll:index];
@@ -48,6 +73,7 @@
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            
             [progress removeFromSuperview];
             [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
         }];
@@ -92,6 +118,7 @@
     ImgScroll.zoomScale = 2;
     ImgScroll.showsVerticalScrollIndicator = NO;
     ImgScroll.showsHorizontalScrollIndicator = NO;
+    ImgScroll.backgroundColor = [UIColor clearColor];
     return ImgScroll;
 }
 

@@ -11,4 +11,5 @@
 @interface ReviewImgController : UIViewController
 @property (nonatomic,copy)NSArray *picArr;
 @property (nonatomic,assign)NSInteger showWhichImg;
+@property (nonatomic,strong)UIImageView *placeHoldimageView;
 @end
