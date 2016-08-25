@@ -17,6 +17,7 @@
 {
     __weak UIScrollView *_imageScroll;
 }
+@property (nonatomic,assign)BOOL isFinishLoad;
 @end
 
 @implementation ReviewImgController
@@ -70,7 +71,12 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         weakSelf.placeHoldimageView.frame = frame;
     } completion:^(BOOL finished) {
-            _imageScroll.alpha = 1;
+        _imageScroll.alpha = 1;
+        if (self.isFinishLoad) {
+            [weakSelf.placeHoldimageView removeFromSuperview];
+        }else{
+            self.isFinishLoad = YES;
+        }
     }];
 }
 
@@ -93,6 +99,12 @@
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (self.isFinishLoad && index == self.showWhichImg) {
+                [weakSelf.placeHoldimageView removeFromSuperview];
+            }
+            if (index == self.showWhichImg) {
+                self.isFinishLoad = YES;
+            }
             [progress removeFromSuperview];
             [weakSelf creatImg:image scrollView:ImgScroll];
         }];

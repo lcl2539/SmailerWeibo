@@ -22,16 +22,16 @@
     toVc.view.frame = [UIScreen mainScreen].bounds;
     Class class = NSClassFromString(@"ReviewImgController");
     if ([toVc isKindOfClass: class]) {
-        toVc.view.alpha = 0;
+        toVc.view.backgroundColor = [UIColor clearColor];
         [UIView animateKeyframesWithDuration:[self transitionDuration:transitionContext] delay:0 options:2 animations:^{
-            toVc.view.alpha = 1;
+            toVc.view.backgroundColor = [UIColor whiteColor];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:finished];
         }];
     }else{
         [containerView bringSubviewToFront:fromVc.view];
         [UIView animateKeyframesWithDuration:0.3 delay:0 options:0 animations:^{
-            fromVc.view.alpha = 0;
+            fromVc.view.backgroundColor = [UIColor clearColor];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:finished];
         }];
