@@ -14,7 +14,8 @@
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
 #import "UIView+Toast.h"
-@interface StatusTableViewController ()<StatusCellDelegate>
+#import "PresentAnimation.h"
+@interface StatusTableViewController ()<StatusCellDelegate,UIViewControllerTransitioningDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
 
@@ -49,6 +50,7 @@
     self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 3)];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    self.transitioningDelegate = self;
 }
 
 - (void)loadData{
@@ -104,7 +106,8 @@
     CGRect frame = [self.view.window convertRect:btn.frame fromView:btn.superview];
     view.frame = frame;
     vc.placeHoldimageView = view;
-    [self presentViewController:vc animated:NO completion:nil];
+    vc.transitioningDelegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
 
 }
 
@@ -131,6 +134,10 @@
 
 - (void)toastWithString:(NSString *)str{
     [self.view toastWithString:str];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+    return [[PresentAnimation alloc]init];
 }
 
 @end
