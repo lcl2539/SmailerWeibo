@@ -12,4 +12,5 @@
 @property (nonatomic,copy)NSArray *picArr;
 @property (nonatomic,assign)NSInteger showWhichImg;
 @property (nonatomic,strong)UIImageView *placeHoldimageView;
+@property (nonatomic,assign)CGRect lastFrame;
 @end

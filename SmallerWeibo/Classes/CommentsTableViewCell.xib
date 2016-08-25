@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentsCell" rowHeight="167" id="KGk-i7-Jjw" customClass="CommentsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="167"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="166"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmR-zY-65R">
+                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="Tf3-G0-Vwy"/>
+                            <constraint firstAttribute="height" constant="50" id="jun-bO-5fC"/>
+                        </constraints>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SII-eW-lZg">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqG-Co-pyu">
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-Lv-pRl" customClass="MLLinkLabel">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="xsP-Lv-pRl" secondAttribute="trailing" constant="8" id="0Cu-eA-b9d"/>
+                    <constraint firstItem="XqG-Co-pyu" firstAttribute="bottom" secondItem="fmR-zY-65R" secondAttribute="bottom" id="HkS-bH-cxB"/>
+                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="top" secondItem="fmR-zY-65R" secondAttribute="bottom" constant="8" id="NgL-2T-VS7"/>
+                    <constraint firstItem="fmR-zY-65R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qjb-9i-ob9"/>
+                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Ve0-gS-VjV"/>
+                    <constraint firstItem="fmR-zY-65R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="gZD-G1-p07"/>
+                    <constraint firstItem="SII-eW-lZg" firstAttribute="leading" secondItem="fmR-zY-65R" secondAttribute="trailing" constant="16" id="hhE-f6-07G"/>
+                    <constraint firstItem="XqG-Co-pyu" firstAttribute="leading" secondItem="SII-eW-lZg" secondAttribute="leading" id="lFn-nW-5df"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xsP-Lv-pRl" secondAttribute="bottom" constant="8" id="vYs-9L-IWI"/>
+                    <constraint firstItem="SII-eW-lZg" firstAttribute="top" secondItem="fmR-zY-65R" secondAttribute="top" id="ysY-5z-2av"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_comments" destination="xsP-Lv-pRl" id="rfB-iC-6B4"/>
+                <outlet property="_creatTime" destination="XqG-Co-pyu" id="xrt-9l-pkD"/>
+                <outlet property="_userImg" destination="fmR-zY-65R" id="RTD-vJ-syS"/>
+                <outlet property="_userName" destination="SII-eW-lZg" id="lyW-zC-9F5"/>
+            </connections>
+            <point key="canvasLocation" x="-326" y="10"/>
+        </tableViewCell>
+    </objects>
+</document>

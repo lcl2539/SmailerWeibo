@@ -14,7 +14,7 @@
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
 #import "UIView+Toast.h"
-#import "PresentAnimation.h"
+#import "ReViewImgAnimation.h"
 @interface StatusTableViewController ()<StatusCellDelegate,UIViewControllerTransitioningDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -83,6 +83,10 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.lastOffsetY = scrollView.contentOffset.y;
 }
@@ -137,7 +141,11 @@
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    return [[PresentAnimation alloc]init];
+    return [[ReViewImgAnimation alloc]init];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    return [[ReViewImgAnimation alloc]init];
 }
 
 @end

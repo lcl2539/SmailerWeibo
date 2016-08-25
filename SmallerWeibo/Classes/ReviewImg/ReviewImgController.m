@@ -11,6 +11,7 @@
 #import "SDWebImageDownloader.h"
 #import <Masonry.h>
 #import "UIView+Toast.h"
+#import "ReViewImgAnimation.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
 @interface ReviewImgController ()<UIScrollViewDelegate>
 {
@@ -47,8 +48,17 @@
 
 - (void)changePlaceHoldViewFrame{
     CGRect frame = self.placeHoldimageView.frame;
-    frame.origin.x = 0;
     frame.size = self.placeHoldimageView.image.size;
+    if (frame.size.width < self.placeHoldimageView.frame.size.width) {
+        CGFloat x = (self.placeHoldimageView.frame.size.width - frame.size.width) / 2 + self.placeHoldimageView.frame.origin.x;
+        frame.origin.x = x;
+    }
+    if (frame.size.height < self.placeHoldimageView.frame.size.height) {
+        CGFloat y = (self.placeHoldimageView.frame.size.height - frame.size.height) / 2 + self.placeHoldimageView.frame.origin.y;
+        frame.origin.y = y;
+    }
+    self.lastFrame = frame;
+    frame.origin.x = 0;
     frame.size.width = screenSize.width;
     frame.size.height = (CGFloat)screenSize.width / self.placeHoldimageView.image.size.width * frame.size.height;
     if (frame.size.height >= screenSize.height) {
@@ -60,9 +70,7 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         weakSelf.placeHoldimageView.frame = frame;
     } completion:^(BOOL finished) {
-        _imageScroll.alpha = 1;
-        [weakSelf.placeHoldimageView removeFromSuperview];
-        weakSelf.placeHoldimageView = nil;
+            _imageScroll.alpha = 1;
     }];
 }
 
@@ -74,6 +82,8 @@
     __weak typeof(self) weakSelf = self;
     for (NSInteger index = 0; index <self.picArr.count ; index++) {
         UIScrollView *ImgScroll = [self creatImgScroll:index];
+        ImgScroll.tag = index;
+        [ImgScroll setBackgroundColor:[UIColor clearColor]];
         NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index][@"thumbnail_pic"]];
         [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
@@ -195,6 +205,10 @@
 
 - (void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
+    UIView *view = [_imageScroll viewWithTag:_imageScroll.contentOffset.x/screenSize.width].subviews.firstObject;
+    [UIView animateWithDuration:0.3 animations:^{
+        view.frame = self.lastFrame;
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden{

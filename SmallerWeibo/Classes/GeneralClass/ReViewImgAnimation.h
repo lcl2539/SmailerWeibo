@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@interface PresentAnimation : NSObject <UIViewControllerAnimatedTransitioning>
+@interface ReViewImgAnimation : NSObject <UIViewControllerAnimatedTransitioning>
 
 @end
