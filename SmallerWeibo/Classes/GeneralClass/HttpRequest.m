@@ -63,6 +63,20 @@
     
 }
 
++ (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(void (^)(id object))success failure:(void (^)(NSError *error))failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/comments/show.json";
+    NSDictionary *dict = @{@"id":statusId,
+                           @"count":@30,
+                           @"page":[NSNumber numberWithInteger:page]
+                           };
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
 + (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/favorites/create.json",//收藏

@@ -10,6 +10,7 @@
 #import "UserModel.h"
 #import "StatusText.h"
 #import "UIButton+WebCache.h"
+#import "commentsModel.h"
 @interface CommentsTableViewCell ()<MLLinkLabelDelegate>
 {
     __weak IBOutlet UIButton *_userImg;
@@ -25,6 +26,22 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _comments.delegate = self;
+}
+
++ (instancetype)commentsCellWithTableview:(UITableView *)tabelview{
+    CommentsTableViewCell *cell = [tabelview dequeueReusableCellWithIdentifier:@"commentsCell"];
+    if (!cell) {
+        cell = [[NSBundle mainBundle]loadNibNamed:@"CommentsTableViewCell" owner:nil options:nil].firstObject;
+    }
+    return cell;
+}
+
+- (void)setModel:(commentsModel *)model{
+    _model = model;
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strProfileImageUrl] forState:UIControlStateNormal];
+    _userName.text = model.user.strScreenName;
+    _creatTime.text = model.creatTime;
+    _comments.attributedText = [StatusText changStrToStatusText:model.commentsText fontSize:17];
 }
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{

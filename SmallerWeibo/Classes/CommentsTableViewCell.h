@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class commentsModel;
 @interface CommentsTableViewCell : UITableViewCell
-
+@property (nonatomic,strong)commentsModel *model;
++ (instancetype)commentsCellWithTableview:(UITableView *)tabelview;
 @end

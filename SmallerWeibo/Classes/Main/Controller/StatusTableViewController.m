@@ -15,6 +15,7 @@
 #import "CommentsStatusModel.h"
 #import "UIView+Toast.h"
 #import "ReViewImgAnimation.h"
+#import "DetailStatusViewController.h"
 @interface StatusTableViewController ()<StatusCellDelegate,UIViewControllerTransitioningDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -84,7 +85,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    id model = self.dataArr[indexPath.section];
+    DetailStatusViewController *vc = [[DetailStatusViewController alloc]init];
+    if ([model isKindOfClass:[StatusModel class]]) {
+        vc.statusModel = model;
+    }else{
+        vc.statusModel = ((CommentsStatusModel *)model).status;
+    }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class StatusModel;
 @interface DetailStatusViewController : UIViewController
-@property (nonatomic,strong)id Statusmodel;
+@property (nonatomic,strong)StatusModel *statusModel;
 @end

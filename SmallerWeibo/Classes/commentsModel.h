@@ -12,4 +12,5 @@
 @property (nonatomic,copy)NSString *commentsText;
 @property (nonatomic,strong)UserModel *user;
 @property (nonatomic,copy)NSString *creatTime;
++ (instancetype)commentsModleWithDict:(NSDictionary *)dict;
 @end

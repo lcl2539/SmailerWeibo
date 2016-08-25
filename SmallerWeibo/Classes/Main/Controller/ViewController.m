@@ -16,6 +16,7 @@
 #import "PrefixHeader.pch"
 #import <WeiboSDK.h>
 #import <Masonry.h>
+#import <AFNetworking.h>
 #import "CommentsStatusModel.h"
 @interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate>
 {
