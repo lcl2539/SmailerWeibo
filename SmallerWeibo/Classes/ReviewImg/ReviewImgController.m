@@ -16,6 +16,7 @@
 {
     __weak UIScrollView *_imageScroll;
 }
+@property (nonatomic,assign)BOOL isloadFisish;
 @end
 
 @implementation ReviewImgController
@@ -25,7 +26,9 @@
     [self loadSomeSetting];
     [self loadScrollView];
     [self loadBackBtn];
+    _imageScroll.alpha = 0;
     [self.view addSubview:self.placeHoldimageView];
+    [self.view bringSubviewToFront:_imageScroll];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -53,6 +56,10 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         self.placeHoldimageView.frame = frame;
     } completion:^(BOOL finished) {
+        /*if (!self.isloadFisish)return;
+        [self.placeHoldimageView removeFromSuperview];
+        self.placeHoldimageView = nil;*/
+        _imageScroll.alpha = 1;
     }];
 }
 
@@ -73,7 +80,9 @@
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            
+            if (index == self.showWhichImg) {
+                self.isloadFisish = YES;
+            }
             [progress removeFromSuperview];
             [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
         }];
@@ -207,5 +216,9 @@
 
 - (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
     [self.view toastWithString:@"保存完成"];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"111");
 }
 @end
