@@ -16,7 +16,7 @@
 #import "MLLinkLabel.h"
 #import "CommentsStatusModel.h"
 #define lineCount 3
-#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 27 - offset)/lineCount;
+#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -30,6 +30,9 @@
     __weak IBOutlet MLLinkLabel *_repeatStatus;
     __weak IBOutlet UIView *_repeatImgView;
     __weak IBOutlet NSLayoutConstraint *_repeatImgViewHeight;
+    __weak IBOutlet UIButton *_likeBtn;
+    __weak IBOutlet UIButton *_repateBtn;
+    __weak IBOutlet UIButton *_commentsBtn;
     
 }
 @end
@@ -75,13 +78,15 @@
         _nicknName.text = modelTemp.user.strName;
         _from.text = modelTemp.strSourceDes;
         _status.attributedText = [StatusText changStrToStatusText:modelTemp.strText fontSize:17];
+        [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.commentsCount] forState:UIControlStateNormal];
+        [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.repostsCount] forState:UIControlStateNormal];
         if (modelTemp.arrPicUrls){
             [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:modelTemp.arrPicUrls];
         }
         if (modelTemp.retweetedStatus) {
             _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.retweetedStatus.user.strName,modelTemp.retweetedStatus.strText] fontSize:15];
             if (modelTemp.retweetedStatus.arrPicUrls){
-                [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
+                [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
             }
         }else{
             _repeatStatus.attributedText = nil;
@@ -94,9 +99,11 @@
         _nicknName.text = modelTemp.user.strScreenName;
         _from.text = modelTemp.strSource;
         _status.attributedText = [StatusText changStrToStatusText:modelTemp.commentText fontSize:17];
+        [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.status.commentsCount] forState:UIControlStateNormal];
+        [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.status.repostsCount] forState:UIControlStateNormal];
         _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.status.user.strScreenName,modelTemp.status.strText] fontSize:15];
         if (modelTemp.status.arrPicUrls) {
-            [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:3 ImgArr:modelTemp.status.arrPicUrls];
+            [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.status.arrPicUrls];
         }
     }
 }
@@ -105,10 +112,11 @@
     NSInteger count = arr.count;
     NSInteger width = imgSize(offset);
     for (NSInteger index = 0; index<count; index++) {
-        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(index % lineCount * (width+3), 3 + index / lineCount * (width+3), width, width)];
+        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(index % lineCount * (width+3), index / lineCount * (width+3), width, width)];
         NSMutableString *strImg = [[NSMutableString alloc]initWithString:arr[index][@"thumbnail_pic"]];
-        [image sd_setImageWithURL:[NSURL URLWithString:strImg] forState:UIControlStateNormal];
+        [image sd_setBackgroundImageWithURL:[NSURL URLWithString:strImg] forState:UIControlStateNormal];
         [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
+        image.contentMode = UIViewContentModeScaleAspectFill;
         image.tag = index;
         image.clipsToBounds = YES;
         [view addSubview:image];

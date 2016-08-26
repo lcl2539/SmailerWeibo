@@ -1833,6 +1833,8 @@
 		CCEDB5E31D6EBFEE00AA4976 /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5E11D6EBFEE00AA4976 /* CommentsTableViewCell.m */; };
 		CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCEDB5E21D6EBFEE00AA4976 /* CommentsTableViewCell.xib */; };
 		CCEDB5E81D6EC43100AA4976 /* commentsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5E71D6EC43100AA4976 /* commentsModel.m */; };
+		CCEDB6321D6F2EC900AA4976 /* UserInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */; };
+		CCEDB6351D6F2FAB00AA4976 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -3713,6 +3715,9 @@
 		CCEDB5E21D6EBFEE00AA4976 /* CommentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsTableViewCell.xib; sourceTree = "<group>"; };
 		CCEDB5E61D6EC43100AA4976 /* commentsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentsModel.h; sourceTree = "<group>"; };
 		CCEDB5E71D6EC43100AA4976 /* commentsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentsModel.m; sourceTree = "<group>"; };
+		CCEDB62F1D6F2EC900AA4976 /* UserInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTableViewController.h; sourceTree = "<group>"; };
+		CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableViewController.m; sourceTree = "<group>"; };
+		CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		E87709EF3301DB26FA66DE96 /* Pods-SmallerWeibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -5643,6 +5648,7 @@
 		36C5EF4F1D57156D006511B9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CCEDB62B1D6F2E8200AA4976 /* UserInfo */,
 				36C5EF521D57161F006511B9 /* AppDelegate */,
 				36C5EF931D571A13006511B9 /* GeneralClass */,
 				36C5EF551D57164F006511B9 /* Main */,
@@ -5860,6 +5866,16 @@
 				CCEDB5E71D6EC43100AA4976 /* commentsModel.m */,
 			);
 			name = model;
+			sourceTree = "<group>";
+		};
+		CCEDB62B1D6F2E8200AA4976 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				CCEDB62F1D6F2EC900AA4976 /* UserInfoTableViewController.h */,
+				CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */,
+				CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */,
+			);
+			name = UserInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7514,6 +7530,7 @@
 				369E77A31D5B56E4007ED09C /* [抓沙发] in Resources */,
 				369E780E1D5B56E4007ED09C /* [炸鸡啤酒] in Resources */,
 				369E739D1D5B56DF007ED09C /* [dino抠鼻] in Resources */,
+				CCEDB6351D6F2FAB00AA4976 /* Storyboard.storyboard in Resources */,
 				369E73951D5B56DF007ED09C /* [dino失望] in Resources */,
 				369E75E71D5B56E2007ED09C /* [xkl困] in Resources */,
 				369E72D21D5B56DF007ED09C /* [bm彩色] in Resources */,
@@ -7788,6 +7805,7 @@
 				3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */,
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
 				3687B2451D5C46BF0084887F /* MLTextAttachment.m in Sources */,
+				CCEDB6321D6F2EC900AA4976 /* UserInfoTableViewController.m in Sources */,
 				36994D4B1D57136C0078372C /* AppDelegate.m in Sources */,
 				360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */,
 				36C5EF821D5716BA006511B9 /* UIButton+WebCache.m in Sources */,

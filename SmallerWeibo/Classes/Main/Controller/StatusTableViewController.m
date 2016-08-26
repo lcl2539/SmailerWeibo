@@ -114,9 +114,10 @@
     vc.picArr = imgArr;
     vc.showWhichImg = btn.tag;
     UIImageView *view = [[UIImageView alloc]init];
-    view.image = btn.currentImage;
+    view.image = btn.currentBackgroundImage;
     CGRect frame = [self.view.window convertRect:btn.frame fromView:btn.superview];
     view.frame = frame;
+    vc.lastFrame = view.frame;
     vc.placeHoldimageView = view;
     vc.transitioningDelegate = self;
     [self presentViewController:vc animated:YES completion:nil];

@@ -12,10 +12,14 @@
 #import <Masonry.h>
 #import "UIView+Toast.h"
 #import "ReViewImgAnimation.h"
+#import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
+#define lineCount 3
 @interface ReviewImgController ()<UIScrollViewDelegate>
 {
     __weak UIScrollView *_imageScroll;
+    __weak UILabel *_numLab;
+    __weak UIButton *_saveBtn;
 }
 @property (nonatomic,assign)BOOL isFinishLoad;
 @end
@@ -26,25 +30,32 @@
     [super viewDidLoad];
     [self loadSomeSetting];
     [self loadScrollView];
+    [self loadNumLab];
+    _numLab.alpha = 0;
     _imageScroll.alpha = 0;
     [self.view addSubview:self.placeHoldimageView];
-    [self.view bringSubviewToFront:_imageScroll];
+    [self.view sendSubviewToBack:self.placeHoldimageView];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self changePlaceHoldViewFrame];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
 }
 
 - (void)loadSomeSetting{
     [self.view setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+}
+
+- (void)loadNumLab{
+    UILabel *lab = [[UILabel alloc]init];
+    lab.text = [NSString stringWithFormat:@"%ld/%ld",self.showWhichImg + 1,self.picArr.count];
+    [self.view addSubview:lab];
+    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view).offset(-10);
+        make.centerX.equalTo(self.view);
+    }];
+    _numLab = lab;
 }
 
 - (void)changePlaceHoldViewFrame{
@@ -58,7 +69,6 @@
         CGFloat y = (self.placeHoldimageView.frame.size.height - frame.size.height) / 2 + self.placeHoldimageView.frame.origin.y;
         frame.origin.y = y;
     }
-    self.lastFrame = frame;
     frame.origin.x = 0;
     frame.size.width = screenSize.width;
     frame.size.height = (CGFloat)screenSize.width / self.placeHoldimageView.image.size.width * frame.size.height;
@@ -70,12 +80,20 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         weakSelf.placeHoldimageView.frame = frame;
+        _numLab.alpha = 1;
     } completion:^(BOOL finished) {
         _imageScroll.alpha = 1;
         if (self.isFinishLoad) {
             [weakSelf.placeHoldimageView removeFromSuperview];
         }else{
             self.isFinishLoad = YES;
+        }
+        NSString *toast = [[NSUserDefaults standardUserDefaults]objectForKey:@"toastImg"];
+        if ([toast integerValue] < 6 || !toast) {
+            [self.view toastWithString:@"长按可以保存图片哦~"];
+            NSInteger num = (toast) ? [toast integerValue] : 0;
+            num += 1;
+            [NSString writeUserInfoWithKey:@"toastImg" value:[NSNumber numberWithInteger:num]];
         }
     }];
 }
@@ -88,7 +106,7 @@
     __weak typeof(self) weakSelf = self;
     for (NSInteger index = 0; index <self.picArr.count ; index++) {
         UIScrollView *ImgScroll = [self creatImgScroll:index];
-        ImgScroll.tag = index;
+        ImgScroll.tag = 100 + index;
         [ImgScroll setBackgroundColor:[UIColor clearColor]];
         NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index][@"thumbnail_pic"]];
         [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
@@ -111,6 +129,7 @@
         [self creatGeature:ImgScroll];
     }
     _imageScroll = scroll;
+    _imageScroll.delegate = self;
     [scroll setContentOffset:CGPointMake(self.showWhichImg * self.view.frame.size.width, 0) animated:YES];
     [self.view addSubview:_imageScroll];
 }
@@ -209,6 +228,20 @@
     view.center=CGPointMake(scrollView.contentSize.width/2+offsetX,scrollView.contentSize.height/2+offsetY);
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView != _imageScroll)return;
+    NSInteger showIndex = _imageScroll.contentOffset.x / screenSize.width;
+    _numLab.text = [NSString stringWithFormat:@"%ld/%ld",showIndex + 1,self.picArr.count];
+    if (showIndex == self.showWhichImg)return;
+    NSInteger nowIndexY = showIndex / lineCount - self.showWhichImg / lineCount;
+    NSInteger nowIndexX = showIndex % lineCount - self.showWhichImg % lineCount;
+    self.showWhichImg = showIndex;
+    CGRect frame = self.lastFrame;
+    frame.origin.x += nowIndexX * (self.lastFrame.size.width + 3);
+    frame.origin.y += nowIndexY * (self.lastFrame.size.height + 3);
+    self.lastFrame = frame;
+}
+
 - (UIProgressView *)creatProgress{
     UIProgressView *progress = [[UIProgressView alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height/2, self.view.frame.size.width-100, 0)];
     progress.trackTintColor = [UIColor darkGrayColor];
@@ -217,9 +250,11 @@
 
 - (void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
-    UIView *view = [_imageScroll viewWithTag:_imageScroll.contentOffset.x/screenSize.width].subviews.firstObject;
+    UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
+    UIView *img = view.subviews.firstObject;
     [UIView animateWithDuration:0.3 animations:^{
-        view.frame = self.lastFrame;
+        view.contentOffset  =CGPointZero;
+        img.frame = self.lastFrame;
     }];
 }
 
