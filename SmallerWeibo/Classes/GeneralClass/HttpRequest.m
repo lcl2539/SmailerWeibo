@@ -90,4 +90,14 @@
     } isGET:NO type:type_json];
 }
 
++ (void)userInfoHttpRequestWithSuccess:(void(^)(id object))success failure:(void(^)(NSError *error))faliure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/users/show.json";
+    NSDictionary *dict = @{@"uid":userId};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        faliure(error);
+    } isGET:YES type:type_json];
+}
 @end

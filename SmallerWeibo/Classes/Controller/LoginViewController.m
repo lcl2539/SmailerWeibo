@@ -81,7 +81,7 @@
 - (void)loadUserData{
     __weak typeof(self) weakSelf = self;
     [HttpRequest httpRequestWithUrl:@"https://api.weibo.com/2/users/show.json" parameter:@{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]} success:^(id object) {
-        [UserModel myInfo:object];
+        //[UserModel myInfo:object];
         [weakSelf successForAccess_Token];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

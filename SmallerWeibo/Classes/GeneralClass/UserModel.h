@@ -47,5 +47,5 @@
 
 /** 模型的初始化方法 */
 + (instancetype)userModelWithDictionary:(NSDictionary *)dicData;
-+ (void)myInfo:(NSDictionary *)dict;
++ (instancetype)CreatMyModle:(NSDictionary *)dict;
 @end

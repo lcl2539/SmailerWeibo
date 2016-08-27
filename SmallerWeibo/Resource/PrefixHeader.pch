@@ -21,4 +21,4 @@
 #define type_text @"text/plain"
 #define type_html @"text/html"
 #define type_json @"application/json"
-#define userId [[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]
+#define userId [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"]

@@ -98,7 +98,7 @@
             [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:modelTemp.arrPicUrls];
         }
         if (modelTemp.retweetedStatus) {
-            _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.retweetedStatus.strText expression:self.exp];
+            _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:[NSString stringWithFormat:@"@%@：%@",modelTemp.retweetedStatus.user.strName,modelTemp.retweetedStatus.strText] expression:self.exp];
             if (modelTemp.retweetedStatus.arrPicUrls){
                 [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
             }
@@ -115,7 +115,7 @@
         _status.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.commentText expression:self.exp];
         [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.status.commentsCount] forState:UIControlStateNormal];
         [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.status.repostsCount] forState:UIControlStateNormal];
-        _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.status.strText expression:self.exp];
+        _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:[NSString stringWithFormat:@"@%@：%@",modelTemp.status.user.strName,modelTemp.status.strText] expression:self.exp];
         if (modelTemp.status.arrPicUrls) {
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.status.arrPicUrls];
         }

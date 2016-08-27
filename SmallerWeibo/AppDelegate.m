@@ -17,11 +17,11 @@
 
 @implementation AppDelegate
 
--(void)didReceiveWeiboRequest:(WBBaseRequest *)request{
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request{
     
 }
 
--(void)didReceiveWeiboResponse:(WBBaseResponse *)response{
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response{
     WBAuthorizeResponse *userInfo = (WBAuthorizeResponse *)response;
     [[NSUserDefaults standardUserDefaults]setObject:userInfo.accessToken forKey:@"access_token"];
     [[NSUserDefaults standardUserDefaults]setObject:userInfo.userID forKey:@"userID"];

@@ -8,9 +8,15 @@
 
 #import "MoreViewController.h"
 #import <Masonry.h>
+#import "HttpRequest.h"
+#import "UserModel.h"
+#import "UIImageView+WebCache.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
+    __weak UIImageView *_userHeadImg;
+    __weak UILabel *_userName;
+    __weak UIImageView *_bgImg;
 }
 @property (nonatomic,copy)NSArray *titleArr;
 @end
@@ -27,12 +33,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadTab];
-    [self loadSomeSetting];
-
+    __weak typeof(self) weakSelf = self;
+    [HttpRequest userInfoHttpRequestWithSuccess:^(id object) {
+        [weakSelf loadData:object];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 
-- (void)loadSomeSetting{
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+- (void)loadData:(id)object{
+    UserModel *user = [UserModel CreatMyModle:object];
+    [_userHeadImg sd_setImageWithURL:[NSURL URLWithString:user.strAvatarLarge]];
+    [_userName setText:user.strScreenName];
 }
 
 - (void)loadTab{
@@ -42,8 +54,41 @@
     [_tab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.bottom.trailing.equalTo(self.view);
     }];
+    _tab.separatorStyle = UIAccessibilityTraitNone;
     _tab.delegate = self;
     _tab.dataSource = self;
+    [self loadHeadView];
+}
+
+- (void)loadHeadView{
+    UIView *head = [[UIView alloc]init];
+    CGFloat height = self.view.bounds.size.height * 0.2;
+    head.frame = CGRectMake(0, 0, 0, height);
+    _tab.tableHeaderView = head;
+    UIImageView *bgImg = [[UIImageView alloc]init];
+    [head addSubview:bgImg];
+    _bgImg = bgImg;
+    UIImageView *img = [[UIImageView alloc]init];
+    img.layer.cornerRadius = 25;
+    img.clipsToBounds = YES;
+    [head addSubview:img];
+    _userHeadImg = img;
+    UILabel *name = [[UILabel alloc]init];
+    name.textAlignment = NSTextAlignmentCenter;
+    [head addSubview:name];
+    _userName = name;
+    [_bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.bottom.equalTo(head);
+    }];
+    [_userHeadImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.equalTo(@50);
+        make.leading.equalTo(head).offset(15);
+        make.bottom.equalTo(head).offset(-40);
+    }];
+    [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(_userHeadImg.mas_leading);
+        make.bottom.equalTo(head).offset(-5);
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -54,6 +99,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
+        cell.backgroundColor = [UIColor whiteColor];
     }
     cell.textLabel.text = self.titleArr[indexPath.row];
     return cell;

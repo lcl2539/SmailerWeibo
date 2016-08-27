@@ -47,7 +47,16 @@
     [user setTintColor:[UIColor whiteColor]];
     [user mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.equalTo(self).offset(8);
-        make.width.height.equalTo(@30);
+        make.width.height.equalTo(@25);
+    }];
+    UILabel *lab = [[UILabel alloc]init];
+    lab.text = @"小号微博";
+    lab.textColor = [UIColor whiteColor];
+    lab.font = [UIFont systemFontOfSize:20];
+    [self addSubview:lab];
+    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(user.mas_trailing).offset(15);
+        make.centerY.equalTo(user.mas_centerY);
     }];
     /*UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
     [search setTintColor:[UIColor whiteColor]];

@@ -14,4 +14,5 @@
 + (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure;
 + (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure;
 + (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(void (^)(id object))success failure:(void (^)(NSError *error))failure;
++ (void)userInfoHttpRequestWithSuccess:(void(^)(id object))success failure:(void(^)(NSError *error))faliure;
 @end

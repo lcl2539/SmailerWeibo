@@ -382,7 +382,7 @@
 }
 
 - (void)dealloc{
-    [self.slideVc removeObserver:self.slideVc forKeyPath:@"view.frame"];
+    [self.slideVc removeObserver:self forKeyPath:@"view.frame"];
 }
 
 @end
