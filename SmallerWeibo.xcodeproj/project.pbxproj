@@ -1828,13 +1828,12 @@
 		36D925F11D59C664003BC4E5 /* StatusText.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D925F01D59C664003BC4E5 /* StatusText.m */; };
 		36FECD981D674092005C525F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FECD971D674092005C525F /* UIView+Toast.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
+		CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBA4C901D7063BE0046E20F /* MoreViewController.m */; };
 		CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D41D6E90A800AA4976 /* ReViewImgAnimation.m */; };
 		CCEDB5D91D6EBC2C00AA4976 /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D81D6EBC2C00AA4976 /* DetailStatusViewController.m */; };
 		CCEDB5E31D6EBFEE00AA4976 /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5E11D6EBFEE00AA4976 /* CommentsTableViewCell.m */; };
 		CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCEDB5E21D6EBFEE00AA4976 /* CommentsTableViewCell.xib */; };
 		CCEDB5E81D6EC43100AA4976 /* commentsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5E71D6EC43100AA4976 /* commentsModel.m */; };
-		CCEDB6321D6F2EC900AA4976 /* UserInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */; };
-		CCEDB6351D6F2FAB00AA4976 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -3706,6 +3705,8 @@
 		36FECD971D674092005C525F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.debug.xcconfig"; sourceTree = "<group>"; };
 		C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmallerWeibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCBA4C8F1D7063BE0046E20F /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
+		CCBA4C901D7063BE0046E20F /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		CCEDB5D31D6E90A800AA4976 /* ReViewImgAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReViewImgAnimation.h; sourceTree = "<group>"; };
 		CCEDB5D41D6E90A800AA4976 /* ReViewImgAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReViewImgAnimation.m; sourceTree = "<group>"; };
 		CCEDB5D71D6EBC2C00AA4976 /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailStatusViewController.h; sourceTree = "<group>"; };
@@ -3715,9 +3716,6 @@
 		CCEDB5E21D6EBFEE00AA4976 /* CommentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsTableViewCell.xib; sourceTree = "<group>"; };
 		CCEDB5E61D6EC43100AA4976 /* commentsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentsModel.h; sourceTree = "<group>"; };
 		CCEDB5E71D6EC43100AA4976 /* commentsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentsModel.m; sourceTree = "<group>"; };
-		CCEDB62F1D6F2EC900AA4976 /* UserInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTableViewController.h; sourceTree = "<group>"; };
-		CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableViewController.m; sourceTree = "<group>"; };
-		CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		E87709EF3301DB26FA66DE96 /* Pods-SmallerWeibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -5648,7 +5646,7 @@
 		36C5EF4F1D57156D006511B9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				CCEDB62B1D6F2E8200AA4976 /* UserInfo */,
+				CCEDB62B1D6F2E8200AA4976 /* More */,
 				36C5EF521D57161F006511B9 /* AppDelegate */,
 				36C5EF931D571A13006511B9 /* GeneralClass */,
 				36C5EF551D57164F006511B9 /* Main */,
@@ -5868,14 +5866,13 @@
 			name = model;
 			sourceTree = "<group>";
 		};
-		CCEDB62B1D6F2E8200AA4976 /* UserInfo */ = {
+		CCEDB62B1D6F2E8200AA4976 /* More */ = {
 			isa = PBXGroup;
 			children = (
-				CCEDB62F1D6F2EC900AA4976 /* UserInfoTableViewController.h */,
-				CCEDB6301D6F2EC900AA4976 /* UserInfoTableViewController.m */,
-				CCEDB6341D6F2FAB00AA4976 /* Storyboard.storyboard */,
+				CCBA4C8F1D7063BE0046E20F /* MoreViewController.h */,
+				CCBA4C901D7063BE0046E20F /* MoreViewController.m */,
 			);
-			name = UserInfo;
+			name = More;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7530,7 +7527,6 @@
 				369E77A31D5B56E4007ED09C /* [抓沙发] in Resources */,
 				369E780E1D5B56E4007ED09C /* [炸鸡啤酒] in Resources */,
 				369E739D1D5B56DF007ED09C /* [dino抠鼻] in Resources */,
-				CCEDB6351D6F2FAB00AA4976 /* Storyboard.storyboard in Resources */,
 				369E73951D5B56DF007ED09C /* [dino失望] in Resources */,
 				369E75E71D5B56E2007ED09C /* [xkl困] in Resources */,
 				369E72D21D5B56DF007ED09C /* [bm彩色] in Resources */,
@@ -7791,6 +7787,7 @@
 				36C5EF8F1D571936006511B9 /* LoginViewController.m in Sources */,
 				36C5EF851D5716BA006511B9 /* UIImage+WebP.m in Sources */,
 				36C5EF881D5716BA006511B9 /* UIView+WebCacheOperation.m in Sources */,
+				CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */,
 				36D925F11D59C664003BC4E5 /* StatusText.m in Sources */,
 				36C5EF7B1D5716BA006511B9 /* SDImageCache.m in Sources */,
 				CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */,
@@ -7805,7 +7802,6 @@
 				3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */,
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
 				3687B2451D5C46BF0084887F /* MLTextAttachment.m in Sources */,
-				CCEDB6321D6F2EC900AA4976 /* UserInfoTableViewController.m in Sources */,
 				36994D4B1D57136C0078372C /* AppDelegate.m in Sources */,
 				360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */,
 				36C5EF821D5716BA006511B9 /* UIButton+WebCache.m in Sources */,

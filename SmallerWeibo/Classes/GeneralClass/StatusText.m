@@ -23,7 +23,7 @@
         NSString *subStr = [originalString substringWithRange:range];
         if ([subStr containsString:@"["] && [subStr containsString:@"]"]) {
             NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-            attachment.image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:subStr ofType:nil]];
+            attachment.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:subStr ofType:nil]]];
             attachment.bounds = CGRectMake(0, offsetY, font.lineHeight, font.lineHeight);
             [string appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
         }else{

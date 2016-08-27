@@ -10,7 +10,7 @@
 @protocol NavigationScrollDeleagte <NSObject>
 
 - (void)navigationScrollValueDidChange:(NSInteger)value;
-
+- (void)moreBtndidClick;
 @end
 @interface NavigationScroll : UIView
 

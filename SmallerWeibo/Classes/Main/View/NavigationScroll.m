@@ -107,7 +107,9 @@
 }
 
 - (void)userBtn{
-    
+    if ([self.delegate respondsToSelector:@selector(moreBtndidClick)]) {
+        [self.delegate moreBtndidClick];
+    }
 }
 
 

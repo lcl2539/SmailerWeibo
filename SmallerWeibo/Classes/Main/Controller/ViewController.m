@@ -18,17 +18,21 @@
 #import <Masonry.h>
 #import <AFNetworking.h>
 #import "CommentsStatusModel.h"
-@interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate>
+#import "MoreViewController.h"
+@interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 {
     __weak NavigationScroll *_navigationScroll;
     __weak UIScrollView *_mainScroll;
     __weak UIView *_contentView;
     __weak UIView *_placeHoldView;
+    __weak UIView *_shadeView;
 }
 @property (nonatomic,strong)NSMutableSet *visibleTabViewControllers;
 @property (nonatomic,strong)NSMutableSet *reusedTableViewControllers;
 @property (nonatomic,strong)NSMutableDictionary *allData;
 @property (nonatomic,assign)NSInteger top;
+@property (nonatomic,strong)MoreViewController *slideVc;
+@property (nonatomic,assign)CGRect slideViewFrame;
 @end
 
 @implementation ViewController
@@ -59,6 +63,7 @@
     [self loadSomeSetting];
     [self loadPlaceHoldView];
     [self judgeLogin];
+    [self loadSlideGesTure];
 }
 
 - (void)judgeLogin{
@@ -73,6 +78,9 @@
         [self loadMianScrollView];
         [_navigationScroll changeNavgationScrollValue:0];
         [self.view bringSubviewToFront:_placeHoldView];
+        [self loadShadeView];
+        [self loadSlideVc];
+        
     }
 }
 
@@ -82,7 +90,6 @@
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBarHidden = YES;
-    
 }
 
 - (void)loadPlaceHoldView{
@@ -94,6 +101,69 @@
         make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height);
     }];
     _placeHoldView = view;
+}
+
+- (void)loadShadeView{
+    UIView *view = [[UIView alloc]initWithFrame:self.view.bounds];
+    view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
+    [self.view addSubview:view];
+    view.alpha = 0;
+    _shadeView = view;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(moreBtndidClick)];
+    [_shadeView addGestureRecognizer:tap];
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(screenEdgesSlide:)];
+    [_shadeView addGestureRecognizer:pan];
+}
+
+- (void)loadSlideVc{
+    self.slideVc = [[MoreViewController alloc]init];
+    [self addChildViewController:self.slideVc];
+    [self.view addSubview:self.slideVc.view];
+    CGRect frame = [UIScreen mainScreen].bounds;
+    frame.origin.x = - [UIScreen mainScreen].bounds.size.width * 2/3;
+    frame.size.width = -frame.origin.x;
+    self.slideViewFrame = frame;
+    self.slideVc.view.frame = frame;
+    [self.slideVc addObserver:self forKeyPath:@"view.frame" options:NSKeyValueObservingOptionNew context:(__bridge void * _Nullable)(_mainScroll)];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    CGFloat X = [change[@"new"] CGRectValue].origin.x;
+    CGFloat width = [change[@"new"] CGRectValue].size.width;
+    _shadeView.alpha = 1 - (CGFloat)(- X) / width;
+}
+
+- (void)loadSlideGesTure{
+    UIScreenEdgePanGestureRecognizer *pan = [[UIScreenEdgePanGestureRecognizer alloc]initWithTarget:self action:@selector(screenEdgesSlide:)];
+    pan.edges = UIRectEdgeLeft;
+    pan.delegate = self;
+    [_mainScroll addGestureRecognizer:pan];
+}
+
+- (void)screenEdgesSlide:(UIPanGestureRecognizer *)slide{
+    CGPoint original = CGPointZero;
+    if (slide.state == UIGestureRecognizerStateBegan) {
+        original = [slide locationInView:self.view];
+    }else if (slide.state == UIGestureRecognizerStateChanged) {
+        if (self.slideVc.view.frame.origin.x <= 0) {
+            CGPoint point = [slide locationInView:self.view];
+            CGRect frame = CGRectOffset(self.slideViewFrame, point.x - original.x, 0);
+            if (frame.origin.x > 0) {
+                frame.origin.x = 0;
+            }
+            self.slideVc.view.frame = frame;
+        }
+    }else if (slide.state == UIGestureRecognizerStateEnded){
+        if (self.slideVc.view.frame.origin.x < 0) {
+            CGRect frame = self.slideViewFrame;
+            if (self.slideVc.view.frame.origin.x > -self.slideVc.view.frame.size.width/2) {
+                frame.origin.x = 0;
+            }
+            [UIView animateWithDuration:0.25 animations:^{
+                self.slideVc.view.frame = frame;
+            }];
+        }
+    }
 }
 
 - (void)loadNavgationBarSetting{
@@ -301,6 +371,18 @@
 
 - (void)navigationScrollValueDidChange:(NSInteger)value{
     [_mainScroll setContentOffset:CGPointMake(value * self.view.frame.size.width, 0) animated:YES];
+}
+
+- (void)moreBtndidClick{
+    CGRect frame = self.slideVc.view.frame;
+    frame.origin.x = (frame.origin.x < 0) ? 0 : -self.view.frame.size.width;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.slideVc.view.frame = frame;
+    }];
+}
+
+- (void)dealloc{
+    [self.slideVc removeObserver:self.slideVc forKeyPath:@"view.frame"];
 }
 
 @end
