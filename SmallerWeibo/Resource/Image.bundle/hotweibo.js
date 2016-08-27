@@ -1,0 +1,98 @@
+
+[{
+	"categoryName" :"笑话",
+	"loadId" :"102803_ctg1_4388_-_ctg1_4388",
+    "imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98380.png"
+}, {
+	"categoryName" :"神最右",
+	"loadId" :"102803_ctg1_6399_-_ctg1_6399",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98370.png"
+}, {
+	"categoryName" :"明星",
+	"loadId" :"102803_ctg1_4288_-_ctg1_4288",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98384.png"
+}, {
+	"categoryName" :"视频",
+	"loadId" :"102803_ctg1_1199_-_ctg1_1199",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98374.png"
+}, {
+	"categoryName" :"体育",
+	"loadId" :"102803_ctg1_1388_-_ctg1_1388",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98376.png"
+}, {
+	"categoryName" :"美食",
+	"loadId" :"102803_ctg1_2688_-_ctg1_2688",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98362.png"
+}, {
+	"categoryName" :"电视剧",
+	"loadId" :"102803_ctg1_2488_-_ctg1_2488",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98392.png"
+}, {
+	"categoryName" :"美妆",
+	"loadId" :"102803_ctg1_1588_-_ctg1_1588",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98372.png"
+}, {
+	"categoryName" :"电影",
+	"loadId" :"102803_ctg1_3288_-_ctg1_3288",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98346.png"
+}, {
+	"categoryName" :"理财",
+	"loadId" :"102803_ctg1_1288_-_ctg1_1288",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98390.png"
+}, {
+	"categoryName" :"音乐",
+	"loadId" :"102803_ctg1_5288_-_ctg1_5288",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98386.png"
+}, {
+	"categoryName" :"时尚",
+	"loadId" :"102803_ctg1_4488_-_ctg1_4488",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98372.png"
+}, {
+	"categoryName" :"情感",
+	"loadId" :"102803_ctg1_1988_-_ctg1_1988",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98368.png"
+}, {
+	"categoryName" :"星座",
+	"loadId" :"102803_ctg1_1688_-_ctg1_1688",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98382.png"
+}, {
+	"categoryName" :"动漫",
+	"loadId" :"102803_ctg1_2388_-_ctg1_2388",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98348.png"
+}, {
+	"categoryName" :"游戏",
+	"loadId" :"102803_ctg1_4888_-_ctg1_4888",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2015/05/13/103905.png"
+}, {
+	"categoryName" :"旅游",
+	"loadId" :"102803_ctg1_2588_-_ctg1_2588",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98358.png"
+}, {
+	"categoryName" :"萌宠",
+	"loadId" :"102803_ctg1_2788_-_ctg1_2788",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98366.png"
+}, {
+	"categoryName" :"摄影",
+	"loadId" :"102803_ctg1_4988_-_ctg1_4988",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2015/05/13/103901.png"
+}, {
+	"categoryName" :"数码",
+	"loadId" :"102803_ctg1_5088_-_ctg1_5088",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2015/05/13/103902.png"
+}, {
+	"categoryName" :"科普",
+	"loadId" :"102803_ctg1_5988_-_ctg1_5988",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98356.png"
+}, {
+	"categoryName" :"健康",
+	"loadId" :"102803_ctg1_2188_-_ctg1_2188",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98352.png"
+}, {
+	"categoryName" :"汽车",
+	"loadId" :"102803_ctg1_5188_-_ctg1_5188",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2015/05/13/103898.png"
+}, {
+	"categoryName" :"美女模特",
+	"loadId" :"102803_ctg1_2288_-_ctg1_2288",
+	"imageUrl" :"http://u1.sinaimg.cn/upload/2014/09/25/98360.png"
+ }]

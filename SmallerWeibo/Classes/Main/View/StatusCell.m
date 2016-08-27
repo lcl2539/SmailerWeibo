@@ -12,9 +12,10 @@
 #import "StatusModel.h"
 #import "UserModel.h"
 #import "NSString+Extend.h"
-#import "StatusText.h"
+#import "SingExp.h"
 #import "MLLinkLabel.h"
 #import "CommentsStatusModel.h"
+#import "MLExpressionManager.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
 #define constants(layout) layout.constant
@@ -35,6 +36,7 @@
     __weak IBOutlet UIButton *_commentsBtn;
     
 }
+@property (nonatomic,strong)MLExpression *exp;
 @end
 @implementation StatusCell
 
@@ -43,8 +45,16 @@
     StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"StatusCell" owner:nil options:nil]firstObject];
+        cell.exp = [SingExp shareExp];
     }
     return cell;
+}
+
+- (MLExpression *)exp{
+    if (_exp) {
+        _exp = [SingExp shareExp];
+    }
+    return _exp;
 }
 
 - (void)awakeFromNib{
@@ -55,8 +65,12 @@
     _userImg.layer.borderColor = [UIColor grayColor].CGColor;
     _status.delegate = self;
     _status.lineSpacing = 5;
+    _status.font = [UIFont systemFontOfSize:17];
+    _status.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineSpacing = 3;
     _repeatStatus.textInsets = UIEdgeInsetsMake(4, 0, 0, 0);
+    _repeatStatus.font = [UIFont systemFontOfSize:15];
+    _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
 }
@@ -77,14 +91,14 @@
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strName;
         _from.text = modelTemp.strSourceDes;
-        _status.attributedText = [StatusText changStrToStatusText:modelTemp.strText fontSize:17];
+        _status.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.strText expression:self.exp];
         [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.commentsCount] forState:UIControlStateNormal];
         [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.repostsCount] forState:UIControlStateNormal];
         if (modelTemp.arrPicUrls){
             [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:modelTemp.arrPicUrls];
         }
         if (modelTemp.retweetedStatus) {
-            _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.retweetedStatus.user.strName,modelTemp.retweetedStatus.strText] fontSize:15];
+            _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.retweetedStatus.strText expression:self.exp];
             if (modelTemp.retweetedStatus.arrPicUrls){
                 [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
             }
@@ -98,10 +112,10 @@
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strScreenName;
         _from.text = modelTemp.strSource;
-        _status.attributedText = [StatusText changStrToStatusText:modelTemp.commentText fontSize:17];
+        _status.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.commentText expression:self.exp];
         [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.status.commentsCount] forState:UIControlStateNormal];
         [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.status.repostsCount] forState:UIControlStateNormal];
-        _repeatStatus.attributedText = [StatusText changStrToStatusText:[NSString stringWithFormat:@"@%@:%@",modelTemp.status.user.strScreenName,modelTemp.status.strText] fontSize:15];
+        _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.status.strText expression:self.exp];
         if (modelTemp.status.arrPicUrls) {
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.status.arrPicUrls];
         }
