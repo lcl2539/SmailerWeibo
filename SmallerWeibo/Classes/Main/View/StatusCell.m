@@ -18,6 +18,7 @@
 #import "MLExpressionManager.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
+#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16)
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -73,10 +74,6 @@
     _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
-    _imgView.layer.cornerRadius = 5;
-    _repeatImgView.layer.cornerRadius = 5;
-    _imgView.clipsToBounds = YES;
-    _repeatImgView.clipsToBounds = YES;
 }
 
 - (void)setModel:(id)model{
@@ -124,22 +121,33 @@
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.status.arrPicUrls];
         }
     }
+    _imgView.layer.cornerRadius = 5;
+    _repeatImgView.layer.cornerRadius = 5;
+    _imgView.clipsToBounds = YES;
+    _repeatImgView.clipsToBounds = YES;
 }
 
 - (void)setImageView:(UIView *)view layoutHeight:(NSLayoutConstraint *)height viewOffset:(NSInteger)offset ImgArr:(NSArray *)arr{
-    NSInteger count = arr.count;
-    NSInteger width = imgSize(offset);
-    for (NSInteger index = 0; index<count; index++) {
-        UIButton *image = [[UIButton alloc]initWithFrame:CGRectMake(index % lineCount * (width+3), index / lineCount * (width+3), width, width)];
-        NSMutableString *strImg = [[NSMutableString alloc]initWithString:arr[index][@"thumbnail_pic"]];
-        [image sd_setBackgroundImageWithURL:[NSURL URLWithString:strImg] forState:UIControlStateNormal];
-        [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
-        image.contentMode = UIViewContentModeScaleAspectFill;
-        image.tag = index;
-        image.clipsToBounds = YES;
-        [view addSubview:image];
+    switch (arr.count) {
+        case 1:
+            height.constant = [self haveOneImgWithArr:arr view:view];
+            break;
+        case 2:
+            height.constant = [self haveTwoImgWithArr:arr view:view];
+            break;
+        case 3:
+            height.constant = [self haveThreeImgWithArr:arr view:view];
+            break;
+        case 4:
+            height.constant = [self haveFourImgWithArr:arr view:view];
+            break;
+        case 6:
+            height.constant = [self haveSixImgWithArr:arr view:view];
+            break;
+        default:
+            height.constant = [self haveOtherImgWithArr:arr view:view];
+            break;
     }
-    height.constant = (count % lineCount == 0) ? (count / lineCount ) * (width+3) + 3 : ((count / lineCount ) + 1)* (width + 3) + 3;
 }
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
@@ -147,8 +155,12 @@
 }
 
 - (void)imgDidTouch:(UIButton *)btn{
-    if ([self.delegate respondsToSelector:@selector(showImgWithArr:button:)]) {
+    if ([self.delegate respondsToSelector:@selector(showImgWithImgArr:frameArr:button:)]) {
         NSArray *arr;
+        NSMutableArray *frameArr = [NSMutableArray array];
+        for (UIView *view in btn.superview.subviews) {
+            [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
+        }
         if ([self.model isKindOfClass:[StatusModel class]]) {
             StatusModel *modelTemp = (StatusModel *)self.model;
             if (modelTemp.arrPicUrls) {
@@ -156,10 +168,10 @@
             }else {
                 arr = modelTemp.retweetedStatus.arrPicUrls;
             }
-            [self.delegate showImgWithArr:arr button:btn];
+            [self.delegate showImgWithImgArr:arr frameArr:frameArr button:btn];
         }else{
             CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
-            [self.delegate showImgWithArr:modelTemp.status.arrPicUrls button:btn];
+            [self.delegate showImgWithImgArr:modelTemp.status.arrPicUrls frameArr:frameArr button:btn];
         }
     }
 }
@@ -174,6 +186,86 @@
         }
         [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[statusId integerValue]];
     }
+}
+
+- (NSInteger)haveOneImgWithArr:(NSArray *)arr view:(UIView *)view{
+    UIButton *image = [self creatImgBtnWith:arr[0][@"thumbnail_pic"] index:0];
+    CGRect frame = CGRectZero;
+    frame.size = CGSizeMake(imgViewWidth, imgViewWidth/2);
+    image.frame = frame;
+    [view addSubview:image];
+    return imgViewWidth/2;
+}
+
+- (NSInteger)haveTwoImgWithArr:(NSArray *)arr view:(UIView *)view{
+    NSInteger width = imgViewWidth/2;
+    for (NSInteger index = 0; index < arr.count; index++) {
+        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        image.frame = CGRectMake(width*(index%2), 0, width, width);
+        [view addSubview:image];
+    }
+    return width;
+}
+
+- (NSInteger)haveThreeImgWithArr:(NSArray *)arr view:(UIView *)view{
+    NSInteger width = imgViewWidth/2;
+    for (NSInteger index = 0; index < arr.count; index++) {
+        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        if (index == 0) {
+            image.frame = CGRectMake(0, 0, width, imgViewWidth);
+        }else{
+            image.frame = CGRectMake(width, width*((index-1)/2), width, width);
+        }
+        [view addSubview:image];
+    }
+    return imgViewWidth;
+}
+
+- (NSInteger)haveFourImgWithArr:(NSArray *)arr view:(UIView *)view{
+    NSInteger width = imgViewWidth/2;
+    for (NSInteger index = 0; index < arr.count; index++) {
+        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        image.frame = CGRectMake(width*(index%2), width*(index/2), width, width);
+        [view addSubview:image];
+    }
+    return imgViewWidth;
+}
+
+- (NSInteger)haveSixImgWithArr:(NSArray *)arr view:(UIView *)view{
+    NSInteger width = imgViewWidth/3;
+    for (NSInteger index = 0; index < arr.count; index++) {
+        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        if (index == 0) {
+            image.frame = CGRectMake(0, 0, width*2, width*2);
+        }else if(index == 1 || index == 2){
+            image.frame = CGRectMake(width*2, width*(index/2), width, width);
+        }else{
+            image.frame = CGRectMake(width*((index-3)%3), width*2, width, width);
+        }
+        [view addSubview:image];
+    }
+    return imgViewWidth;
+}
+
+- (NSInteger)haveOtherImgWithArr:(NSArray *)arr view:(UIView *)view{
+    NSInteger width = imgViewWidth/3;
+    for (NSInteger index = 0; index < arr.count; index++) {
+        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        image.frame = CGRectMake(width*(index%3), width*(index/3), width, width);
+        [view addSubview:image];
+    }
+    return imgViewWidth;
+}
+
+
+- (UIButton *)creatImgBtnWith:(NSString *)url index:(NSInteger)index{
+    UIButton *image = [[UIButton alloc]init];
+    [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
+    [image sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
+    image.contentMode = UIViewContentModeScaleToFill;
+    image.tag = index;
+    image.clipsToBounds = YES;
+    return image;
 }
 
 

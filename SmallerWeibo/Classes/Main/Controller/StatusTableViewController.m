@@ -110,15 +110,15 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)showImgWithArr:(NSArray *)imgArr button:(UIButton *)btn{
+- (void)showImgWithImgArr:(NSArray *)imgArr frameArr:(NSArray *)frameArr button:(UIButton *)btn{
     ReviewImgController *vc = [[ReviewImgController alloc]init];
     vc.picArr = imgArr;
     vc.showWhichImg = btn.tag;
     UIImageView *view = [[UIImageView alloc]init];
     view.image = btn.currentBackgroundImage;
-    CGRect frame = [self.view.window convertRect:btn.frame fromView:btn.superview];
-    view.frame = frame;
-    vc.lastFrame = view.frame;
+    view.frame = [frameArr[btn.tag] CGRectValue];
+    vc.lastFrame = [frameArr[btn.tag] CGRectValue];
+    vc.frameArr = frameArr;
     vc.placeHoldimageView = view;
     vc.transitioningDelegate = self;
     [self presentViewController:vc animated:YES completion:nil];

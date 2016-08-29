@@ -85,6 +85,7 @@
         _imageScroll.alpha = 1;
         if (self.isFinishLoad) {
             [weakSelf.placeHoldimageView removeFromSuperview];
+            weakSelf.placeHoldimageView = nil;
         }else{
             self.isFinishLoad = YES;
         }
@@ -119,6 +120,7 @@
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (self.isFinishLoad && index == self.showWhichImg) {
                 [weakSelf.placeHoldimageView removeFromSuperview];
+                weakSelf.placeHoldimageView = nil;
             }
             if (index == self.showWhichImg) {
                 self.isFinishLoad = YES;
@@ -157,6 +159,7 @@
 }
 
 - (void)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
+    if (!image)return;
     UIImageView * img = [[UIImageView alloc]initWithImage:image];
     CGRect frame = img.frame;
     CGFloat proportion = (CGFloat)screenSize.width/frame.size.width;
@@ -232,14 +235,7 @@
     if (scrollView != _imageScroll)return;
     NSInteger showIndex = _imageScroll.contentOffset.x / screenSize.width;
     _numLab.text = [NSString stringWithFormat:@"%ld/%ld",showIndex + 1,self.picArr.count];
-    if (showIndex == self.showWhichImg)return;
-    NSInteger nowIndexY = showIndex / lineCount - self.showWhichImg / lineCount;
-    NSInteger nowIndexX = showIndex % lineCount - self.showWhichImg % lineCount;
-    self.showWhichImg = showIndex;
-    CGRect frame = self.lastFrame;
-    frame.origin.x += nowIndexX * (self.lastFrame.size.width + 3);
-    frame.origin.y += nowIndexY * (self.lastFrame.size.height + 3);
-    self.lastFrame = frame;
+    self.lastFrame = [self.frameArr[showIndex] CGRectValue];
 }
 
 - (UIProgressView *)creatProgress{
@@ -253,8 +249,13 @@
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
     UIView *img = view.subviews.firstObject;
     [UIView animateWithDuration:0.3 animations:^{
-        view.contentOffset  =CGPointZero;
-        img.frame = self.lastFrame;
+        if (self.placeHoldimageView) {
+            self.placeHoldimageView.frame = self.lastFrame;
+            view.alpha = 0;
+        }else{
+            view.contentOffset  =CGPointZero;
+            img.frame = self.lastFrame;
+        }
     }];
 }
 

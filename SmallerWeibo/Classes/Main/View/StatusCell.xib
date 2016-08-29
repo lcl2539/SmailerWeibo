@@ -39,6 +39,9 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8X-Lx-Uam">
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.11355064655172414" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="4" id="MUU-bC-Hr9"/>
+                        </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rw6-F4-Cdg">
                         <constraints>
@@ -102,20 +105,18 @@
                     <constraint firstItem="IMO-l7-owh" firstAttribute="leading" secondItem="N2P-cB-Qjd" secondAttribute="trailing" constant="8" id="0Lt-7F-f5o"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Qi5-ye-Q62" secondAttribute="bottom" id="1LA-wG-Hc7"/>
                     <constraint firstItem="olx-3c-a8o" firstAttribute="trailing" secondItem="rw6-F4-Cdg" secondAttribute="trailing" constant="-5" id="1mg-kB-pE7"/>
-                    <constraint firstItem="U8X-Lx-Uam" firstAttribute="bottom" secondItem="8Wd-R2-ROP" secondAttribute="bottom" id="6dx-jM-JHj"/>
                     <constraint firstAttribute="trailingMargin" secondItem="o8C-RW-SB0" secondAttribute="trailing" id="9tf-YS-y26"/>
                     <constraint firstAttribute="trailing" secondItem="rw6-F4-Cdg" secondAttribute="trailing" constant="8" id="CA5-Mq-hgu"/>
                     <constraint firstItem="gdi-mQ-62h" firstAttribute="leading" secondItem="o8C-RW-SB0" secondAttribute="leading" id="GBF-CD-v0p"/>
                     <constraint firstItem="Qi5-ye-Q62" firstAttribute="trailing" secondItem="8Wd-R2-ROP" secondAttribute="trailing" id="Gch-iP-WfG"/>
                     <constraint firstItem="olx-3c-a8o" firstAttribute="top" secondItem="rw6-F4-Cdg" secondAttribute="bottom" id="Gjx-rH-5ak"/>
                     <constraint firstItem="jJF-iW-GCf" firstAttribute="top" secondItem="ghE-mC-Ksp" secondAttribute="top" id="KiX-uX-43e"/>
-                    <constraint firstItem="U8X-Lx-Uam" firstAttribute="trailing" secondItem="o8C-RW-SB0" secondAttribute="trailing" id="ORu-D3-cu0"/>
                     <constraint firstItem="eO8-zh-9lx" firstAttribute="bottom" secondItem="N2P-cB-Qjd" secondAttribute="bottom" id="Sk8-yG-6Zd"/>
                     <constraint firstItem="rw6-F4-Cdg" firstAttribute="leading" secondItem="o8C-RW-SB0" secondAttribute="leading" id="U65-Mg-Tqi"/>
                     <constraint firstItem="8Wd-R2-ROP" firstAttribute="trailing" secondItem="olx-3c-a8o" secondAttribute="trailing" id="VYZ-8b-1Yh"/>
                     <constraint firstItem="Qi5-ye-Q62" firstAttribute="top" secondItem="8Wd-R2-ROP" secondAttribute="bottom" constant="8" id="YvO-sZ-vcc"/>
                     <constraint firstItem="olx-3c-a8o" firstAttribute="leading" secondItem="rw6-F4-Cdg" secondAttribute="leading" constant="5" id="cce-gN-ilW"/>
-                    <constraint firstItem="8Wd-R2-ROP" firstAttribute="leading" secondItem="olx-3c-a8o" secondAttribute="leading" id="cxY-Xk-jTq"/>
+                    <constraint firstItem="8Wd-R2-ROP" firstAttribute="leading" secondItem="olx-3c-a8o" secondAttribute="leading" constant="-5" id="cxY-Xk-jTq"/>
                     <constraint firstItem="Qi5-ye-Q62" firstAttribute="leading" secondItem="ghE-mC-Ksp" secondAttribute="trailing" constant="10" id="fFg-9T-hCi"/>
                     <constraint firstItem="gdi-mQ-62h" firstAttribute="bottom" secondItem="Qi5-ye-Q62" secondAttribute="bottom" id="gCD-U8-per"/>
                     <constraint firstItem="IMO-l7-owh" firstAttribute="top" secondItem="N2P-cB-Qjd" secondAttribute="top" id="j0a-mP-T1c"/>
@@ -124,8 +125,9 @@
                     <constraint firstItem="o8C-RW-SB0" firstAttribute="top" secondItem="eO8-zh-9lx" secondAttribute="bottom" constant="8" id="lFk-tZ-xqK"/>
                     <constraint firstItem="ghE-mC-Ksp" firstAttribute="top" secondItem="Qi5-ye-Q62" secondAttribute="top" id="meo-4b-4t4"/>
                     <constraint firstItem="N2P-cB-Qjd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="sRW-EF-fsw"/>
+                    <constraint firstItem="U8X-Lx-Uam" firstAttribute="bottom" secondItem="olx-3c-a8o" secondAttribute="bottom" id="sdD-FG-v1s"/>
                     <constraint firstItem="o8C-RW-SB0" firstAttribute="leading" secondItem="N2P-cB-Qjd" secondAttribute="leading" id="uW8-dt-oOU"/>
-                    <constraint firstItem="8Wd-R2-ROP" firstAttribute="top" secondItem="olx-3c-a8o" secondAttribute="bottom" id="vWv-lK-rtH"/>
+                    <constraint firstItem="8Wd-R2-ROP" firstAttribute="top" secondItem="olx-3c-a8o" secondAttribute="bottom" constant="8" id="vWv-lK-rtH"/>
                     <constraint firstItem="N2P-cB-Qjd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="w4Y-nI-sSR"/>
                     <constraint firstItem="rw6-F4-Cdg" firstAttribute="top" secondItem="o8C-RW-SB0" secondAttribute="bottom" id="xvj-YE-TRY"/>
                     <constraint firstItem="U8X-Lx-Uam" firstAttribute="top" secondItem="rw6-F4-Cdg" secondAttribute="bottom" id="y69-HQ-246"/>
@@ -147,7 +149,7 @@
                 <outlet property="_statusImgViewHeight" destination="pyZ-oe-9bt" id="uwU-OZ-CUG"/>
                 <outlet property="_userImg" destination="N2P-cB-Qjd" id="asv-ag-k7A"/>
             </connections>
-            <point key="canvasLocation" x="-194" y="-541"/>
+            <point key="canvasLocation" x="-492" y="-678"/>
         </tableViewCell>
     </objects>
 </document>

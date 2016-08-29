@@ -107,7 +107,7 @@
 		36994D521D57136C0078372C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		36994D551D57136C0078372C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		36994D571D57136C0078372C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		36C5EF561D5716AB006511B9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		36C5EF561D5716AB006511B9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../../Resource/PrefixHeader.pch; sourceTree = "<group>"; };
 		36C5EF581D5716BA006511B9 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		36C5EF591D5716BA006511B9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		36C5EF5A1D5716BA006511B9 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -345,7 +345,6 @@
 			children = (
 				36A4BB181D5AED690075DA18 /* MLLabel */,
 				36C5EF571D5716BA006511B9 /* SDWebImage */,
-				36C5EF561D5716AB006511B9 /* PrefixHeader.pch */,
 				36994D521D57136C0078372C /* Assets.xcassets */,
 				CC8F1CA21D716BEF0028D0D9 /* face.plist */,
 				CC0303301D716678003FE795 /* Image.bundle */,
@@ -465,6 +464,7 @@
 		36C5EF931D571A13006511B9 /* GeneralClass */ = {
 			isa = PBXGroup;
 			children = (
+				36C5EF561D5716AB006511B9 /* PrefixHeader.pch */,
 				CCEDB5D61D6E90AF00AA4976 /* Animation */,
 				CCEDB5D11D6E8AD500AA4976 /* String */,
 				CCEDB5D01D6E8AC500AA4976 /* View */,
@@ -494,8 +494,8 @@
 		CC1C30ED1D73C417003A9C2C /* Fans */ = {
 			isa = PBXGroup;
 			children = (
-				CC1C30EA1D73C304003A9C2C /* FansViewController.m */,
 				CC1C30E91D73C304003A9C2C /* FansViewController.h */,
+				CC1C30EA1D73C304003A9C2C /* FansViewController.m */,
 			);
 			name = Fans;
 			sourceTree = "<group>";

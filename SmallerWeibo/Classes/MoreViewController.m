@@ -25,7 +25,7 @@
 
 - (NSArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
+        _titleArr = @[@"我的关注",@"我的粉丝",@"我的私信",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
     }
     return _titleArr;
 }
@@ -38,11 +38,6 @@
         [weakSelf loadData:object];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
-    }];
-    [HttpRequest fansHttpRequestWithSuccess:^(id object) {
-        
-    } failure:^(NSError *error) {
-        
     }];
 }
 

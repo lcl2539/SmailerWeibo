@@ -13,8 +13,6 @@
 #import "StatusTableViewController.h"
 #import "HttpRequest.h"
 #import "StatusModel.h"
-#import "PrefixHeader.pch"
-#import <WeiboSDK.h>
 #import <Masonry.h>
 #import <AFNetworking.h>
 #import "CommentsStatusModel.h"
@@ -62,26 +60,13 @@
     [super viewDidLoad];
     [self loadSomeSetting];
     [self loadPlaceHoldView];
-    [self judgeLogin];
+    [self loadNavgationBarSetting];
+    [self loadMianScrollView];
+    [_navigationScroll changeNavgationScrollValue:0];
+    [self.view bringSubviewToFront:_placeHoldView];
+    [self loadShadeView];
+    [self loadSlideVc];
     [self loadSlideGesTure];
-}
-
-- (void)judgeLogin{
-    NSString *access_token = myToken;
-    if (!access_token) {
-        WBAuthorizeRequest *request = [WBAuthorizeRequest request];
-        request.redirectURI = redirect_Url;
-        request.scope = @"all";
-        [WeiboSDK sendRequest:request];
-    }else{
-        [self loadNavgationBarSetting];
-        [self loadMianScrollView];
-        [_navigationScroll changeNavgationScrollValue:0];
-        [self.view bringSubviewToFront:_placeHoldView];
-        [self loadShadeView];
-        [self loadSlideVc];
-        
-    }
 }
 
 - (void)loadSomeSetting{
