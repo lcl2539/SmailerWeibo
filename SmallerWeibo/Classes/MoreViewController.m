@@ -39,6 +39,11 @@
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
+    [HttpRequest fansHttpRequestWithSuccess:^(id object) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)loadData:(id)object{
@@ -99,10 +104,14 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
     }
     cell.textLabel.text = self.titleArr[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

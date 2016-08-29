@@ -8,8 +8,7 @@ target 'SmallerWeibo' do
   # use_frameworks
 pod 'AFNetworking'
 pod 'Masonry'
-pod 'MJRefresh'
-pod "WeiboSDK",:git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git" 
+pod 'MJRefresh' 
  # Pods for SmallerWeibo
 
 end

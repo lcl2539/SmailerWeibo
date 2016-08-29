@@ -14,8 +14,9 @@
 #endif /* PrefixHeader_pch */
 
 #define Color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
-#define client_Id @"1065698738"
-#define redirect_Url @"https://api.weibo.com/oauth2/default.html"
+#define client_Id @"83996567"  //@"1065698738"
+#define redirect_Url @"http://weiboformac.sinaapp.com/_auth/callback.php"   
+
 #define client_Secret @"dc264834556f73e61ddc0d3e88905e7c"
 #define myToken [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"]
 #define type_text @"text/plain"

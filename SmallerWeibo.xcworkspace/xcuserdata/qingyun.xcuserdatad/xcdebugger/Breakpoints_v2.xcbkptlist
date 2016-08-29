@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SmallerWeibo/AppDelegate.m"
-            timestampString = "493980036.279719"
+            filePath = "SmallerWeibo/Classes/GeneralClass/HttpRequest.m"
+            timestampString = "494133824.170305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "-didReceiveWeiboResponse:"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "+fansHttpRequestWithSuccess:failure:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

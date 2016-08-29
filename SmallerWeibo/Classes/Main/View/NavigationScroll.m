@@ -50,7 +50,7 @@
         make.width.height.equalTo(@25);
     }];
     UILabel *lab = [[UILabel alloc]init];
-    lab.text = @"小号微博";
+    lab.text = @"比较小的微博";
     lab.textColor = [UIColor whiteColor];
     lab.font = [UIFont systemFontOfSize:20];
     [self addSubview:lab];

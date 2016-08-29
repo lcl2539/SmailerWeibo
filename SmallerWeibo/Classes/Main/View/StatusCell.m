@@ -73,6 +73,10 @@
     _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
+    _imgView.layer.cornerRadius = 5;
+    _repeatImgView.layer.cornerRadius = 5;
+    _imgView.clipsToBounds = YES;
+    _repeatImgView.clipsToBounds = YES;
 }
 
 - (void)setModel:(id)model{

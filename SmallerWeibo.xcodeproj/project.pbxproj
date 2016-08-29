@@ -54,6 +54,9 @@
 		36FECD981D674092005C525F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FECD971D674092005C525F /* UIView+Toast.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
 		CC0303311D716678003FE795 /* Image.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC0303301D716678003FE795 /* Image.bundle */; };
+		CC1C30EB1D73C304003A9C2C /* FansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30EA1D73C304003A9C2C /* FansViewController.m */; };
+		CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */; };
+		CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */; };
 		CC8F1CA31D716BF00028D0D9 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC8F1CA21D716BEF0028D0D9 /* face.plist */; };
 		CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8F1CA51D716D3A0028D0D9 /* SingExp.m */; };
 		CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBA4C901D7063BE0046E20F /* MoreViewController.m */; };
@@ -158,6 +161,11 @@
 		4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.debug.xcconfig"; sourceTree = "<group>"; };
 		C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmallerWeibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0303301D716678003FE795 /* Image.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Image.bundle; sourceTree = "<group>"; };
+		CC1C30E91D73C304003A9C2C /* FansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FansViewController.h; sourceTree = "<group>"; };
+		CC1C30EA1D73C304003A9C2C /* FansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FansViewController.m; sourceTree = "<group>"; };
+		CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
+		CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
+		CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		CC8F1CA21D716BEF0028D0D9 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = face.plist; path = ../../../../../Desktop/face.plist; sourceTree = "<group>"; };
 		CC8F1CA41D716D3A0028D0D9 /* SingExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingExp.h; sourceTree = "<group>"; };
 		CC8F1CA51D716D3A0028D0D9 /* SingExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingExp.m; sourceTree = "<group>"; };
@@ -474,6 +482,34 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CC1C30EC1D73C3D8003A9C2C /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				CC1C30EE1D73C6E8003A9C2C /* View */,
+				CC1C30ED1D73C417003A9C2C /* Fans */,
+			);
+			name = UserInfo;
+			sourceTree = "<group>";
+		};
+		CC1C30ED1D73C417003A9C2C /* Fans */ = {
+			isa = PBXGroup;
+			children = (
+				CC1C30EA1D73C304003A9C2C /* FansViewController.m */,
+				CC1C30E91D73C304003A9C2C /* FansViewController.h */,
+			);
+			name = Fans;
+			sourceTree = "<group>";
+		};
+		CC1C30EE1D73C6E8003A9C2C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */,
+				CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */,
+				CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		CCEDB5D01D6E8AC500AA4976 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +583,7 @@
 			children = (
 				CCBA4C8F1D7063BE0046E20F /* MoreViewController.h */,
 				CCBA4C901D7063BE0046E20F /* MoreViewController.m */,
+				CC1C30EC1D73C3D8003A9C2C /* UserInfo */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -614,6 +651,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */,
 				CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */,
 				CC0303311D716678003FE795 /* Image.bundle in Resources */,
 				36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */,
@@ -686,6 +724,7 @@
 				36C5EF801D5716BA006511B9 /* SDWebImageManager.m in Sources */,
 				36C5EF9F1D571B2B006511B9 /* NavigationScroll.m in Sources */,
 				36C5EF7E1D5716BA006511B9 /* SDWebImageDownloader.m in Sources */,
+				CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */,
 				3687B24A1D5C46BF0084887F /* MLLinkLabel.m in Sources */,
 				36C5EF981D571A13006511B9 /* HttpRequest.m in Sources */,
 				368E17461D5ABA630006234D /* StatusCell.m in Sources */,
@@ -717,6 +756,7 @@
 				36C5EF7C1D5716BA006511B9 /* SDWebImageCompat.m in Sources */,
 				3687B2441D5C46BF0084887F /* MLExpressionManager.m in Sources */,
 				36C5EFA31D572378006511B9 /* NavigationCollectionViewCell.m in Sources */,
+				CC1C30EB1D73C304003A9C2C /* FansViewController.m in Sources */,
 				3687B2421D5C46BF0084887F /* NSMutableAttributedString+MLLabel.m in Sources */,
 				3687B2461D5C46BF0084887F /* NSAttributedString+MLExpression.m in Sources */,
 				361C36B01D589C660064E76C /* UserModel.m in Sources */,

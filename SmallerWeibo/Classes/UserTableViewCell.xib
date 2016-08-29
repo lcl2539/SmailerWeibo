@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" rowHeight="76" id="KGk-i7-Jjw" customClass="UserTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="75"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Py1-ll-5S8">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="OdI-bz-diP"/>
+                            <constraint firstAttribute="width" constant="50" id="uQR-s4-YoA"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cor">
+                                <integer key="value" value="25"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyZ-xy-rE3">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIW-C0-3NL">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rkM-00-I1m">
+                        <state key="normal" title="Button"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Py1-ll-5S8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="0eF-Qa-NkN"/>
+                    <constraint firstItem="TIW-C0-3NL" firstAttribute="leading" secondItem="nyZ-xy-rE3" secondAttribute="leading" id="7hx-dw-w6L"/>
+                    <constraint firstItem="Py1-ll-5S8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="CHF-Q9-WvR"/>
+                    <constraint firstItem="nyZ-xy-rE3" firstAttribute="leading" secondItem="Py1-ll-5S8" secondAttribute="trailing" constant="16" id="V0B-Pe-gWk"/>
+                    <constraint firstItem="rkM-00-I1m" firstAttribute="centerY" secondItem="Py1-ll-5S8" secondAttribute="centerY" id="aFS-PK-sBX"/>
+                    <constraint firstItem="rkM-00-I1m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TIW-C0-3NL" secondAttribute="trailing" constant="16" id="aGe-8J-89p"/>
+                    <constraint firstItem="rkM-00-I1m" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="jbg-UZ-ukS"/>
+                    <constraint firstItem="TIW-C0-3NL" firstAttribute="bottom" secondItem="Py1-ll-5S8" secondAttribute="bottom" id="uIW-gq-kuC"/>
+                    <constraint firstItem="nyZ-xy-rE3" firstAttribute="top" secondItem="Py1-ll-5S8" secondAttribute="top" id="upG-o7-G1j"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="8" y="-59"/>
+        </tableViewCell>
+    </objects>
+</document>

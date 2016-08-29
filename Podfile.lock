@@ -16,29 +16,17 @@ PODS:
     - AFNetworking/NSURLSession
   - Masonry (1.0.1)
   - MJRefresh (3.1.12)
-  - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
   - AFNetworking
   - Masonry
   - MJRefresh
-  - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
-
-EXTERNAL SOURCES:
-  WeiboSDK:
-    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
-
-CHECKOUT OPTIONS:
-  WeiboSDK:
-    :commit: 6031a8da4ce17867ff5887b8dfc59ea45930274e
-    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 034f860837ce70f0c09ea906144e554d8cca2931
+PODFILE CHECKSUM: b2212803b4b3b409e2d9c09008c2515c2da1e2fd
 
 COCOAPODS: 1.0.1
