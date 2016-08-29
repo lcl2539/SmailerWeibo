@@ -57,6 +57,8 @@
 		CC1C30EB1D73C304003A9C2C /* FansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30EA1D73C304003A9C2C /* FansViewController.m */; };
 		CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */; };
 		CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */; };
+		CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */; };
+		CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */; };
 		CC8F1CA31D716BF00028D0D9 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC8F1CA21D716BEF0028D0D9 /* face.plist */; };
 		CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8F1CA51D716D3A0028D0D9 /* SingExp.m */; };
 		CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBA4C901D7063BE0046E20F /* MoreViewController.m */; };
@@ -166,6 +168,9 @@
 		CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
+		CC668C2B1D74713D00631A97 /* UserInfoHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoHeadView.h; sourceTree = "<group>"; };
+		CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHeadView.m; sourceTree = "<group>"; };
+		CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoHeadView.xib; sourceTree = "<group>"; };
 		CC8F1CA21D716BEF0028D0D9 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = face.plist; path = ../../../../../Desktop/face.plist; sourceTree = "<group>"; };
 		CC8F1CA41D716D3A0028D0D9 /* SingExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingExp.h; sourceTree = "<group>"; };
 		CC8F1CA51D716D3A0028D0D9 /* SingExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingExp.m; sourceTree = "<group>"; };
@@ -485,8 +490,8 @@
 		CC1C30EC1D73C3D8003A9C2C /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CC1C30EE1D73C6E8003A9C2C /* View */,
 				CC1C30ED1D73C417003A9C2C /* Fans */,
+				CC1C30EE1D73C6E8003A9C2C /* View */,
 			);
 			name = UserInfo;
 			sourceTree = "<group>";
@@ -506,6 +511,9 @@
 				CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */,
 				CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */,
 				CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */,
+				CC668C2B1D74713D00631A97 /* UserInfoHeadView.h */,
+				CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */,
+				CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -652,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */,
+				CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */,
 				CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */,
 				CC0303311D716678003FE795 /* Image.bundle in Resources */,
 				36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */,
@@ -744,6 +753,7 @@
 				36C5EF7F1D5716BA006511B9 /* SDWebImageDownloaderOperation.m in Sources */,
 				3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */,
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
+				CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */,
 				3687B2451D5C46BF0084887F /* MLTextAttachment.m in Sources */,
 				36994D4B1D57136C0078372C /* AppDelegate.m in Sources */,
 				360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */,

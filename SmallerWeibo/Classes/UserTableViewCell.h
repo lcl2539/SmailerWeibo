@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef enum : NSUInteger {
+    kUserTableViewCellNone,
+    kUserTableViewCellCancelFans
+} UserTableViewCellType;
+@class UserModel;
 @interface UserTableViewCell : UITableViewCell
-
+@property (nonatomic,strong)UserModel *model;
+@property (nonatomic,assign)UserTableViewCellType type;
++ (instancetype)userCellWithTableView:(UITableView *)tableview;
 @end

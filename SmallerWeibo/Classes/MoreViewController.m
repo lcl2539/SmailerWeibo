@@ -10,6 +10,7 @@
 #import <Masonry.h>
 #import "HttpRequest.h"
 #import "UserModel.h"
+#import "FansViewController.h"
 #import "UIImageView+WebCache.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -107,6 +108,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.row) {
+        case 0:
+            
+            break;
+        case 1:{
+            FansViewController *vc = [[FansViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            break;
+        case 6:
+            
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

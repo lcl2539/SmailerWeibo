@@ -7,18 +7,45 @@
 //
 
 #import "UserTableViewCell.h"
-
+#import "UserModel.h"
+#import "UIImageView+WebCache.h"
+@interface UserTableViewCell()
+{
+    __weak IBOutlet UIImageView *_userImg;
+    __weak IBOutlet UILabel *_userName;
+    
+    __weak IBOutlet UILabel *_userInfo;
+    __weak IBOutlet UIButton *_cancelFansBtn;
+}
+@end
 @implementation UserTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
++ (instancetype)userCellWithTableView:(UITableView *)tableview{
+    UserTableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"userCell"];
+    if (!cell) {
+        cell = [[NSBundle mainBundle]loadNibNamed:@"UserTableViewCell" owner:nil options:nil].firstObject;
+    }
+    return cell;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    _userImg.clipsToBounds = YES;
+    _userImg.layer.cornerRadius = 25;
+}
 
-    // Configure the view for the selected state
+- (void)setModel:(UserModel *)model{
+    _model = model;
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge]];
+    _userName.text = model.strScreenName;
+    _userInfo.text = model.strUserDescription;
+}
+
+- (void)setType:(UserTableViewCellType)type{
+    _type = type;
+    if (type == kUserTableViewCellNone) {
+        _cancelFansBtn.hidden = YES;
+    }
 }
 
 @end

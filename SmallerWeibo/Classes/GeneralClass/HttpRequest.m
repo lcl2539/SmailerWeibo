@@ -101,12 +101,12 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)fansHttpRequestWithSuccess:(success)success failure:(failure)failure{
++ (void)fansHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor{
     static NSString *url;
-    url = @"https://api.weibo.com/2/friendships/friends.json";
+    url = @"https://api.weibo.com/2/friendships/followers.json";
     NSDictionary *dict = @{@"uid":userId,
-                           @"count":@200,
-                           @"cursor":@0};
+                           @"count":@20,
+                           @"cursor":[NSNumber numberWithInteger:cursor]};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
