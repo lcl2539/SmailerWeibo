@@ -9,6 +9,7 @@
 #import "UserInfoHeadView.h"
 #import "UserModel.h"
 #import "UIImageView+WebCache.h"
+#import <Chameleon.h>
 @interface UserInfoHeadView ()
 {
     __weak IBOutlet UIImageView *_userImg;
@@ -17,9 +18,37 @@
     __weak IBOutlet UILabel *_statusNum;
     __weak IBOutlet UILabel *_fansNum;
     __weak IBOutlet UILabel *_friendsNum;
+    __weak IBOutlet UIButton *_statusBtn;
+    __weak IBOutlet UIButton *_fansBtn;
+    __weak IBOutlet UIButton *_frendsBtn;
+    __weak IBOutlet UIButton *_backBtn;
+    __weak IBOutlet UIButton *_likeBtn;
+    __weak IBOutlet NSLayoutConstraint *_userImgHeight;
+    __weak IBOutlet NSLayoutConstraint *_userImgWeight;
 }
+@property (nonatomic,strong)UIColor *textColor;
 @end
 @implementation UserInfoHeadView
+
+- (void)setUserImage:(UIImage *)userImage{
+    _userImage = userImage;
+    self.backgroundColor = AverageColorFromImage(userImage);
+    self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:NO];
+}
+
+- (void)setTextColor:(UIColor *)textColor{
+    _textColor = textColor;
+    _userName.textColor = textColor;
+    _userText.textColor = textColor;
+    _fansNum.textColor = textColor;
+    _friendsNum.textColor = textColor;
+    _statusNum.textColor = textColor;
+    [_fansBtn setTitleColor:textColor forState:UIControlStateNormal];
+    [_frendsBtn setTitleColor:textColor forState:UIControlStateNormal];
+    [_statusBtn setTitleColor:textColor forState:UIControlStateNormal];
+    [_likeBtn setTitleColor:textColor forState:UIControlStateNormal];
+    [_backBtn setTitleColor:textColor forState:UIControlStateNormal];
+}
 
 + (instancetype)headView{
     UserInfoHeadView *view = [[NSBundle mainBundle]loadNibNamed:@"UserInfoHeadView" owner:nil options:nil].firstObject;
@@ -40,6 +69,7 @@
         if (weakSelf.downloadFinish) {
             weakSelf.downloadFinish();
         }
+        self.backgroundColor = AverageColorFromImage(image);
     }];
     _userName.text = model.strScreenName;
     _userText.text = model.strUserDescription;
@@ -52,6 +82,20 @@
     [self.delegate back];
 }
 
+
+- (void)changeAlpha:(CGFloat)alpha{
+    _userName.alpha = alpha;
+    _userText.alpha = alpha;
+    _statusNum.alpha = alpha;
+    _fansNum.alpha = alpha;
+    _friendsNum.alpha = alpha;
+    _statusBtn.alpha = alpha;
+    _fansBtn.alpha = alpha;
+    _frendsBtn.alpha = alpha;
+    _userImgWeight.constant = 70 - 20 *(1-alpha);
+    _userImgHeight.constant = 70 - 20 *(1-alpha);
+    _userImg.layer.cornerRadius = _userImgHeight.constant/2;
+}
 - (void)userImgShow{
     _userImg.alpha = (_userImg.alpha == 1) ? 0 : 1;;
 }

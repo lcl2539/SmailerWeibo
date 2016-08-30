@@ -13,7 +13,6 @@
 {
     __weak IBOutlet UIImageView *_userImg;
     __weak IBOutlet UILabel *_userName;
-    
     __weak IBOutlet UILabel *_userInfo;
     __weak IBOutlet UIButton *_cancelFansBtn;
 }
@@ -47,5 +46,6 @@
         _cancelFansBtn.hidden = YES;
     }
 }
+
 
 @end

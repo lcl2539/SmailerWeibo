@@ -12,10 +12,12 @@
 - (void)back;
 @end
 @interface UserInfoHeadView : UIView
+@property (nonatomic,strong)UIImage *userImage;
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,assign)CGRect userImgFrame;
 @property (nonatomic,copy)void (^downloadFinish)();
 @property (nonatomic,weak)id <UserHeadDelegate> delegate;
 - (void)userImgShow;
+- (void)changeAlpha:(CGFloat)alpha;
 + (instancetype)headView;
 @end

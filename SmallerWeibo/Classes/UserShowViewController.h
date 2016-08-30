@@ -10,7 +10,7 @@
 @class UserModel;
 @interface UserShowViewController : UIViewController
 @property (nonatomic,strong)UserModel *model;
-@property (nonatomic,strong)UIView *placeHoldView;
+@property (nonatomic,strong)UIImageView *placeHoldView;
 @property (nonatomic,strong)UIViewController *fromVc;
 - (void)show;
 @end

@@ -22,6 +22,8 @@
 @property (nonatomic,assign)BOOL isFinish;
 @property (nonatomic,copy)NSArray *data;
 @property (nonatomic,assign)CGRect lastFrame;
+@property (nonatomic,assign)NSInteger height;
+@property (nonatomic,assign)CGFloat lastOffsetY;
 @end
 
 @implementation UserShowViewController
@@ -40,7 +42,9 @@
     [self httpRequest];
     _head.alpha = 0;
     _statusList.alpha = 0;
+    _head.userImage = self.placeHoldView.image;
     [self.view addSubview:self.placeHoldView];
+    [self.view sendSubviewToBack:_statusList];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -107,9 +111,10 @@
     };
     head.delegate = self;
     head.model = self.model;
+    self.height = 200;
     [head mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.trailing.equalTo(self.view);
-        make.height.equalTo(@200);
+        make.height.mas_equalTo(self.height);
     }];
 }
 
@@ -131,11 +136,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 3;
+    return 0.1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section{
-    return 3;
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.1;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -151,6 +156,25 @@
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     cell.model = model;
     return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if(scrollView.contentOffset.y < 0 || scrollView.contentOffset.y > [UIScreen mainScreen].bounds.size.height )return;
+    NSInteger value = self.lastOffsetY - scrollView.contentOffset.y;
+    self.height += value;
+    if (self.height < 50) {
+        self.height = 50;
+    }
+    if (self.height > 200) {
+        self.height = 200;
+    }
+    [_head mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.mas_equalTo(self.height);
+    }];
+    CGFloat alpha = (self.height - 50) / 150.0;
+    [_head changeAlpha:alpha];
+    self.lastOffsetY = scrollView.contentOffset.y;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
