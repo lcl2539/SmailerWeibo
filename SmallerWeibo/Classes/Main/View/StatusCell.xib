@@ -21,6 +21,9 @@
                             <constraint firstAttribute="height" constant="50" id="syd-Dn-XGr"/>
                             <constraint firstAttribute="width" constant="50" id="vBd-12-41n"/>
                         </constraints>
+                        <connections>
+                            <action selector="userImgClickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wPb-Z1-hcD"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IMO-l7-owh">
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>

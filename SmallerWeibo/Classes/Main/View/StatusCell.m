@@ -16,6 +16,8 @@
 #import "MLLinkLabel.h"
 #import "CommentsStatusModel.h"
 #import "MLExpressionManager.h"
+#import "ReviewImgController.h"
+#import "UserShowViewController.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
 #define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16)
@@ -155,25 +157,33 @@
 }
 
 - (void)imgDidTouch:(UIButton *)btn{
-    if ([self.delegate respondsToSelector:@selector(showImgWithImgArr:frameArr:button:)]) {
-        NSArray *arr;
-        NSMutableArray *frameArr = [NSMutableArray array];
-        for (UIView *view in btn.superview.subviews) {
-            [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
-        }
-        if ([self.model isKindOfClass:[StatusModel class]]) {
-            StatusModel *modelTemp = (StatusModel *)self.model;
-            if (modelTemp.arrPicUrls) {
-                arr = modelTemp.arrPicUrls;
-            }else {
-                arr = modelTemp.retweetedStatus.arrPicUrls;
-            }
-            [self.delegate showImgWithImgArr:arr frameArr:frameArr button:btn];
-        }else{
-            CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
-            [self.delegate showImgWithImgArr:modelTemp.status.arrPicUrls frameArr:frameArr button:btn];
-        }
+    NSArray *arr;
+    NSMutableArray *frameArr = [NSMutableArray array];
+    for (UIView *view in btn.superview.subviews) {
+        [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
     }
+    if ([self.model isKindOfClass:[StatusModel class]]) {
+        StatusModel *modelTemp = (StatusModel *)self.model;
+        if (modelTemp.arrPicUrls) {
+            arr = modelTemp.arrPicUrls;
+        }else {
+            arr = modelTemp.retweetedStatus.arrPicUrls;
+        }
+    }else{
+        CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
+        arr = modelTemp.status.arrPicUrls;
+    }
+    ReviewImgController *vc = [[ReviewImgController alloc]init];
+    vc.picArr = arr;
+    vc.showWhichImg = btn.tag;
+    UIImageView *view = [[UIImageView alloc]init];
+    view.image = btn.currentBackgroundImage;
+    view.frame = [frameArr[btn.tag] CGRectValue];
+    vc.lastFrame = [frameArr[btn.tag] CGRectValue];
+    vc.frameArr = frameArr;
+    vc.placeHoldimageView = view;
+    vc.fromVc = [self superViewController];
+    [vc show];
 }
 
 - (IBAction)btnAction:(UIButton *)sender {
@@ -214,7 +224,7 @@
         if (index == 0) {
             image.frame = CGRectMake(0, 0, width, imgViewWidth);
         }else{
-            image.frame = CGRectMake(width, width*((index-1)/2), width, width);
+            image.frame = CGRectMake(width, width*(index/2), width, width);
         }
         [view addSubview:image];
     }
@@ -254,7 +264,8 @@
         image.frame = CGRectMake(width*(index%3), width*(index/3), width, width);
         [view addSubview:image];
     }
-    return imgViewWidth;
+    NSInteger height = (arr.count%3 > 0) ? (width * ((arr.count/3)+1)) : width*(arr.count/3);
+    return height;
 }
 
 
@@ -268,5 +279,31 @@
     return image;
 }
 
+- (IBAction)userImgClickAction:(UIButton *)sender {
+    UserShowViewController *vc = [[UserShowViewController alloc]init];
+    if ([self.model isKindOfClass:[StatusModel class]]) {
+        vc.model = ((StatusModel *)self.model).user;
+    }else{
+        vc.model = ((CommentsStatusModel *)self.model).user;
+    }
+    UIImageView *view = [[UIImageView alloc]init];
+    view.frame = [self.window convertRect:sender.frame fromView:sender.superview];
+    view.layer.cornerRadius = view.frame.size.width/2;
+    view.clipsToBounds = YES;
+    view.image = sender.currentImage;
+    vc.placeHoldView = view;
+    vc.fromVc = [self superViewController];
+    [vc show];
+}
+
+- (UIViewController *)superViewController{
+    UIResponder *responder = self;
+    while ((responder = [responder nextResponder])) {
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)responder;
+        }
+    }
+    return nil;
+}
 
 @end

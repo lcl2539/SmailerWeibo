@@ -12,6 +12,7 @@
 #import "UserModel.h"
 #import "FansViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ViewController.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
@@ -108,6 +109,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    ViewController *vc = (ViewController *)self.parentViewController;
+    [vc moreBtndidClick];
     switch (indexPath.row) {
         case 0:
             

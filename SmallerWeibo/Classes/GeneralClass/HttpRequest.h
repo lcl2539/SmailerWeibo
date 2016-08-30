@@ -17,4 +17,5 @@ typedef void (^failure)(NSError *error);
 + (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure;
 + (void)fansHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor;
++ (void)userShowHttpRequestWithName:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure;
 @end

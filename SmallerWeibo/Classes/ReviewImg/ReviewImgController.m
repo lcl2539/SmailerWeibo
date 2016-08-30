@@ -15,7 +15,7 @@
 #import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
 #define lineCount 3
-@interface ReviewImgController ()<UIScrollViewDelegate>
+@interface ReviewImgController ()<UIScrollViewDelegate,UIViewControllerTransitioningDelegate>
 {
     __weak UIScrollView *_imageScroll;
     __weak UILabel *_numLab;
@@ -244,6 +244,12 @@
     return progress;
 }
 
+- (void)show{
+    self.fromVc.transitioningDelegate = self;
+    self.transitioningDelegate = self;
+    [self.fromVc presentViewController:self animated:YES completion:nil];
+}
+
 - (void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
@@ -265,5 +271,17 @@
 
 - (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
     [self.view toastWithString:@"保存完成"];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
+    animation.type = kPresentAnimationType;
+    return animation;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
+    animation.type = kDismissAnimationType;
+    return animation;
 }
 @end

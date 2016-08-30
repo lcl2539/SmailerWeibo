@@ -113,4 +113,17 @@
         failure(error);
     } isGET:YES type:type_json];
 }
+
++ (void)userShowHttpRequestWithName:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/statuses/user_timeline.json";
+    NSDictionary *dict = @{@"screen_name":name,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
 @end

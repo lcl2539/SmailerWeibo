@@ -8,15 +8,13 @@
 
 #import "StatusTableViewController.h"
 #import "StatusCell.h"
-#import "ReviewImgController.h"
 #import <MJRefresh.h>
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
 #import "UIView+Toast.h"
-#import "ReViewImgAnimation.h"
 #import "DetailStatusViewController.h"
-@interface StatusTableViewController ()<StatusCellDelegate,UIViewControllerTransitioningDelegate>
+@interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
 
@@ -51,7 +49,6 @@
     self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 3)];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.transitioningDelegate = self;
 }
 
 - (void)loadData{
@@ -110,20 +107,6 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)showImgWithImgArr:(NSArray *)imgArr frameArr:(NSArray *)frameArr button:(UIButton *)btn{
-    ReviewImgController *vc = [[ReviewImgController alloc]init];
-    vc.picArr = imgArr;
-    vc.showWhichImg = btn.tag;
-    UIImageView *view = [[UIImageView alloc]init];
-    view.image = btn.currentBackgroundImage;
-    view.frame = [frameArr[btn.tag] CGRectValue];
-    vc.lastFrame = [frameArr[btn.tag] CGRectValue];
-    vc.frameArr = frameArr;
-    vc.placeHoldimageView = view;
-    vc.transitioningDelegate = self;
-    [self presentViewController:vc animated:YES completion:nil];
-
-}
 
 - (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{
     __weak typeof(self) weakSelf = self;
@@ -148,14 +131,6 @@
 
 - (void)toastWithString:(NSString *)str{
     [self.view toastWithString:str];
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    return [[ReViewImgAnimation alloc]init];
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    return [[ReViewImgAnimation alloc]init];
 }
 
 @end
