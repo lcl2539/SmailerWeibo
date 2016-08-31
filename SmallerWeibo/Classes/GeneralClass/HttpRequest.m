@@ -43,7 +43,6 @@
 + (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/statuses/home_timeline.json",//我的微博主页
-               @"https://api.weibo.com/2/statuses/user_timeline.json",//我发表的微博
                @"https://api.weibo.com/2/statuses/public_timeline.json",//公共微博
                @"https://api.weibo.com/2/favorites.json",//收藏
                @"https://api.weibo.com/2/comments/by_me.json",//我的评论
@@ -101,25 +100,29 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)fansHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor{
-    static NSString *url;
-    url = @"https://api.weibo.com/2/friendships/followers.json";
++ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type{
+    static NSArray *url;
+    url = @[@"https://api.weibo.com/2/friendships/friends.json",
+            @"https://api.weibo.com/2/friendships/followers.json"];
     NSDictionary *dict = @{@"uid":userId,
-                           @"count":@20,
+                           @"count":@200,
                            @"cursor":[NSNumber numberWithInteger:cursor]};
-    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+    [self httpRequestWithUrl:url[type] parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
         failure(error);
     } isGET:YES type:type_json];
 }
 
-+ (void)userShowHttpRequestWithName:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure{
++ (void)userShowHttpRequestWithId:(NSString *)uid page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"https://api.weibo.com/2/statuses/user_timeline.json";
-    NSDictionary *dict = @{@"screen_name":name,
+    url = @"http://api.weibo.cn/2/statuses/user_timeline";
+    NSDictionary *dict = @{@"uid":uid,
                            @"page":[NSNumber numberWithInteger:page],
-                           @"count":@20};
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {

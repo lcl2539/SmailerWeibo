@@ -48,6 +48,8 @@
     /** avatar_hd	string	用户头像地址（高清），高清头像原图 */
     user.strAvatarHd = dicData[@"avatar_hd"];
     
+    user.following = [dicData[@"following"] boolValue];
+    user.followMe = [dicData[@"follow_me"] boolValue];
     return user;
 }
 

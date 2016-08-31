@@ -38,14 +38,20 @@
     [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge]];
     _userName.text = model.strScreenName;
     _userInfo.text = model.strUserDescription;
+    self.followType = (model.following) ? kUserFriendsFollowing : kUserFriendsFollowMe;
+    if(model.followMe && model.following)self.followType = kUserFriendsAll;
 }
 
-- (void)setType:(UserTableViewCellType)type{
-    _type = type;
-    if (type == kUserTableViewCellNone) {
-        _cancelFansBtn.hidden = YES;
+- (void)setFollowType:(UserFriendsType)followType{
+    _followType = followType;
+    NSString *title;
+    if (followType == kUserFriendsAll) {
+        title = @"互相关注";
+    }else{
+        title = (followType == kUserFriendsFollowMe) ? @"关注" : @"取消关注";
     }
+    [_cancelFansBtn setTitle:title forState:UIControlStateNormal];
+    
 }
-
 
 @end

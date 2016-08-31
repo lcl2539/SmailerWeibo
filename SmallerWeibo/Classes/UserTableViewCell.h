@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 typedef enum : NSUInteger {
-    kUserTableViewCellNone,
-    kUserTableViewCellCancelFans
-} UserTableViewCellType;
+    kUserFriendsFollowing,
+    kUserFriendsFollowMe,
+    kUserFriendsAll
+} UserFriendsType;
 @class UserModel;
 @interface UserTableViewCell : UITableViewCell
 @property (nonatomic,strong)UserModel *model;
-@property (nonatomic,assign)UserTableViewCellType type;
+@property (nonatomic,assign)UserFriendsType followType;
 + (instancetype)userCellWithTableView:(UITableView *)tableview;
 @end

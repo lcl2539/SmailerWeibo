@@ -12,7 +12,7 @@
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
-#import "UIView+Toast.h"
+#import "UIView+extend.h"
 #import "DetailStatusViewController.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;

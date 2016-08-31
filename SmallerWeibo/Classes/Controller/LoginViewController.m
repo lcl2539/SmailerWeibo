@@ -14,9 +14,10 @@
 #import "HttpRequest.h"
 #import "NSString+Extend.h"
 #import "UserModel.h"
-#pragma mark 宏定义
-#define baseUrl [NSString stringWithFormat:@"https://api.weibo.com/oauth2/authorize?forcelogin=true&scope=all&client_id=%@&response_type=code&redirect_uri=%@",client_Id,redirect_Url]
-#define tokenUrl(code) [NSString stringWithFormat:@"https://api.weibo.com/oauth2/access_token?client_id=%@&code=%@&redirect_uri=%@&client_secret=%@&grant_type=authorization_code",client_Id,code,redirect_Url,client_Secret]
+
+#define baseUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&scope=all&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
+#define gsidUrl [NSString stringWithFormat:@"http://api.weibo.cn/2/account/login?access_token=%@&source=%d",myToken,3]
+
 @interface LoginViewController ()<UIWebViewDelegate>
 {
     __weak UIWebView *_web;
@@ -37,26 +38,28 @@
     [self.view addSubview:web];
     web.delegate = self;
     _web = web;
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:baseUrl]];
     [web loadRequest:request];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     __weak typeof(self) weakSelf = self;
-    if ([request.URL.absoluteString containsString:@"code="]) {
+    if ([request.URL.absoluteString containsString:@"access_token"]) {
         [webView loadHTMLString:@"\n请稍等" baseURL:nil];
-        NSString *code = [request.URL.absoluteString componentsSeparatedByString:@"="].lastObject;
+        NSArray *arr = [[request.URL.absoluteString componentsSeparatedByString:@"?"].lastObject componentsSeparatedByString:@"&"];
+        for (NSString *str in arr) {
+            if ([str containsString:@"access"] || [str containsString:@"uid"]) {
+                NSArray *arr = [str componentsSeparatedByString:@"="];
+                [NSString writeUserInfoWithKey:arr.firstObject value:arr.lastObject];
+            }
+        }
         AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
-        manger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_text, nil];
-        NSString *url = tokenUrl(code);
-        [manger POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+        manger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_json, nil];
+        [manger POST:gsidUrl parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            for (NSString *key in responseObject) {
-                if ([key isEqualToString:@"access_token"] || [key isEqualToString:@"uid"]) {
-                    [NSString writeUserInfoWithKey:key value:responseObject[key]];
-                }
-            }
+            [NSString writeUserInfoWithKey:@"gsid" value:responseObject[@"gsid"]];
             [weakSelf successForAccess_Token];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);

@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "SDWebImageDownloader.h"
 #import <Masonry.h>
-#import "UIView+Toast.h"
+#import "UIView+extend.h"
 #import "ReViewImgAnimation.h"
 #import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
@@ -109,8 +109,8 @@
         UIScrollView *ImgScroll = [self creatImgScroll:index];
         ImgScroll.tag = 100 + index;
         [ImgScroll setBackgroundColor:[UIColor clearColor]];
-        NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index][@"thumbnail_pic"]];
-        [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
+        NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index]];
+        [imgURL replaceOccurrencesOfString:@"bmiddle" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
@@ -189,7 +189,6 @@
     [view addGestureRecognizer:singleTap];
     [singleTap requireGestureRecognizerToFail:tap];
 }
-
 
 - (void)saveImage:(UILongPressGestureRecognizer *)lp{
     __weak typeof(self) weakSelf = self;

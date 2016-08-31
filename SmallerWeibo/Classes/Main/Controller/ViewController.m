@@ -181,7 +181,7 @@
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.trailing.bottom.equalTo(_mainScroll);
         make.centerY.equalTo(_mainScroll.mas_centerY);
-        make.width.mas_equalTo(self.view.frame.size.width*7);
+        make.width.mas_equalTo(self.view.frame.size.width*6);
     }];
     _contentView = contentView;
     [self showSatusViewAtIndex:0];
@@ -227,15 +227,14 @@
         switch (vc.index) {
             case 0:
             case 1:
-            case 2:
-            case 6:
+            case 5:
                 arr = Object[@"statuses"];
                 break;
-            case 3:
+            case 2:
                 arr = Object[@"favorites"];
                 break;
+            case 3:
             case 4:
-            case 5:
                 arr = Object[@"comments"];
                 break;
             default:
@@ -258,15 +257,14 @@
         switch (vc.index) {
             case 0:
             case 1:
-            case 2:
-            case 6:
+            case 5:
                 model = [StatusModel statusModelWithDictionary:dict];
                 break;
-            case 3:
+            case 2:
                 model = [StatusModel statusModelWithDictionary:dict[@"status"]];
                 break;
+            case 3:
             case 4:
-            case 5:
                 model = [CommentsStatusModel commentsModelWithDictionary:dict];
                 break;
             default:
@@ -288,8 +286,8 @@
     if (firstIndex < 0) {
         firstIndex = 0;
     }
-    if (lastIndex >= 7) {
-        lastIndex = 6;
+    if (lastIndex >= 6) {
+        lastIndex = 5;
     }
     for (StatusTableViewController *vc in self.visibleTabViewControllers) {
         if (vc.index < firstIndex || vc.index > lastIndex) {

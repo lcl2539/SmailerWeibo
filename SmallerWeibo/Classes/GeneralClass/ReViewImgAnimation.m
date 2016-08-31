@@ -10,7 +10,7 @@
 @implementation ReViewImgAnimation
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext{
-    return 0.25;
+    return 0.3;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
@@ -29,7 +29,7 @@
         }];
     }else{
         [containerView bringSubviewToFront:fromVc.view];
-        [UIView animateKeyframesWithDuration:0.3 delay:0 options:0 animations:^{
+        [UIView animateKeyframesWithDuration:[self transitionDuration:transitionContext] delay:0 options:0 animations:^{
             fromVc.view.backgroundColor = [UIColor clearColor];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:finished];

@@ -44,7 +44,10 @@
 
 /** avatar_hd	string	用户头像地址（高清），高清头像原图 */
 @property (nonatomic, copy) NSString *strAvatarHd;
-
+/**是否关注*/
+@property (nonatomic,assign)BOOL following;
+/**是否关注我*/
+@property (nonatomic,assign)BOOL followMe;
 /** 模型的初始化方法 */
 + (instancetype)userModelWithDictionary:(NSDictionary *)dicData;
 + (instancetype)CreatMyModle:(NSDictionary *)dict;

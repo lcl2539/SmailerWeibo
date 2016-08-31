@@ -6,19 +6,19 @@
 //  Copyright © 2016年 鲁成龙. All rights reserved.
 //
 
-#import "FansViewController.h"
+#import "FriendsViewController.h"
 #import "UserModel.h"
 #import "UserTableViewCell.h"
 #import "HttpRequest.h"
 #import <MJRefresh.h>
-@interface FansViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface FriendsViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
 }
 @property (nonatomic,copy)NSArray *data;
 @end
 
-@implementation FansViewController
+@implementation FriendsViewController
 
 - (NSArray *)data{
     if (!_data) {
@@ -48,11 +48,11 @@
 
 - (void)httpRequest{
     __weak typeof(self) weakSelf = self;
-    [HttpRequest fansHttpRequestWithSuccess:^(id object) {
+    [HttpRequest friendsHttpRequestWithSuccess:^(id object) {
         [weakSelf loadData:object[@"users"]];
     } failure:^(NSError *error) {
         
-    } cursor:0];
+    } cursor:0 type:self.type];
 }
 
 - (void)loadData:(NSArray *)arr{
@@ -73,7 +73,6 @@
     UserTableViewCell *cell = [UserTableViewCell userCellWithTableView:tableView];
     UserModel *model = self.data[indexPath.row];
     cell.model = model;
-    cell.type = kUserTableViewCellNone;
     return cell;
 }
 

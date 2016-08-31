@@ -14,6 +14,7 @@
 #import "StatusModel.h"
 #import "UserModel.h"
 #import "ReViewImgAnimation.h"
+#import <MJRefresh.h>
 @interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UIViewControllerTransitioningDelegate,UserHeadDelegate>
 {
     __weak UITableView *_statusList;
@@ -24,6 +25,7 @@
 @property (nonatomic,assign)CGRect lastFrame;
 @property (nonatomic,assign)NSInteger height;
 @property (nonatomic,assign)CGFloat lastOffsetY;
+@property (nonatomic,assign)CGPoint lastCenter;
 @end
 
 @implementation UserShowViewController
@@ -53,6 +55,7 @@
     if ([self.presentedViewController isKindOfClass:[class class]]) {
         return;
     }
+    self.lastCenter = self.placeHoldView.center;
     self.lastFrame = self.placeHoldView.frame;
     [UIView animateWithDuration:0.5 animations:^{
         self.placeHoldView.transform = CGAffineTransformMakeScale(1.4, 1.4);
@@ -80,7 +83,7 @@
     NSInteger page = 1;
     page = self.data.count/20 + 1;
     page = (self.data.count%20 > 0) ? page + 1 : page;
-    [HttpRequest userShowHttpRequestWithName:self.model.strScreenName page:page success:^(id object) {
+    [HttpRequest userShowHttpRequestWithId:self.model.strIdstr page:page success:^(id object) {
         [weakSelf loadDataWithArr:object[@"statuses"]];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -93,6 +96,12 @@
         StatusModel *model = [StatusModel statusModelWithDictionary:dict];
         [arrTemp addObject:model];
     }
+    if (arrTemp.count == self.data.count) {
+        [_statusList.mj_footer endRefreshingWithNoMoreData];
+    }else{
+        [_statusList.mj_footer endRefreshing];
+    }
+    [_statusList.mj_header endRefreshing];
     self.data = arrTemp;
     [_statusList reloadData];
 }
@@ -119,6 +128,7 @@
 }
 
 - (void)loadTableView{
+    __weak typeof(self) weakSelf = self;
     UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.view addSubview:tab];
     [tab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,9 +139,23 @@
     tab.delegate = self;
     tab.dataSource = self;
     tab.estimatedRowHeight = 100;
+    tab.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.data = [[NSArray alloc]init];
+        [weakSelf httpRequest];
+    }];
+    tab.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [weakSelf httpRequest];
+    }];
 }
 
 - (void)back{
+    self.placeHoldView.alpha = 1;
+    [UIView animateWithDuration:0.3 animations:^{
+        _head.alpha = 0;
+        _statusList.alpha = 0;
+        self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
+        self.placeHoldView.center = self.lastCenter;
+    }];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -174,6 +198,9 @@
     }];
     CGFloat alpha = (self.height - 50) / 150.0;
     [_head changeAlpha:alpha];
+    CGFloat scale = ((20.0 * alpha) + 50) / 70.0;
+    self.placeHoldView.transform = CGAffineTransformMakeScale(scale+0.4, scale+0.4);
+    self.placeHoldView.center = CGPointMake(self.view.center.x, 20 + 35.0 *scale);
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 

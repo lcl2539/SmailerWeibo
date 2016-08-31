@@ -10,7 +10,7 @@
 #import <Masonry.h>
 #import "HttpRequest.h"
 #import "UserModel.h"
-#import "FansViewController.h"
+#import "FriendsViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ViewController.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -113,10 +113,10 @@
     [vc moreBtndidClick];
     switch (indexPath.row) {
         case 0:
-            
-            break;
-        case 1:{
-            FansViewController *vc = [[FansViewController alloc]init];
+        case 1:
+        {
+            FriendsViewController *vc = [[FriendsViewController alloc]init];
+            vc.type = indexPath.row;
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

@@ -18,6 +18,7 @@
 #import "MLExpressionManager.h"
 #import "ReviewImgController.h"
 #import "UserShowViewController.h"
+#import "UIView+extend.h"
 #define lineCount 3
 #define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
 #define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16)
@@ -64,8 +65,6 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds = YES;
-    _userImg.layer.borderWidth = 1;
-    _userImg.layer.borderColor = [UIColor grayColor].CGColor;
     _status.delegate = self;
     _status.lineSpacing = 5;
     _status.font = [UIFont systemFontOfSize:17];
@@ -90,7 +89,7 @@
     }
     if ([model isKindOfClass:[StatusModel class]]) {
         StatusModel *modelTemp = (StatusModel *)model;
-        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strProfileImageUrl] forState:UIControlStateNormal];
+        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strAvatarLarge] forState:UIControlStateNormal];
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strName;
         _from.text = modelTemp.strSourceDes;
@@ -111,7 +110,7 @@
         }
     }else{
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)model;
-        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strProfileImageUrl] forState:UIControlStateNormal];
+        [_userImg sd_setImageWithURL:[NSURL URLWithString:modelTemp.user.strAvatarLarge] forState:UIControlStateNormal];
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strScreenName;
         _from.text = modelTemp.strSource;
@@ -173,17 +172,7 @@
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
         arr = modelTemp.status.arrPicUrls;
     }
-    ReviewImgController *vc = [[ReviewImgController alloc]init];
-    vc.picArr = arr;
-    vc.showWhichImg = btn.tag;
-    UIImageView *view = [[UIImageView alloc]init];
-    view.image = btn.currentBackgroundImage;
-    view.frame = [frameArr[btn.tag] CGRectValue];
-    vc.lastFrame = [frameArr[btn.tag] CGRectValue];
-    vc.frameArr = frameArr;
-    vc.placeHoldimageView = view;
-    vc.fromVc = [self superViewController];
-    [vc show];
+    [self showReViewImgVCWithImageArr:arr frameArr:frameArr button:btn];
 }
 
 - (IBAction)btnAction:(UIButton *)sender {
@@ -199,7 +188,7 @@
 }
 
 - (NSInteger)haveOneImgWithArr:(NSArray *)arr view:(UIView *)view{
-    UIButton *image = [self creatImgBtnWith:arr[0][@"thumbnail_pic"] index:0];
+    UIButton *image = [self creatImgBtnWith:arr[0] index:0];
     CGRect frame = CGRectZero;
     frame.size = CGSizeMake(imgViewWidth, imgViewWidth/2);
     image.frame = frame;
@@ -210,7 +199,7 @@
 - (NSInteger)haveTwoImgWithArr:(NSArray *)arr view:(UIView *)view{
     NSInteger width = imgViewWidth/2;
     for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
         image.frame = CGRectMake(width*(index%2), 0, width, width);
         [view addSubview:image];
     }
@@ -220,7 +209,7 @@
 - (NSInteger)haveThreeImgWithArr:(NSArray *)arr view:(UIView *)view{
     NSInteger width = imgViewWidth/2;
     for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
         if (index == 0) {
             image.frame = CGRectMake(0, 0, width, imgViewWidth);
         }else{
@@ -234,7 +223,7 @@
 - (NSInteger)haveFourImgWithArr:(NSArray *)arr view:(UIView *)view{
     NSInteger width = imgViewWidth/2;
     for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
         image.frame = CGRectMake(width*(index%2), width*(index/2), width, width);
         [view addSubview:image];
     }
@@ -244,7 +233,7 @@
 - (NSInteger)haveSixImgWithArr:(NSArray *)arr view:(UIView *)view{
     NSInteger width = imgViewWidth/3;
     for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
         if (index == 0) {
             image.frame = CGRectMake(0, 0, width*2, width*2);
         }else if(index == 1 || index == 2){
@@ -260,7 +249,7 @@
 - (NSInteger)haveOtherImgWithArr:(NSArray *)arr view:(UIView *)view{
     NSInteger width = imgViewWidth/3;
     for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index][@"thumbnail_pic"] index:index];
+        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
         image.frame = CGRectMake(width*(index%3), width*(index/3), width, width);
         [view addSubview:image];
     }
@@ -268,42 +257,24 @@
     return height;
 }
 
-
 - (UIButton *)creatImgBtnWith:(NSString *)url index:(NSInteger)index{
-    UIButton *image = [[UIButton alloc]init];
-    [image addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [image sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
-    image.contentMode = UIViewContentModeScaleToFill;
-    image.tag = index;
-    image.clipsToBounds = YES;
-    return image;
+    UIButton *imageBtn = [[UIButton alloc]init];
+    [imageBtn addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
+    [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
+    imageBtn.contentMode = UIViewContentModeScaleAspectFill;
+    imageBtn.tag = index;
+    imageBtn.clipsToBounds = YES;
+    return imageBtn;
 }
 
 - (IBAction)userImgClickAction:(UIButton *)sender {
-    UserShowViewController *vc = [[UserShowViewController alloc]init];
+    UserModel *model;
     if ([self.model isKindOfClass:[StatusModel class]]) {
-        vc.model = ((StatusModel *)self.model).user;
+        model = ((StatusModel *)self.model).user;
     }else{
-        vc.model = ((CommentsStatusModel *)self.model).user;
+        model = ((CommentsStatusModel *)self.model).user;
     }
-    UIImageView *view = [[UIImageView alloc]init];
-    view.frame = [self.window convertRect:sender.frame fromView:sender.superview];
-    view.layer.cornerRadius = view.frame.size.width/2;
-    view.clipsToBounds = YES;
-    view.image = sender.currentImage;
-    vc.placeHoldView = view;
-    vc.fromVc = [self superViewController];
-    [vc show];
-}
-
-- (UIViewController *)superViewController{
-    UIResponder *responder = self;
-    while ((responder = [responder nextResponder])) {
-        if ([responder isKindOfClass:[UIViewController class]]) {
-            return (UIViewController *)responder;
-        }
-    }
-    return nil;
+    [self showUserShowVcWithUserModel:model button:sender];
 }
 
 @end

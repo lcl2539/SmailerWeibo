@@ -65,7 +65,7 @@
 - (void)setModel:(UserModel *)model{
     _model = model;
     __weak typeof(self) weakSelf = self;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarHd] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (weakSelf.downloadFinish) {
             weakSelf.downloadFinish();
         }
@@ -78,10 +78,10 @@
     _friendsNum.text = [NSString stringWithFormat:@"%ld",model.friendsCount];
     _userImgFrame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-35, 20, 70, 70);
 }
+
 - (IBAction)backBtnAction {
     [self.delegate back];
 }
-
 
 - (void)changeAlpha:(CGFloat)alpha{
     _userName.alpha = alpha;
@@ -96,6 +96,7 @@
     _userImgHeight.constant = 70 - 20 *(1-alpha);
     _userImg.layer.cornerRadius = _userImgHeight.constant/2;
 }
+
 - (void)userImgShow{
     _userImg.alpha = (_userImg.alpha == 1) ? 0 : 1;;
 }
