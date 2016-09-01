@@ -15,7 +15,7 @@
 #import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
 #define lineCount 3
-@interface ReviewImgController ()<UIScrollViewDelegate,UIViewControllerTransitioningDelegate>
+@interface ReviewImgController ()<UIScrollViewDelegate>
 {
     __weak UIScrollView *_imageScroll;
     __weak UILabel *_numLab;
@@ -205,6 +205,7 @@
     }];
     [alert addAction:cancelAction];
     [alert addAction:okAction];
+    if (!((UIImageView *)lp.view.subviews.firstObject).image)return;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -244,13 +245,10 @@
 }
 
 - (void)show{
-    self.fromVc.transitioningDelegate = self;
-    self.transitioningDelegate = self;
-    [self.fromVc presentViewController:self animated:YES completion:nil];
+    [self.fromVc.navigationController pushViewController:self animated:YES];
 }
 
 - (void)back{
-    [self dismissViewControllerAnimated:YES completion:nil];
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
     UIView *img = view.subviews.firstObject;
     [UIView animateWithDuration:0.3 animations:^{
@@ -262,25 +260,21 @@
             img.frame = self.lastFrame;
         }
     }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)prefersStatusBarHidden{
     return YES;
 }
 
-- (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
+- (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
     [self.view toastWithString:@"保存完成"];
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
     ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kPresentAnimationType;
+    animation.type = (fromVC == self) ? kPopAnimationType : kPushAnimationType;
     return animation;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kDismissAnimationType;
-    return animation;
-}
 @end

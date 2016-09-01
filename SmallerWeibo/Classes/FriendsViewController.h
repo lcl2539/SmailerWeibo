@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class UserModel;
 typedef enum : NSUInteger {
     kFriendsVcFans,
     kFriendsVcFollows
 } kFriendsType;
 @interface FriendsViewController : UIViewController
 @property (nonatomic,assign)kFriendsType type;
+@property (nonatomic,strong)UserModel *model;
+@property (nonatomic,strong)UIViewController *fromVc;
+- (void)show;
 @end

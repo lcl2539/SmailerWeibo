@@ -15,7 +15,7 @@
 #import "UserModel.h"
 #import "ReViewImgAnimation.h"
 #import <MJRefresh.h>
-@interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UIViewControllerTransitioningDelegate,UserHeadDelegate>
+@interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UserHeadDelegate>
 {
     __weak UITableView *_statusList;
     __weak UserInfoHeadView *_head;
@@ -26,6 +26,7 @@
 @property (nonatomic,assign)NSInteger height;
 @property (nonatomic,assign)CGFloat lastOffsetY;
 @property (nonatomic,assign)CGPoint lastCenter;
+@property (nonatomic,strong)NSString *lastVc;
 @end
 
 @implementation UserShowViewController
@@ -45,18 +46,24 @@
     _head.alpha = 0;
     _statusList.alpha = 0;
     _head.userImage = self.placeHoldView.image;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.placeHoldView];
     [self.view sendSubviewToBack:_statusList];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    NSLog(@"1");
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    Class class = NSClassFromString(@"ReviewImgController");
-    if ([self.presentedViewController isKindOfClass:[class class]] || !self.placeHoldView) {
+    if (self.lastVc || !self.placeHoldView) {
         return;
     }
-    self.lastCenter = self.placeHoldView.center;
-    self.lastFrame = self.placeHoldView.frame;
+    if (self.lastFrame.size.height == 0) {
+        self.lastCenter = self.placeHoldView.center;
+        self.lastFrame = self.placeHoldView.frame;
+    }
     [UIView animateWithDuration:0.5 animations:^{
         self.placeHoldView.transform = CGAffineTransformMakeScale(1.4, 1.4);
         self.placeHoldView.center = CGPointMake(self.view.center.x, 55);
@@ -70,14 +77,16 @@
             self.isFinish = YES;
         }
     }];
+    self.lastVc = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.lastVc = NSStringFromClass([self.navigationController.viewControllers.lastObject class]);
 }
 
 - (void)show{
-    if (self.placeHoldView) {
-        self.fromVc.transitioningDelegate = self;
-        self.transitioningDelegate = self;
-    }
-    [self.fromVc presentViewController:self animated:YES completion:nil];
+    [self.fromVc.navigationController pushViewController:self animated:YES];
 }
 
 - (void)httpRequest{
@@ -160,8 +169,9 @@
             self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
             self.placeHoldView.center = self.lastCenter;
         }];
+        self.navigationController.delegate = self;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.fromVc.navigationController popViewControllerAnimated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -211,15 +221,10 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kPresentAnimationType;
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    ReViewImgAnimation *animation = [ReViewImgAnimation shareAnimation];
+    animation.type = (fromVC == self) ? kPopAnimationType : kPushAnimationType;
     return animation;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kDismissAnimationType;
-    return animation;
-}
 @end

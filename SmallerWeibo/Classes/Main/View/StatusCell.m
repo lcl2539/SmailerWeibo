@@ -20,8 +20,7 @@
 #import "UserShowViewController.h"
 #import "UIView+extend.h"
 #define lineCount 3
-#define imgSize(offset) ([UIScreen mainScreen].bounds.size.width - 32 - offset)/lineCount;
-#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16)
+#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16-50)
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -59,6 +58,19 @@
         _exp = [SingExp shareExp];
     }
     return _exp;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
+    [super setSelected:selected animated:animated];
+    if (selected && self.model) {
+        StatusModel *model;
+        if ([self.model isKindOfClass:[StatusModel class]]) {
+            model = self.model;
+        }else{
+            model = ((CommentsStatusModel *)self.model).status;
+        }
+        [self showDetailStatusVcWithModel:model];
+    }
 }
 
 - (void)awakeFromNib{

@@ -100,11 +100,11 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type{
++ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid{
     static NSArray *url;
     url = @[@"https://api.weibo.com/2/friendships/friends.json",
             @"https://api.weibo.com/2/friendships/followers.json"];
-    NSDictionary *dict = @{@"uid":userId,
+    NSDictionary *dict = @{@"uid":uid,
                            @"count":@200,
                            @"cursor":[NSNumber numberWithInteger:cursor]};
     [self httpRequestWithUrl:url[type] parameter:dict success:^(id object) {

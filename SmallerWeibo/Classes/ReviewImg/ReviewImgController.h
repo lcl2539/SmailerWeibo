@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReviewImgController : UIViewController
+@interface ReviewImgController : UIViewController<UINavigationControllerDelegate>
 @property (nonatomic,copy)NSArray *picArr;
 @property (nonatomic,assign)NSInteger showWhichImg;
 @property (nonatomic,strong)UIImageView *placeHoldimageView;

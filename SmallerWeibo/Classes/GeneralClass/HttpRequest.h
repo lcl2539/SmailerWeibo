@@ -16,6 +16,6 @@ typedef void (^failure)(NSError *error);
 + (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure;
 + (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure;
-+ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type;
++ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid;
 + (void)userShowHttpRequestWithId:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure;
 @end

@@ -127,32 +127,6 @@
     [_mainScroll addGestureRecognizer:pan];
 }
 
-- (void)screenEdgesSlide:(UIPanGestureRecognizer *)slide{
-    CGPoint original = CGPointZero;
-    if (slide.state == UIGestureRecognizerStateBegan) {
-        original = [slide locationInView:self.view];
-    }else if (slide.state == UIGestureRecognizerStateChanged) {
-        if (self.slideVc.view.frame.origin.x <= 0) {
-            CGPoint point = [slide locationInView:self.view];
-            CGRect frame = CGRectOffset(self.slideViewFrame, point.x - original.x, 0);
-            if (frame.origin.x > 0) {
-                frame.origin.x = 0;
-            }
-            self.slideVc.view.frame = frame;
-        }
-    }else if (slide.state == UIGestureRecognizerStateEnded){
-        if (self.slideVc.view.frame.origin.x < 0) {
-            CGRect frame = self.slideViewFrame;
-            if (self.slideVc.view.frame.origin.x > -self.slideVc.view.frame.size.width/2) {
-                frame.origin.x = 0;
-            }
-            [UIView animateWithDuration:0.25 animations:^{
-                self.slideVc.view.frame = frame;
-            }];
-        }
-    }
-}
-
 - (void)loadNavgationBarSetting{
     NavigationScroll *scroll = [[NavigationScroll alloc]init];
     [self.view addSubview:scroll];
@@ -354,6 +328,32 @@
     }];
     [self.visibleTabViewControllers addObject:vc];
     [self loadVisibleTableViewData:index];
+}
+
+- (void)screenEdgesSlide:(UIPanGestureRecognizer *)slide{
+    CGPoint original = CGPointZero;
+    if (slide.state == UIGestureRecognizerStateBegan) {
+        original = [slide locationInView:self.view];
+    }else if (slide.state == UIGestureRecognizerStateChanged) {
+        if (self.slideVc.view.frame.origin.x <= 0) {
+            CGPoint point = [slide locationInView:self.view];
+            CGRect frame = CGRectOffset(self.slideViewFrame, point.x - original.x, 0);
+            if (frame.origin.x > 0) {
+                frame.origin.x = 0;
+            }
+            self.slideVc.view.frame = frame;
+        }
+    }else if (slide.state == UIGestureRecognizerStateEnded){
+        if (self.slideVc.view.frame.origin.x < 0) {
+            CGRect frame = self.slideViewFrame;
+            if (self.slideVc.view.frame.origin.x > -self.slideVc.view.frame.size.width/2) {
+                frame.origin.x = 0;
+            }
+            [UIView animateWithDuration:0.25 animations:^{
+                self.slideVc.view.frame = frame;
+            }];
+        }
+    }
 }
 
 - (void)navigationScrollValueDidChange:(NSInteger)value{

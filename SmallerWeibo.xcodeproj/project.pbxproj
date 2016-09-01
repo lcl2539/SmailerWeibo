@@ -62,6 +62,8 @@
 		CC8ABC341D7672B300A40525 /* UIView+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8ABC331D7672B300A40525 /* UIView+extend.m */; };
 		CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8F1CA51D716D3A0028D0D9 /* SingExp.m */; };
 		CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBA4C901D7063BE0046E20F /* MoreViewController.m */; };
+		CCBD8B371D77ED53001C71DD /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBD8B361D77ED53001C71DD /* TitleView.m */; };
+		CCBD8B391D77ED6E001C71DD /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCBD8B381D77ED6E001C71DD /* TitleView.xib */; };
 		CCE7D4791D751DDF00EAB495 /* UserShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE7D4781D751DDF00EAB495 /* UserShowViewController.m */; };
 		CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D41D6E90A800AA4976 /* ReViewImgAnimation.m */; };
 		CCEDB5D91D6EBC2C00AA4976 /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D81D6EBC2C00AA4976 /* DetailStatusViewController.m */; };
@@ -177,6 +179,9 @@
 		CC8F1CA51D716D3A0028D0D9 /* SingExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingExp.m; sourceTree = "<group>"; };
 		CCBA4C8F1D7063BE0046E20F /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		CCBA4C901D7063BE0046E20F /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
+		CCBD8B351D77ED53001C71DD /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		CCBD8B361D77ED53001C71DD /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		CCBD8B381D77ED6E001C71DD /* TitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
 		CCE7D4771D751DDF00EAB495 /* UserShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserShowViewController.h; sourceTree = "<group>"; };
 		CCE7D4781D751DDF00EAB495 /* UserShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShowViewController.m; sourceTree = "<group>"; };
 		CCEDB5D31D6E90A800AA4976 /* ReViewImgAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReViewImgAnimation.h; sourceTree = "<group>"; };
@@ -536,6 +541,9 @@
 			children = (
 				CC8ABC321D7672B300A40525 /* UIView+extend.h */,
 				CC8ABC331D7672B300A40525 /* UIView+extend.m */,
+				CCBD8B351D77ED53001C71DD /* TitleView.h */,
+				CCBD8B361D77ED53001C71DD /* TitleView.m */,
+				CCBD8B381D77ED6E001C71DD /* TitleView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -675,6 +683,7 @@
 				CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */,
 				CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */,
 				CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */,
+				CCBD8B391D77ED6E001C71DD /* TitleView.xib in Resources */,
 				CC0303311D716678003FE795 /* Image.bundle in Resources */,
 				36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */,
 				CC4D1C031D75900B00F9B4C8 /* face.plist in Resources */,
@@ -742,6 +751,7 @@
 				36C5EF861D5716BA006511B9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36C5EF7A1D5716BA006511B9 /* NSData+ImageContentType.m in Sources */,
 				CC8ABC341D7672B300A40525 /* UIView+extend.m in Sources */,
+				CCBD8B371D77ED53001C71DD /* TitleView.m in Sources */,
 				CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */,
 				36C5EF991D571A13006511B9 /* NSString+Extend.m in Sources */,
 				36C5EF801D5716BA006511B9 /* SDWebImageManager.m in Sources */,

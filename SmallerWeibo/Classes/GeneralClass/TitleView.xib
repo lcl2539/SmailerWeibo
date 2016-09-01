@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TitleView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="73"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiH-Av-0hd">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="efu-OG-Ry4"/>
+                        <constraint firstAttribute="height" constant="17" id="ppB-kV-8PH"/>
+                    </constraints>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="back"/>
+                    <connections>
+                        <action selector="back:" destination="iN0-l3-epB" eventType="touchUpInside" id="tmL-Rh-w2a"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9d-RQ-qPW">
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="kiH-Av-0hd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Fnw-h6-I0Y"/>
+                <constraint firstItem="N9d-RQ-qPW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Z8M-8w-eDq"/>
+                <constraint firstItem="N9d-RQ-qPW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cA0-Hu-pnv"/>
+                <constraint firstItem="kiH-Av-0hd" firstAttribute="centerY" secondItem="N9d-RQ-qPW" secondAttribute="centerY" id="mq7-OW-usq"/>
+                <constraint firstAttribute="bottom" secondItem="N9d-RQ-qPW" secondAttribute="bottom" id="rP5-2F-ek5"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="_title" destination="N9d-RQ-qPW" id="YIM-mQ-JZZ"/>
+            </connections>
+            <point key="canvasLocation" x="23.5" y="-143.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back" width="53" height="32"/>
+    </resources>
+</document>

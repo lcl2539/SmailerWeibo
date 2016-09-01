@@ -13,6 +13,7 @@
 #import "FriendsViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ViewController.h"
+#import "UIView+extend.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
@@ -20,6 +21,7 @@
     __weak UILabel *_userName;
     __weak UIImageView *_bgImg;
 }
+@property (nonatomic,strong)UserModel *model;
 @property (nonatomic,copy)NSArray *titleArr;
 @end
 
@@ -47,6 +49,7 @@
     UserModel *user = [UserModel CreatMyModle:object];
     [_userHeadImg sd_setImageWithURL:[NSURL URLWithString:user.strAvatarLarge]];
     [_userName setText:user.strScreenName];
+    self.model = user;
 }
 
 - (void)loadTab{
@@ -115,9 +118,7 @@
         case 0:
         case 1:
         {
-            FriendsViewController *vc = [[FriendsViewController alloc]init];
-            vc.type = indexPath.row;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.view showFriendsVcWithType:indexPath.row userModel:self.model];
         }
             break;
         case 2:

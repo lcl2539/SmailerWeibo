@@ -8,8 +8,12 @@
 
 #import "UIView+extend.h"
 #import "UserModel.h"
+#import "StatusModel.h"
 #import "ReviewImgController.h"
 #import "UserShowViewController.h"
+#import "FriendsViewController.h"
+#import "DetailStatusViewController.h"
+#import "ReViewImgAnimation.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str{
     UILabel *lab = [[UILabel alloc]init];
@@ -62,6 +66,8 @@
     vc.frameArr = frameArr;
     vc.placeHoldimageView = view;
     vc.fromVc = [self superViewController];
+    vc.fromVc.navigationController.delegate = vc;
+    vc.navigationController.delegate = vc;
     [vc show];
 }
 
@@ -75,6 +81,27 @@
     view.image = sender.currentImage;
     vc.placeHoldView = view;
     vc.fromVc = [self superViewController];
+    if (vc.placeHoldView) {
+        vc.fromVc.navigationController.delegate = vc;
+        vc.navigationController.delegate = vc;
+    }
     [vc show];
 }
+
+- (void)showFriendsVcWithType:(NSInteger)type userModel:(UserModel *)model{
+    FriendsViewController *vc = [[FriendsViewController alloc]init];
+    vc.type = type;
+    vc.model = model;
+    vc.fromVc = [self superViewController];
+    vc.fromVc.navigationController.delegate = nil;
+    [vc show];
+}
+
+- (void)showDetailStatusVcWithModel:(StatusModel *)model{
+    DetailStatusViewController *vc = [[DetailStatusViewController alloc]init];
+    vc.statusModel = model;
+    [self superViewController].navigationController.delegate = nil;
+    [[self superViewController].navigationController pushViewController:vc animated:YES];
+}
+
 @end

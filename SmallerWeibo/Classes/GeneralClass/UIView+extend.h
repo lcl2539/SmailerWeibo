@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 @class UserModel;
+@class StatusModel;
 @interface UIView (extend)
 - (void)toastWithString:(NSString *)str;
 - (UIViewController *)superViewController;
 - (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr button:(UIButton *)btn;
 - (void)showUserShowVcWithUserModel:(UserModel *)model button:(UIButton *)sender;
+- (void)showFriendsVcWithType:(NSInteger)type userModel:(UserModel *)model;
+- (void)showDetailStatusVcWithModel:(StatusModel *)model;
 @end

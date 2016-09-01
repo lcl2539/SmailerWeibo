@@ -8,9 +8,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 typedef enum : NSInteger {
-    kPresentAnimationType,
-    kDismissAnimationType
+    kPushAnimationType,
+    kPopAnimationType
 } AnimationType;
 @interface ReViewImgAnimation : NSObject <UIViewControllerAnimatedTransitioning>
 @property (nonatomic,assign)AnimationType type;
++ (instancetype)shareAnimation;
 @end
