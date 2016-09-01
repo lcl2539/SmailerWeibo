@@ -151,42 +151,6 @@
     }
 }
 
-- (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
-    NSLog(@"%@\n%@\n%@",link,linkText,linkLabel);
-}
-
-- (void)imgDidTouch:(UIButton *)btn{
-    NSArray *arr;
-    NSMutableArray *frameArr = [NSMutableArray array];
-    for (UIView *view in btn.superview.subviews) {
-        [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
-    }
-    if ([self.model isKindOfClass:[StatusModel class]]) {
-        StatusModel *modelTemp = (StatusModel *)self.model;
-        if (modelTemp.arrPicUrls) {
-            arr = modelTemp.arrPicUrls;
-        }else {
-            arr = modelTemp.retweetedStatus.arrPicUrls;
-        }
-    }else{
-        CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
-        arr = modelTemp.status.arrPicUrls;
-    }
-    [self showReViewImgVCWithImageArr:arr frameArr:frameArr button:btn];
-}
-
-- (IBAction)btnAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(cellBtnActionWithIndex:withStatusId:)]) {
-        NSString *statusId;
-        if ([self.model isKindOfClass:[StatusModel class]]) {
-            statusId = ((StatusModel *)self.model).strIdstr;
-        }else{
-            statusId = ((CommentsStatusModel *)self.model).status.strIdstr;
-        }
-        [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[statusId integerValue]];
-    }
-}
-
 - (NSInteger)haveOneImgWithArr:(NSArray *)arr view:(UIView *)view{
     UIButton *image = [self creatImgBtnWith:arr[0] index:0];
     CGRect frame = CGRectZero;
@@ -276,5 +240,48 @@
     }
     [self showUserShowVcWithUserModel:model button:sender];
 }
+
+- (void)imgDidTouch:(UIButton *)btn{
+    NSArray *arr;
+    NSMutableArray *frameArr = [NSMutableArray array];
+    for (UIView *view in btn.superview.subviews) {
+        [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
+    }
+    if ([self.model isKindOfClass:[StatusModel class]]) {
+        StatusModel *modelTemp = (StatusModel *)self.model;
+        if (modelTemp.arrPicUrls) {
+            arr = modelTemp.arrPicUrls;
+        }else {
+            arr = modelTemp.retweetedStatus.arrPicUrls;
+        }
+    }else{
+        CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
+        arr = modelTemp.status.arrPicUrls;
+    }
+    [self showReViewImgVCWithImageArr:arr frameArr:frameArr button:btn];
+}
+
+- (IBAction)btnAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(cellBtnActionWithIndex:withStatusId:)]) {
+        NSString *statusId;
+        if ([self.model isKindOfClass:[StatusModel class]]) {
+            statusId = ((StatusModel *)self.model).strIdstr;
+        }else{
+            statusId = ((CommentsStatusModel *)self.model).status.strIdstr;
+        }
+        [self.delegate cellBtnActionWithIndex:sender.tag withStatusId:[statusId integerValue]];
+    }
+}
+
+- (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
+    if ([linkText hasPrefix:@"#"] && [linkText hasSuffix:@"#"]) {
+        NSLog(@"topic");
+    }else if([linkText hasPrefix:@"@"]){
+        
+    }else{
+        NSLog(@"link");
+    }
+}
+
 
 @end

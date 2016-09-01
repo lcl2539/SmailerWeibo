@@ -83,6 +83,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UserTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell showUser];
 }
 
 - (void)back{

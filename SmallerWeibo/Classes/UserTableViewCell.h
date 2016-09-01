@@ -16,5 +16,6 @@ typedef enum : NSUInteger {
 @interface UserTableViewCell : UITableViewCell
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,assign)UserFriendsType followType;
+- (void)showUser;
 + (instancetype)userCellWithTableView:(UITableView *)tableview;
 @end

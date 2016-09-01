@@ -31,6 +31,7 @@
 @property (nonatomic,assign)NSInteger top;
 @property (nonatomic,strong)MoreViewController *slideVc;
 @property (nonatomic,assign)CGRect slideViewFrame;
+@property (nonatomic,assign)NSInteger lastIndex;
 @end
 
 @implementation ViewController
@@ -75,6 +76,7 @@
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBarHidden = YES;
+    self.lastIndex = 1;
 }
 
 - (void)loadPlaceHoldView{
@@ -204,7 +206,9 @@
             if (arr) {
                 vc.dataArr = arr;
             }else{
+                if (vc.index == self.lastIndex)return;
                 [self tableViewLoadData:vc isReLoad:NO];
+                self.lastIndex = vc.index;
             }
         }
     }

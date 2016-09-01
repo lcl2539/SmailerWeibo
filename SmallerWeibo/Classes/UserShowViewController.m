@@ -52,7 +52,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     Class class = NSClassFromString(@"ReviewImgController");
-    if ([self.presentedViewController isKindOfClass:[class class]]) {
+    if ([self.presentedViewController isKindOfClass:[class class]] || !self.placeHoldView) {
         return;
     }
     self.lastCenter = self.placeHoldView.center;
@@ -73,8 +73,10 @@
 }
 
 - (void)show{
-    self.fromVc.transitioningDelegate = self;
-    self.transitioningDelegate = self;
+    if (self.placeHoldView) {
+        self.fromVc.transitioningDelegate = self;
+        self.transitioningDelegate = self;
+    }
     [self.fromVc presentViewController:self animated:YES completion:nil];
 }
 
@@ -149,13 +151,16 @@
 }
 
 - (void)back{
-    self.placeHoldView.alpha = 1;
-    [UIView animateWithDuration:0.3 animations:^{
-        _head.alpha = 0;
-        _statusList.alpha = 0;
-        self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
-        self.placeHoldView.center = self.lastCenter;
-    }];
+    if (self.placeHoldView) {
+        self.placeHoldView.alpha = 1;
+        [_head userImgShow];
+        [UIView animateWithDuration:0.3 animations:^{
+            _head.alpha = 0;
+            _statusList.alpha = 0;
+            self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
+            self.placeHoldView.center = self.lastCenter;
+        }];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -199,8 +204,10 @@
     CGFloat alpha = (self.height - 50) / 150.0;
     [_head changeAlpha:alpha];
     CGFloat scale = ((20.0 * alpha) + 50) / 70.0;
-    self.placeHoldView.transform = CGAffineTransformMakeScale(scale+0.4, scale+0.4);
-    self.placeHoldView.center = CGPointMake(self.view.center.x, 20 + 35.0 *scale);
+    if (self.placeHoldView) {
+        self.placeHoldView.transform = CGAffineTransformMakeScale(scale+0.4, scale+0.4);
+        self.placeHoldView.center = CGPointMake(self.view.center.x, 20 + 35.0 *scale);
+    }
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 

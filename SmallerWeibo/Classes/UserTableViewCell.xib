@@ -12,15 +12,9 @@
             <rect key="frame" x="0.0" y="0.0" width="403" height="68"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="403" height="67"/>
+                <frame key="frameInset" width="403" height="67.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Go-pF-Gw0">
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="5D7-mC-Kmx"/>
-                            <constraint firstAttribute="height" constant="50" id="uwn-gP-YwE"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-Dj-4I1">
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -34,27 +28,34 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blT-Zl-ddB">
                         <state key="normal" title="Button"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGe-fs-9Hz">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="2eq-0R-Fne"/>
+                            <constraint firstAttribute="width" constant="50" id="ljK-qv-3qy"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="gKv-yA-X4f" secondAttribute="bottom" constant="1.5" id="2kP-Fe-SDO"/>
-                    <constraint firstItem="7IE-Dj-4I1" firstAttribute="top" secondItem="2Go-pF-Gw0" secondAttribute="top" id="3jf-wH-j8s"/>
-                    <constraint firstItem="blT-Zl-ddB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gKv-yA-X4f" secondAttribute="trailing" constant="16" id="6Ij-bw-B6n"/>
-                    <constraint firstItem="gKv-yA-X4f" firstAttribute="leading" secondItem="7IE-Dj-4I1" secondAttribute="leading" id="Ubt-XI-AHE"/>
-                    <constraint firstItem="blT-Zl-ddB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Uct-YR-LGk"/>
-                    <constraint firstItem="2Go-pF-Gw0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="hPg-l8-kDe"/>
-                    <constraint firstItem="2Go-pF-Gw0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="mBQ-co-tcM"/>
-                    <constraint firstItem="gKv-yA-X4f" firstAttribute="bottom" secondItem="2Go-pF-Gw0" secondAttribute="bottom" id="pzF-TO-R98"/>
-                    <constraint firstItem="7IE-Dj-4I1" firstAttribute="leading" secondItem="2Go-pF-Gw0" secondAttribute="trailing" constant="16" id="q1i-5P-GYg"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="blT-Zl-ddB" secondAttribute="trailing" id="quw-la-pWU"/>
+                    <constraint firstItem="blT-Zl-ddB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gKv-yA-X4f" secondAttribute="trailing" constant="16" id="2uN-R8-MTM"/>
+                    <constraint firstItem="tGe-fs-9Hz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="EWR-1B-wr9"/>
+                    <constraint firstItem="tGe-fs-9Hz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="T0x-5m-tG4"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="gKv-yA-X4f" secondAttribute="bottom" constant="1.5" id="TZ3-Oo-FH1"/>
+                    <constraint firstItem="7IE-Dj-4I1" firstAttribute="top" secondItem="tGe-fs-9Hz" secondAttribute="top" id="cxJ-Ub-kfj"/>
+                    <constraint firstItem="gKv-yA-X4f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="66" id="i0Y-bw-Gsf"/>
+                    <constraint firstItem="blT-Zl-ddB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mob-s6-LF2"/>
+                    <constraint firstItem="7IE-Dj-4I1" firstAttribute="leading" secondItem="tGe-fs-9Hz" secondAttribute="trailing" constant="16" id="n3v-Dq-PHL"/>
+                    <constraint firstItem="gKv-yA-X4f" firstAttribute="bottom" secondItem="tGe-fs-9Hz" secondAttribute="bottom" id="qfp-hU-a1q"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="blT-Zl-ddB" secondAttribute="trailing" id="t6M-HG-im4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="_cancelFansBtn" destination="blT-Zl-ddB" id="ROw-mh-Yae"/>
-                <outlet property="_userImg" destination="2Go-pF-Gw0" id="v3j-wA-hti"/>
+                <outlet property="_userImg" destination="tGe-fs-9Hz" id="xyu-1W-fGQ"/>
                 <outlet property="_userInfo" destination="gKv-yA-X4f" id="2f2-hA-tK7"/>
                 <outlet property="_userName" destination="7IE-Dj-4I1" id="fku-g7-sGS"/>
             </connections>
-            <point key="canvasLocation" x="-70" y="30"/>
+            <point key="canvasLocation" x="65.5" y="3"/>
         </tableViewCell>
     </objects>
 </document>

@@ -118,7 +118,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-        //cell.delegate = self;
         cell.model = self.statusModel;
         return cell;
     }else{

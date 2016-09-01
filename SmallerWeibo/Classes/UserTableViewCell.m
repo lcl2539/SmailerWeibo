@@ -8,10 +8,11 @@
 
 #import "UserTableViewCell.h"
 #import "UserModel.h"
-#import "UIImageView+WebCache.h"
+#import "UIView+extend.h"
+#import "UIButton+WebCache.h"
 @interface UserTableViewCell()
 {
-    __weak IBOutlet UIImageView *_userImg;
+    __weak IBOutlet UIButton *_userImg;
     __weak IBOutlet UILabel *_userName;
     __weak IBOutlet UILabel *_userInfo;
     __weak IBOutlet UIButton *_cancelFansBtn;
@@ -31,11 +32,12 @@
     [super awakeFromNib];
     _userImg.clipsToBounds = YES;
     _userImg.layer.cornerRadius = 25;
+    [_userImg addTarget:self action:@selector(showUser) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setModel:(UserModel *)model{
     _model = model;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge]];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] forState:UIControlStateNormal];
     _userName.text = model.strScreenName;
     _userInfo.text = model.strUserDescription;
     self.followType = (model.following) ? kUserFriendsFollowing : kUserFriendsFollowMe;
@@ -52,6 +54,10 @@
     }
     [_cancelFansBtn setTitle:title forState:UIControlStateNormal];
     
+}
+
+- (void)showUser{
+    [self showUserShowVcWithUserModel:self.model button:_userImg];
 }
 
 @end
