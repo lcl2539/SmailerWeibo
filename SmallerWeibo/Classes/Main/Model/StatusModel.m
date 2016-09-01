@@ -47,8 +47,25 @@
     
     /** pic_urls array 微博图片 */
     NSArray *arrPicUrls = dicData[@"pic_urls"];
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    if (!arrPicUrls) {
+        NSString *str = dicData[@"bmiddle_pic"];
+        NSRange rangeLeft = [str rangeOfString:@"bmiddle/"];
+        NSRange rangeResult = NSMakeRange(rangeLeft.location + 8, str.length - 4 - rangeLeft.location - 8);
+        for (NSString *picId in dicData[@"pic_ids"]) {
+            NSMutableString *strPic = [[NSMutableString alloc]initWithString:str];
+            [arr addObject:[strPic stringByReplacingCharactersInRange:rangeResult withString:picId]];
+        }
+    }else{
+        for (NSDictionary *dict in arrPicUrls) {
+            NSMutableString *strPic = [[NSMutableString alloc]initWithString:dict[@"thumbnail_pic"]];
+            [strPic replaceOccurrencesOfString:@"thumbnail" withString:@"bmiddle" options:0 range:NSMakeRange(0, strPic.length)];
+            [arr addObject:strPic];
+        }
+    }
+    arrPicUrls = arr;
     if (arrPicUrls.count>0) {
-        status.arrPicUrls = dicData[@"pic_urls"];
+        status.arrPicUrls = arrPicUrls;
     } else {
         status.arrPicUrls = nil;
     }

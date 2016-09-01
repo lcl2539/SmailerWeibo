@@ -8,35 +8,23 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import <WeiboSDK.h>
 #import "PrefixHeader.pch"
-#import "UIView+Toast.h"
-@interface AppDelegate ()<WeiboSDKDelegate>
+#import "UIView+extend.h"
+#import "LoginViewController.h"
+@interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
--(void)didReceiveWeiboRequest:(WBBaseRequest *)request{
-    
-}
-
--(void)didReceiveWeiboResponse:(WBBaseResponse *)response{
-    WBAuthorizeResponse *userInfo = (WBAuthorizeResponse *)response;
-    [[NSUserDefaults standardUserDefaults]setObject:userInfo.accessToken forKey:@"access_token"];
-    [[NSUserDefaults standardUserDefaults]setObject:userInfo.userID forKey:@"userID"];
-    [[NSUserDefaults standardUserDefaults]setObject:userInfo.expirationDate forKey:@"expirationDate"];
-    [[NSUserDefaults standardUserDefaults]setObject:userInfo.refreshToken forKey:@"refreshToken"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    [self loadMainViewController];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
+    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"uid"]) {
+        self.window.rootViewController = [[LoginViewController alloc]init];
+    }else{
+        self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
+    }
     [self.window makeKeyAndVisible];
-    [WeiboSDK enableDebugMode:YES];
-    [WeiboSDK registerApp:client_Id];
     return YES;
 }
 
@@ -71,12 +59,5 @@
     UIViewController *vc= [[ViewController alloc]init];
     [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:vc]];
     [vc.view toastWithString:@"登陆成功"];
-}
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
-    return [WeiboSDK handleOpenURL:url delegate:self];
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    return [WeiboSDK handleOpenURL:url delegate:self];
 }
 @end

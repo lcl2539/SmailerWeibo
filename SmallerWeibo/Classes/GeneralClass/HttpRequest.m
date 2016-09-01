@@ -14,7 +14,7 @@
 @end
 
 @implementation HttpRequest
-+ (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(void (^)(id object))success failure:(void (^)(NSError *error))failure isGET:(BOOL)isget type:(NSString *)type{
++ (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(success)success failure:(failure)failure isGET:(BOOL)isget type:(NSString *)type{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type, nil];
     static NSDictionary *baseDict;
@@ -40,10 +40,9 @@
     }
 }
 
-+ (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(void (^) (id Object))success failure:(void (^) (NSError *error))failure{
++ (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/statuses/home_timeline.json",//我的微博主页
-               @"https://api.weibo.com/2/statuses/user_timeline.json",//我发表的微博
                @"https://api.weibo.com/2/statuses/public_timeline.json",//公共微博
                @"https://api.weibo.com/2/favorites.json",//收藏
                @"https://api.weibo.com/2/comments/by_me.json",//我的评论
@@ -59,19 +58,75 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
++ (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(success)sucess failure:(failure)faliure{
     
 }
 
-+ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId success:(void (^) (id object))sucess failure:(void (^) (NSError *error))faliure{
-    static NSString *baseURL;
-    baseURL = @"https://api.weibo.com/2/favorites/create.json";
++ (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/comments/show.json";
+    NSDictionary *dict = @{@"id":statusId,
+                           @"count":@30,
+                           @"page":[NSNumber numberWithInteger:page]
+                           };
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure{
+    static NSArray *urlArr;
+    urlArr = @[@"https://api.weibo.com/2/favorites/create.json",//收藏
+               @"https://api.weibo.com/2/statuses/repost.json"//转发
+               ];
     NSDictionary *dict = @{@"id":[NSNumber numberWithInteger:statusId]};
-    [self httpRequestWithUrl:baseURL parameter:dict success:^(id object) {
+    [self httpRequestWithUrl:urlArr[type - 1] parameter:dict success:^(id object) {
         sucess(object);
     } failure:^(NSError *error) {
         faliure(error);
     } isGET:NO type:type_json];
 }
 
++ (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/users/show.json";
+    NSDictionary *dict = @{@"uid":userId};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        faliure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type{
+    static NSArray *url;
+    url = @[@"https://api.weibo.com/2/friendships/friends.json",
+            @"https://api.weibo.com/2/friendships/followers.json"];
+    NSDictionary *dict = @{@"uid":userId,
+                           @"count":@200,
+                           @"cursor":[NSNumber numberWithInteger:cursor]};
+    [self httpRequestWithUrl:url[type] parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)userShowHttpRequestWithId:(NSString *)uid page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"http://api.weibo.cn/2/statuses/user_timeline";
+    NSDictionary *dict = @{@"uid":uid,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
 @end

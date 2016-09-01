@@ -21,7 +21,7 @@
 
 - (NSArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = @[@"主页",@"我的微博",@"广场",@"收藏",@"评论",@"提及的微博",@"提及的评论"];
+        _titleArr = @[@"主页",@"广场",@"收藏",@"评论",@"提及的微博",@"提及的评论"];
     }
     return _titleArr;
 }
@@ -47,9 +47,18 @@
     [user setTintColor:[UIColor whiteColor]];
     [user mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.equalTo(self).offset(8);
-        make.width.height.equalTo(@30);
+        make.width.height.equalTo(@25);
     }];
-    UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
+    UILabel *lab = [[UILabel alloc]init];
+    lab.text = @"比较小的微博";
+    lab.textColor = [UIColor whiteColor];
+    lab.font = [UIFont systemFontOfSize:20];
+    [self addSubview:lab];
+    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(user.mas_trailing).offset(15);
+        make.centerY.equalTo(user.mas_centerY);
+    }];
+    /*UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
     [search setTintColor:[UIColor whiteColor]];
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
     [search addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +67,7 @@
         make.top.equalTo(user.mas_top).offset(1);
         make.trailing.equalTo(self.mas_trailing).offset(-8);
         make.width.height.equalTo(@28);
-    }];
+    }];*/
 }
 
 - (void)loadCollectionView{
@@ -107,11 +116,10 @@
 }
 
 - (void)userBtn{
-    
+    if ([self.delegate respondsToSelector:@selector(moreBtndidClick)]) {
+        [self.delegate moreBtndidClick];
+    }
 }
 
-- (void)search{
-    
-}
 
 @end

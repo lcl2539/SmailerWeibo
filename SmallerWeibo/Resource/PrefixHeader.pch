@@ -14,11 +14,13 @@
 #endif /* PrefixHeader_pch */
 
 #define Color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
-#define client_Id @"1065698738"
-#define redirect_Url @"https://api.weibo.com/oauth2/default.html"
-#define client_Secret @"dc264834556f73e61ddc0d3e88905e7c"
+#define client_Id @"211160679"  //@"1065698738"
+#define redirect_Url @"http://oauth.weico.cc"
+
+#define client_Secret @"72d4545a28a46a6f329c4f2b1e949e6a"
 #define myToken [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"]
+#define gsid [[NSUserDefaults standardUserDefaults]objectForKey:@"gsid"]
 #define type_text @"text/plain"
 #define type_html @"text/html"
 #define type_json @"application/json"
-#define userId [[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]
+#define userId [[NSUserDefaults standardUserDefaults]objectForKey:@"uid"]

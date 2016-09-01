@@ -8,11 +8,12 @@
 
 #import "StatusTableViewController.h"
 #import "StatusCell.h"
-#import "ReviewImgController.h"
 #import <MJRefresh.h>
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import "CommentsStatusModel.h"
+#import "UIView+extend.h"
+#import "DetailStatusViewController.h"
 @interface StatusTableViewController ()<StatusCellDelegate>
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
@@ -80,6 +81,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    id model = self.dataArr[indexPath.section];
+    DetailStatusViewController *vc = [[DetailStatusViewController alloc]init];
+    if ([model isKindOfClass:[StatusModel class]]) {
+        vc.statusModel = model;
+    }else{
+        vc.statusModel = ((CommentsStatusModel *)model).status;
+    }
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.lastOffsetY = scrollView.contentOffset.y;
 }
@@ -94,29 +107,30 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (void)showImgWithArr:(NSArray *)imgArr index:(NSInteger)index{
-    ReviewImgController *vc = [[ReviewImgController alloc]init];
-    vc.picArr = imgArr;
-    vc.showWhichImg = index;
-    [self presentViewController:vc animated:YES completion:nil];
-}
 
 - (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{
+    __weak typeof(self) weakSelf = self;
     switch (index) {
         case 1:
-            [HttpRequest likeStatusHttpRequestWithStatusId:statusId success:^(id object) {
-                NSLog(@"%@",object);
+        case 2:{
+            [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:index success:^(id object) {
+                NSString *toast = (index == 1) ? @"收藏成功" : @"转发成功";
+                [weakSelf toastWithString:toast];
             } failure:^(NSError *error) {
                 NSLog(@"%@",error);
             }];
+        }
             break;
-        case 2:
         case 3:
             
             break;
         default:
             break;
     }
+}
+
+- (void)toastWithString:(NSString *)str{
+    [self.view toastWithString:str];
 }
 
 @end

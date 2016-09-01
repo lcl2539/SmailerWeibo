@@ -10,7 +10,6 @@
 @class StatusModel;
 @protocol StatusCellDelegate <NSObject>
 
-- (void)showImgWithArr:(NSArray *)imgArr index:(NSInteger)index;
 - (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId;
 
 @end

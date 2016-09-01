@@ -9,7 +9,7 @@ target 'SmallerWeibo' do
 pod 'AFNetworking'
 pod 'Masonry'
 pod 'MJRefresh'
-pod "WeiboSDK",:git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git" 
+pod 'ChameleonFramework'
  # Pods for SmallerWeibo
 
 end

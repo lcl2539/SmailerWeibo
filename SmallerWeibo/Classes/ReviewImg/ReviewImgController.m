@@ -10,12 +10,18 @@
 #import "UIImageView+WebCache.h"
 #import "SDWebImageDownloader.h"
 #import <Masonry.h>
-#import "UIView+Toast.h"
+#import "UIView+extend.h"
+#import "ReViewImgAnimation.h"
+#import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
-@interface ReviewImgController ()<UIScrollViewDelegate>
+#define lineCount 3
+@interface ReviewImgController ()<UIScrollViewDelegate,UIViewControllerTransitioningDelegate>
 {
     __weak UIScrollView *_imageScroll;
+    __weak UILabel *_numLab;
+    __weak UIButton *_saveBtn;
 }
+@property (nonatomic,assign)BOOL isFinishLoad;
 @end
 
 @implementation ReviewImgController
@@ -24,7 +30,16 @@
     [super viewDidLoad];
     [self loadSomeSetting];
     [self loadScrollView];
-    [self loadBackBtn];
+    [self loadNumLab];
+    _numLab.alpha = 0;
+    _imageScroll.alpha = 0;
+    [self.view addSubview:self.placeHoldimageView];
+    [self.view sendSubviewToBack:self.placeHoldimageView];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self changePlaceHoldViewFrame];
 }
 
 - (void)loadSomeSetting{
@@ -32,15 +47,70 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
+- (void)loadNumLab{
+    UILabel *lab = [[UILabel alloc]init];
+    lab.text = [NSString stringWithFormat:@"%ld/%ld",self.showWhichImg + 1,self.picArr.count];
+    [self.view addSubview:lab];
+    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view).offset(-10);
+        make.centerX.equalTo(self.view);
+    }];
+    _numLab = lab;
+}
+
+- (void)changePlaceHoldViewFrame{
+    CGRect frame = self.placeHoldimageView.frame;
+    frame.size = self.placeHoldimageView.image.size;
+    if (frame.size.width < self.placeHoldimageView.frame.size.width) {
+        CGFloat x = (self.placeHoldimageView.frame.size.width - frame.size.width) / 2 + self.placeHoldimageView.frame.origin.x;
+        frame.origin.x = x;
+    }
+    if (frame.size.height < self.placeHoldimageView.frame.size.height) {
+        CGFloat y = (self.placeHoldimageView.frame.size.height - frame.size.height) / 2 + self.placeHoldimageView.frame.origin.y;
+        frame.origin.y = y;
+    }
+    frame.origin.x = 0;
+    frame.size.width = screenSize.width;
+    frame.size.height = (CGFloat)screenSize.width / self.placeHoldimageView.image.size.width * frame.size.height;
+    if (frame.size.height >= screenSize.height) {
+        frame.origin.y = 0;
+    }else{
+        frame.origin.y = screenSize.height/2 - frame.size.height/2;
+    }
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        weakSelf.placeHoldimageView.frame = frame;
+        _numLab.alpha = 1;
+    } completion:^(BOOL finished) {
+        _imageScroll.alpha = 1;
+        if (self.isFinishLoad) {
+            [weakSelf.placeHoldimageView removeFromSuperview];
+            weakSelf.placeHoldimageView = nil;
+        }else{
+            self.isFinishLoad = YES;
+        }
+        NSString *toast = [[NSUserDefaults standardUserDefaults]objectForKey:@"toastImg"];
+        if ([toast integerValue] < 6 || !toast) {
+            [self.view toastWithString:@"长按可以保存图片哦~"];
+            NSInteger num = (toast) ? [toast integerValue] : 0;
+            num += 1;
+            [NSString writeUserInfoWithKey:@"toastImg" value:[NSNumber numberWithInteger:num]];
+        }
+    }];
+}
+
 - (void)loadScrollView{
     UIScrollView *scroll = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     scroll.contentSize = CGSizeMake(self.picArr.count * self.view.frame.size.width, 0);
     scroll.pagingEnabled = YES;
+    scroll.backgroundColor = [UIColor clearColor];
     __weak typeof(self) weakSelf = self;
     for (NSInteger index = 0; index <self.picArr.count ; index++) {
         UIScrollView *ImgScroll = [self creatImgScroll:index];
-        NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index][@"thumbnail_pic"]];
-        [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
+        ImgScroll.tag = 100 + index;
+        [ImgScroll setBackgroundColor:[UIColor clearColor]];
+        NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index]];
+        [imgURL replaceOccurrencesOfString:@"bmiddle" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
@@ -48,30 +118,22 @@
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (self.isFinishLoad && index == self.showWhichImg) {
+                [weakSelf.placeHoldimageView removeFromSuperview];
+                weakSelf.placeHoldimageView = nil;
+            }
+            if (index == self.showWhichImg) {
+                self.isFinishLoad = YES;
+            }
             [progress removeFromSuperview];
-            [ImgScroll addSubview:[weakSelf creatImg:image scrollView:ImgScroll]];
+            [weakSelf creatImg:image scrollView:ImgScroll];
         }];
-        UITapGestureRecognizer *tap = [self creatGeature];
-        UILongPressGestureRecognizer *lp = [self creatLongPressGeature];
-        [ImgScroll addGestureRecognizer:lp];
-        [ImgScroll addGestureRecognizer:tap];
+        [self creatGeature:ImgScroll];
     }
     _imageScroll = scroll;
+    _imageScroll.delegate = self;
     [scroll setContentOffset:CGPointMake(self.showWhichImg * self.view.frame.size.width, 0) animated:YES];
     [self.view addSubview:_imageScroll];
-}
-
-- (void)loadBackBtn{
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
-    btn.tintColor = [UIColor darkGrayColor];
-    [btn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [self.view addSubview:btn];
-    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self.view).offset(10);
-        make.bottom.equalTo(self.view).offset(-10);
-        make.width.height.mas_equalTo(40);
-    }];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -92,10 +154,12 @@
     ImgScroll.zoomScale = 2;
     ImgScroll.showsVerticalScrollIndicator = NO;
     ImgScroll.showsHorizontalScrollIndicator = NO;
+    ImgScroll.backgroundColor = [UIColor clearColor];
     return ImgScroll;
 }
 
-- (UIImageView *)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
+- (void)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
+    if (!image)return;
     UIImageView * img = [[UIImageView alloc]initWithImage:image];
     CGRect frame = img.frame;
     CGFloat proportion = (CGFloat)screenSize.width/frame.size.width;
@@ -107,21 +171,23 @@
         frame.origin.y = screenSize.height/2 - frame.size.height/2;
     }
     img.frame = frame;
-    scrollView.contentSize = CGSizeMake(frame.size.width, frame.size.height);
-    return img;
+    scrollView.contentSize = frame.size;
+    [scrollView addSubview:img];
 }
 
-- (UITapGestureRecognizer *)creatGeature{
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didDoubleTap:)];
-    tap.numberOfTapsRequired = 2;
-    tap.numberOfTouchesRequired = 1;
-    return tap;
-}
-
-- (UILongPressGestureRecognizer *)creatLongPressGeature{
+- (void)creatGeature:(UIView *)view{
     UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage:)];
     lp.minimumPressDuration = 1;
-    return lp;
+    [view addGestureRecognizer:lp];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didDoubleTap:)];
+    tap.numberOfTouchesRequired = 1;
+    tap.numberOfTapsRequired = 2;
+    [view addGestureRecognizer:tap];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(back)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:singleTap];
+    [singleTap requireGestureRecognizerToFail:tap];
 }
 
 - (void)saveImage:(UILongPressGestureRecognizer *)lp{
@@ -164,14 +230,38 @@
     view.center=CGPointMake(scrollView.contentSize.width/2+offsetX,scrollView.contentSize.height/2+offsetY);
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView != _imageScroll)return;
+    NSInteger showIndex = _imageScroll.contentOffset.x / screenSize.width;
+    _numLab.text = [NSString stringWithFormat:@"%ld/%ld",showIndex + 1,self.picArr.count];
+    self.lastFrame = [self.frameArr[showIndex] CGRectValue];
+}
+
 - (UIProgressView *)creatProgress{
     UIProgressView *progress = [[UIProgressView alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height/2, self.view.frame.size.width-100, 0)];
     progress.trackTintColor = [UIColor darkGrayColor];
     return progress;
 }
 
+- (void)show{
+    self.fromVc.transitioningDelegate = self;
+    self.transitioningDelegate = self;
+    [self.fromVc presentViewController:self animated:YES completion:nil];
+}
+
 - (void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
+    UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
+    UIView *img = view.subviews.firstObject;
+    [UIView animateWithDuration:0.3 animations:^{
+        if (self.placeHoldimageView) {
+            self.placeHoldimageView.frame = self.lastFrame;
+            view.alpha = 0;
+        }else{
+            view.contentOffset  =CGPointZero;
+            img.frame = self.lastFrame;
+        }
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden{
@@ -180,5 +270,17 @@
 
 - (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
     [self.view toastWithString:@"保存完成"];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
+    animation.type = kPresentAnimationType;
+    return animation;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
+    animation.type = kDismissAnimationType;
+    return animation;
 }
 @end

@@ -48,32 +48,18 @@
     /** avatar_hd	string	用户头像地址（高清），高清头像原图 */
     user.strAvatarHd = dicData[@"avatar_hd"];
     
+    user.following = [dicData[@"following"] boolValue];
+    user.followMe = [dicData[@"follow_me"] boolValue];
     return user;
 }
 
-+ (void)myInfo:(NSDictionary *)dict{
-    NSMutableDictionary *dictTemp = [[NSMutableDictionary alloc]init];
-    [dictTemp setObject:dict[@"idstr"] forKey:@"idstr"];
-    [dictTemp setObject:dict[@"name"] forKey:@"name"];
-    [dictTemp setObject:dict[@"screen_name"] forKey:@"screen_name"];
-    [dictTemp setObject:dict[@"description"] forKey:@"description"];
-    [dictTemp setObject:dict[@"profile_image_url"] forKey:@"profile_image_url"];
-    [dictTemp setObject:dict[@"followers_count"] forKey:@"followers_count"];
-    [dictTemp setObject:dict[@"friends_count"] forKey:@"friends_count"];
-    [dictTemp setObject:dict[@"statuses_count"] forKey:@"statuses_count"];
-    [dictTemp setObject:dict[@"favourites_count"] forKey:@"favourites_count"];
-    [dictTemp setObject:dict[@"avatar_large"] forKey:@"avatar_large"];
-    [dictTemp setObject:dict[@"avatar_hd"] forKey:@"avatar_hd"];
-    NSString *file = [NSString filePathWithfile:@"user.plist"];
-    [dictTemp writeToFile:file atomically:YES];
-}
-
-+ (instancetype)myModel{
++ (instancetype)CreatMyModle:(NSDictionary *)dict{
     static UserModel *model;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [self userModelWithDictionary:[NSDictionary dictionaryWithContentsOfFile:[NSString filePathWithfile:@"user.plist"]]];
+        model = [self userModelWithDictionary:dict];
     });
     return model;
 }
+
 @end
