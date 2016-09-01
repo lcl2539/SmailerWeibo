@@ -10,6 +10,7 @@
 #import "UserModel.h"
 #import "UIImageView+WebCache.h"
 #import <Chameleon.h>
+#import "UIView+extend.h"
 @interface UserInfoHeadView ()
 {
     __weak IBOutlet UIImageView *_userImg;
@@ -95,6 +96,9 @@
     _userImgWeight.constant = 70 - 20 *(1-alpha);
     _userImgHeight.constant = 70 - 20 *(1-alpha);
     _userImg.layer.cornerRadius = _userImgHeight.constant/2;
+}
+- (IBAction)peopleBtnDidClick:(UIButton *)sender {
+    [self showFriendsVcWithType:sender.tag userModel:self.model];
 }
 
 - (void)userImgShow{

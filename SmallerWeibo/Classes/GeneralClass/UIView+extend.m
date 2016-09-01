@@ -72,6 +72,7 @@
 }
 
 - (void)showUserShowVcWithUserModel:(UserModel *)model button:(UIButton *)sender{
+    if ([[self superViewController] isKindOfClass:[UserShowViewController class]])return;
     UserShowViewController *vc = [[UserShowViewController alloc]init];
     vc.model = model;
     UIImageView *view = [[UIImageView alloc]init];
@@ -98,6 +99,7 @@
 }
 
 - (void)showDetailStatusVcWithModel:(StatusModel *)model{
+    if ([[self superViewController] isKindOfClass:[DetailStatusViewController class]])return;
     DetailStatusViewController *vc = [[DetailStatusViewController alloc]init];
     vc.statusModel = model;
     [self superViewController].navigationController.delegate = nil;

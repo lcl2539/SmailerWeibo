@@ -12,6 +12,7 @@
 #import "UserModel.h"
 #import "UIButton+WebCache.h"
 #import "commentsModel.h"
+#import "UIView+extend.h"
 @interface CommentsTableViewCell ()<MLLinkLabelDelegate>
 {
     __weak IBOutlet UIButton *_userImg;
@@ -28,6 +29,16 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _comments.delegate = self;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
+    [super setSelected:selected animated:animated];
+    if (selected) {
+        
+    }
+}
+- (IBAction)userImgDidClick {
+    [self showUserShowVcWithUserModel:self.model.user button:_userImg];
 }
 
 + (instancetype)commentsCellWithTableview:(UITableView *)tabelview{
@@ -50,5 +61,6 @@
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
     
 }
+
 
 @end

@@ -36,13 +36,16 @@
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="微博"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGq-xR-lBW">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGq-xR-lBW">
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="yVW-3A-a1u"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="粉丝"/>
+                    <connections>
+                        <action selector="peopleBtnDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="zFL-22-WPz"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTh-Yx-X2j">
                     <constraints>
@@ -51,6 +54,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="关注"/>
+                    <connections>
+                        <action selector="peopleBtnDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="vmI-bI-IUZ"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyf-Ne-bed">
                     <state key="normal" title="返回"/>
