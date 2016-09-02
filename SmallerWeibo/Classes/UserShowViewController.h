@@ -12,5 +12,6 @@
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,strong)UIImageView *placeHoldView;
 @property (nonatomic,strong)UIViewController *fromVc;
+@property (nonatomic,copy)NSString *name;
 - (void)show;
 @end

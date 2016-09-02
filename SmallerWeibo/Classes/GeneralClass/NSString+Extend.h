@@ -13,4 +13,5 @@
 + (NSString *)filePathWithfile:(NSString *)file;
 - (CGSize)getStringSize:(UIFont*)font width:(CGFloat)width;
 + (NSString *)dateFromString:(NSString *)str;
+- (NSAttributedString *)attributedStr;
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "NSString+Extend.h"
+#import "MLExpressionManager.h"
+#import "SingExp.h"
 @implementation NSString (extend)
 + (void)writeUserInfoWithKey:(NSString *)key value:(id)value{
     [[NSUserDefaults standardUserDefaults]setObject:value forKey:key];
@@ -48,6 +50,10 @@
     formatter.dateFormat = @"MM-dd HH:mm";
     NSString *time = [formatter stringFromDate:date];
     return time;
+}
+
+- (NSAttributedString *)attributedStr{
+    return [MLExpressionManager expressionAttributedStringWithString:self expression:[SingExp shareExp]];
 }
 
 @end

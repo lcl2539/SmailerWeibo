@@ -8,7 +8,7 @@
 
 #import "StatusModel.h"
 #import "UserModel.h"
-
+#import "NSString+Extend.h"
 @implementation StatusModel
 
 + (instancetype)statusModelWithDictionary:(NSDictionary *)dicData {
@@ -23,7 +23,7 @@
     
     /** text	string	微博信息内容 */
     status.strText = dicData[@"text"];
-    
+    status.attributedStr = [status.strText attributedStr];
     /** source	string	微博来源 */
     status.strSource = dicData[@"source"];
     
@@ -49,17 +49,18 @@
     NSArray *arrPicUrls = dicData[@"pic_urls"];
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     if (!arrPicUrls) {
-        NSString *str = dicData[@"bmiddle_pic"];
-        NSRange rangeLeft = [str rangeOfString:@"bmiddle/"];
-        NSRange rangeResult = NSMakeRange(rangeLeft.location + 8, str.length - 4 - rangeLeft.location - 8);
-        for (NSString *picId in dicData[@"pic_ids"]) {
-            NSMutableString *strPic = [[NSMutableString alloc]initWithString:str];
-            [arr addObject:[strPic stringByReplacingCharactersInRange:rangeResult withString:picId]];
+        NSString *str = dicData[@"thumbnail_pic"];
+        if(str){
+            NSRange rangeLeft = [str rangeOfString:@"thumbnail/"];
+            NSRange rangeResult = NSMakeRange(rangeLeft.location + 10, str.length - 4 - rangeLeft.location - 10);
+            for (NSString *picId in dicData[@"pic_ids"]) {
+                NSMutableString *strPic = [[NSMutableString alloc]initWithString:str];
+                [arr addObject:[strPic stringByReplacingCharactersInRange:rangeResult withString:picId]];
+            }
         }
     }else{
         for (NSDictionary *dict in arrPicUrls) {
-            NSMutableString *strPic = [[NSMutableString alloc]initWithString:dict[@"thumbnail_pic"]];
-            [strPic replaceOccurrencesOfString:@"thumbnail" withString:@"bmiddle" options:0 range:NSMakeRange(0, strPic.length)];
+            NSString *strPic = dict[@"thumbnail_pic"];
             [arr addObject:strPic];
         }
     }

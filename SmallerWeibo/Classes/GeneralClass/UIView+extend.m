@@ -14,6 +14,7 @@
 #import "FriendsViewController.h"
 #import "DetailStatusViewController.h"
 #import "ReViewImgAnimation.h"
+#import "TopicViewController.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str{
     UILabel *lab = [[UILabel alloc]init];
@@ -89,6 +90,14 @@
     [vc show];
 }
 
+- (void)showUserShowVcWithUserName:(NSString *)name{
+    if ([[self superViewController] isKindOfClass:[UserShowViewController class]])return;
+    UserShowViewController *vc = [[UserShowViewController alloc]init];
+    vc.name = name;
+    vc.fromVc = [self superViewController];
+    [vc show];
+}
+
 - (void)showFriendsVcWithType:(NSInteger)type userModel:(UserModel *)model{
     FriendsViewController *vc = [[FriendsViewController alloc]init];
     vc.type = type;
@@ -105,5 +114,14 @@
     [self superViewController].navigationController.delegate = nil;
     [[self superViewController].navigationController pushViewController:vc animated:YES];
 }
+
+- (void)showTopicVcWithTopic:(NSString *)topic{
+    if ([[self superViewController] isKindOfClass:[TopicViewController class]] && [((TopicViewController *)[self superViewController]).title isEqualToString:topic])return;
+    TopicViewController *vc =[[TopicViewController alloc]init];
+    vc.topic = topic;
+    [[self superViewController].navigationController pushViewController:vc animated:YES];
+
+}
+
 
 @end

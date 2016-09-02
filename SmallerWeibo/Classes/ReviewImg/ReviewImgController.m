@@ -78,7 +78,7 @@
         frame.origin.y = screenSize.height/2 - frame.size.height/2;
     }
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.7 options:UIViewAnimationOptionTransitionNone animations:^{
         weakSelf.placeHoldimageView.frame = frame;
         _numLab.alpha = 1;
     } completion:^(BOOL finished) {
@@ -97,6 +97,7 @@
             [NSString writeUserInfoWithKey:@"toastImg" value:[NSNumber numberWithInteger:num]];
         }
     }];
+    
 }
 
 - (void)loadScrollView{
@@ -110,7 +111,7 @@
         ImgScroll.tag = 100 + index;
         [ImgScroll setBackgroundColor:[UIColor clearColor]];
         NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index]];
-        [imgURL replaceOccurrencesOfString:@"bmiddle" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
+        [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
@@ -251,7 +252,7 @@
 - (void)back{
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
     UIView *img = view.subviews.firstObject;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.8 options:UIViewAnimationOptionTransitionNone animations:^{
         if (self.placeHoldimageView) {
             self.placeHoldimageView.frame = self.lastFrame;
             view.alpha = 0;
@@ -259,7 +260,7 @@
             view.contentOffset  =CGPointZero;
             img.frame = self.lastFrame;
         }
-    }];
+    } completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

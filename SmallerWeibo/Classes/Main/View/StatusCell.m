@@ -12,15 +12,13 @@
 #import "StatusModel.h"
 #import "UserModel.h"
 #import "NSString+Extend.h"
-#import "SingExp.h"
 #import "MLLinkLabel.h"
 #import "CommentsStatusModel.h"
-#import "MLExpressionManager.h"
 #import "ReviewImgController.h"
 #import "UserShowViewController.h"
 #import "UIView+extend.h"
 #define lineCount 3
-#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16-50)
+#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -16)
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
@@ -39,7 +37,6 @@
     __weak IBOutlet UIButton *_commentsBtn;
     
 }
-@property (nonatomic,strong)MLExpression *exp;
 @end
 @implementation StatusCell
 
@@ -48,17 +45,10 @@
     StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StatusCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"StatusCell" owner:nil options:nil]firstObject];
-        cell.exp = [SingExp shareExp];
     }
     return cell;
 }
 
-- (MLExpression *)exp{
-    if (_exp) {
-        _exp = [SingExp shareExp];
-    }
-    return _exp;
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
@@ -105,14 +95,16 @@
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strName;
         _from.text = modelTemp.strSourceDes;
-        _status.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.strText expression:self.exp];
+        _status.attributedText = modelTemp.attributedStr;
         [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.commentsCount] forState:UIControlStateNormal];
         [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.repostsCount] forState:UIControlStateNormal];
         if (modelTemp.arrPicUrls){
             [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:modelTemp.arrPicUrls];
         }
         if (modelTemp.retweetedStatus) {
-            _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:[NSString stringWithFormat:@"@%@：%@",modelTemp.retweetedStatus.user.strName,modelTemp.retweetedStatus.strText] expression:self.exp];
+            NSMutableAttributedString *strTemp = [modelTemp.retweetedStatus.attributedStr mutableCopy];
+            [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",modelTemp.user.strScreenName]] atIndex:0];
+            _repeatStatus.attributedText = strTemp;
             if (modelTemp.retweetedStatus.arrPicUrls){
                 [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.retweetedStatus.arrPicUrls];
             }
@@ -126,10 +118,12 @@
         _creatTime.text = [NSString dateFromString:modelTemp.strCreatedAt];
         _nicknName.text = modelTemp.user.strScreenName;
         _from.text = modelTemp.strSource;
-        _status.attributedText = [MLExpressionManager expressionAttributedStringWithString:modelTemp.commentText expression:self.exp];
+        _status.attributedText = modelTemp.attributedStr;
         [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",modelTemp.status.commentsCount] forState:UIControlStateNormal];
         [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",modelTemp.status.repostsCount] forState:UIControlStateNormal];
-        _repeatStatus.attributedText = [MLExpressionManager expressionAttributedStringWithString:[NSString stringWithFormat:@"@%@：%@",modelTemp.status.user.strName,modelTemp.status.strText] expression:self.exp];
+        NSMutableAttributedString *strTemp = [modelTemp.status.attributedStr mutableCopy];
+        [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",modelTemp.user.strScreenName]] atIndex:0];
+        _repeatStatus.attributedText = strTemp;
         if (modelTemp.status.arrPicUrls) {
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:modelTemp.status.arrPicUrls];
         }
@@ -287,9 +281,10 @@
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
     if ([linkText hasPrefix:@"#"] && [linkText hasSuffix:@"#"]) {
-        NSLog(@"topic");
+        NSString *topic = [linkText substringWithRange:NSMakeRange(1, linkText.length-2)];
+        [self showTopicVcWithTopic:topic];
     }else if([linkText hasPrefix:@"@"]){
-        
+        [self showUserShowVcWithUserName:[linkText substringWithRange:NSMakeRange(1, linkText.length-1)]];
     }else{
         NSLog(@"link");
     }

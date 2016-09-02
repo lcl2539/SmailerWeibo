@@ -40,19 +40,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadHeadView];
-    [self loadTableView];
-    [self httpRequest];
-    _head.alpha = 0;
-    _statusList.alpha = 0;
-    _head.userImage = self.placeHoldView.image;
+    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:self.placeHoldView];
-    [self.view sendSubviewToBack:_statusList];
+    [self judgeDoWhat];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    NSLog(@"1");
+- (void)judgeDoWhat{
+    if (self.model) {
+        [self loadHeadView];
+        [self loadTableView];
+        [self httpRequest];
+        if (self.placeHoldView) {
+            _head.userImage = self.placeHoldView.image;
+            _head.alpha = 0;
+            _statusList.alpha = 0;
+            [self.view addSubview:self.placeHoldView];
+        }else{
+            [_head userImgShow];
+            CGRect frame = CGRectMake(0, 0, 0, CGFLOAT_MIN);
+            _statusList.tableHeaderView = [[UIView alloc]initWithFrame:frame];
+        }
+        [self.view sendSubviewToBack:_statusList];
+    }else{
+        __weak typeof(self) weakSelf = self;
+        [HttpRequest userModelFromUserName:self.name success:^(id object) {
+            weakSelf.model = [UserModel userModelWithDictionary:object];
+            [weakSelf judgeDoWhat];
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{

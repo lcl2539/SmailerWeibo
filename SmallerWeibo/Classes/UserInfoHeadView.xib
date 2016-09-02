@@ -87,7 +87,7 @@
             <constraints>
                 <constraint firstAttribute="trailingMargin" secondItem="6b3-OF-RKa" secondAttribute="trailing" id="1CL-8S-UHC"/>
                 <constraint firstAttribute="bottom" secondItem="UGq-xR-lBW" secondAttribute="bottom" id="1uB-Sw-xjI"/>
-                <constraint firstItem="aM6-83-XvT" firstAttribute="top" secondItem="5Ho-ma-G7C" secondAttribute="bottom" constant="10" id="2Ch-6d-Chg"/>
+                <constraint firstItem="aM6-83-XvT" firstAttribute="top" secondItem="5Ho-ma-G7C" secondAttribute="bottom" constant="6" id="2Ch-6d-Chg"/>
                 <constraint firstItem="UGq-xR-lBW" firstAttribute="width" secondItem="w5F-z4-qMb" secondAttribute="width" id="4ez-qF-r3U"/>
                 <constraint firstItem="Iu9-vv-PLR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6df-lV-Uuj"/>
                 <constraint firstItem="Iu9-vv-PLR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="8N1-oY-hBz"/>

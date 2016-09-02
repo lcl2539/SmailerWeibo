@@ -18,4 +18,6 @@ typedef void (^failure)(NSError *error);
 + (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure;
 + (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid;
 + (void)userShowHttpRequestWithId:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure;
++ (void)userModelFromUserName:(NSString *)name success:(success)success failure:(failure)failure;
++ (void)topicStatusWithTopic:(NSString *)topic page:(NSInteger)page success:(success)success failure:(failure)failure;
 @end

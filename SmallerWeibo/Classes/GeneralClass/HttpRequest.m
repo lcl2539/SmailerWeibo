@@ -129,4 +129,28 @@
         failure(error);
     } isGET:YES type:type_json];
 }
+
++ (void)userModelFromUserName:(NSString *)name success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/users/show.json?";
+    NSDictionary *dict = @{@"screen_name":name};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)topicStatusWithTopic:(NSString *)topic page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/search/topics.json";
+    NSDictionary *dict = @{@"q":topic,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
 @end

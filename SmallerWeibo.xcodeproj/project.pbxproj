@@ -56,6 +56,7 @@
 		CC1C30EB1D73C304003A9C2C /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30EA1D73C304003A9C2C /* FriendsViewController.m */; };
 		CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */; };
 		CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */; };
+		CC22C6041D79720E004960A7 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC22C6031D79720E004960A7 /* TopicViewController.m */; };
 		CC4D1C031D75900B00F9B4C8 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC4D1C021D75900B00F9B4C8 /* face.plist */; };
 		CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */; };
 		CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */; };
@@ -169,6 +170,8 @@
 		CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
+		CC22C6021D79720E004960A7 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
+		CC22C6031D79720E004960A7 /* TopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicViewController.m; sourceTree = "<group>"; };
 		CC4D1C021D75900B00F9B4C8 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
 		CC668C2B1D74713D00631A97 /* UserInfoHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoHeadView.h; sourceTree = "<group>"; };
 		CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHeadView.m; sourceTree = "<group>"; };
@@ -347,6 +350,7 @@
 				36C5EF551D57164F006511B9 /* Main */,
 				CCEDB62B1D6F2E8200AA4976 /* More */,
 				CCEDB5DB1D6EBC4300AA4976 /* DetailStatus */,
+				CC22C6011D7971E5004960A7 /* Topic */,
 				363C0A781D630FB200CED9DB /* ReviewImgController */,
 				36C5EF541D57163D006511B9 /* Login */,
 			);
@@ -525,6 +529,15 @@
 				CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		CC22C6011D7971E5004960A7 /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				CC22C6021D79720E004960A7 /* TopicViewController.h */,
+				CC22C6031D79720E004960A7 /* TopicViewController.m */,
+			);
+			name = Topic;
 			sourceTree = "<group>";
 		};
 		CCE7D4761D751D6B00EAB495 /* UserShow */ = {
@@ -779,6 +792,7 @@
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
 				CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */,
 				3687B2451D5C46BF0084887F /* MLTextAttachment.m in Sources */,
+				CC22C6041D79720E004960A7 /* TopicViewController.m in Sources */,
 				36994D4B1D57136C0078372C /* AppDelegate.m in Sources */,
 				360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */,
 				36C5EF821D5716BA006511B9 /* UIButton+WebCache.m in Sources */,

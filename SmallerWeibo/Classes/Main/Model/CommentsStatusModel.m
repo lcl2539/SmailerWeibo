@@ -21,6 +21,7 @@
     model.user = [UserModel userModelWithDictionary:dicData[@"user"]];
     model.strCreatedAt = dicData[@"created_at"];
     model.strSource = dicData[@"source"];
+    model.attributedStr = [model.commentText attributedStr];
     return model;
 }
 

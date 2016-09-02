@@ -16,4 +16,6 @@
 - (void)showUserShowVcWithUserModel:(UserModel *)model button:(UIButton *)sender;
 - (void)showFriendsVcWithType:(NSInteger)type userModel:(UserModel *)model;
 - (void)showDetailStatusVcWithModel:(StatusModel *)model;
+- (void)showUserShowVcWithUserName:(NSString *)name;
+- (void)showTopicVcWithTopic:(NSString *)topic;
 @end
