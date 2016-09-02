@@ -8,7 +8,8 @@ target 'SmallerWeibo' do
   # use_frameworks
 pod 'AFNetworking'
 pod 'Masonry'
-pod 'MJRefresh' 
+pod 'MJRefresh'
+pod 'ChameleonFramework'
  # Pods for SmallerWeibo
 
 end
