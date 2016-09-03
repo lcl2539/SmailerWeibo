@@ -153,4 +153,15 @@
         failure(error);
     } isGET:YES type:type_json];
 }
+
++ (void)shortUrlWithurl:(NSString *)shortUrl success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/short_url/info.json";
+    NSDictionary *dict = @{@"url_short":shortUrl};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
 @end

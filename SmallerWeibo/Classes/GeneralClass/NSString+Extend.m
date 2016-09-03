@@ -56,4 +56,8 @@
     return [MLExpressionManager expressionAttributedStringWithString:self expression:[SingExp shareExp]];
 }
 
+- (NSArray *)shortUrlResult{
+    NSRegularExpression *rex = [SingExp shareRex];
+    return [rex matchesInString:self options:0 range:NSMakeRange(0, self.length)];
+}
 @end

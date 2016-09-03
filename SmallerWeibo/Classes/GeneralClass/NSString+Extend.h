@@ -14,4 +14,5 @@
 - (CGSize)getStringSize:(UIFont*)font width:(CGFloat)width;
 + (NSString *)dateFromString:(NSString *)str;
 - (NSAttributedString *)attributedStr;
+- (NSArray *)shortUrlResult;
 @end

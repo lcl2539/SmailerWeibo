@@ -1,0 +1,34 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x",
+      "language-direction" : "left-to-right"
+    },
+    {
+      "alignment-insets" : {
+        "top" : 16,
+        "left" : 0,
+        "bottom" : 0,
+        "right" : 0
+      },
+      "idiom" : "universal",
+      "filename" : "zan.png",
+      "language-direction" : "left-to-right",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x",
+      "language-direction" : "left-to-right"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "properties" : {
+    "compression-type" : "automatic",
+    "template-rendering-intent" : "template"
+  }
+}
