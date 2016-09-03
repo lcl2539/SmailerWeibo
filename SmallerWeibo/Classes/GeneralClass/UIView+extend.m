@@ -15,6 +15,7 @@
 #import "DetailStatusViewController.h"
 #import "ReViewImgAnimation.h"
 #import "TopicViewController.h"
+#import "NewStatusViewController.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str{
     UILabel *lab = [[UILabel alloc]init];
@@ -121,6 +122,13 @@
     vc.topic = topic;
     [[self superViewController].navigationController pushViewController:vc animated:YES];
 
+}
+
+- (void)showNewStatusVc{
+    NewStatusViewController *vc = [[NewStatusViewController alloc]init];
+    vc.lastPoint = [self.window convertPoint:self.center fromView:self.superview];
+    vc.fromVc = [self superViewController];
+    [vc show];
 }
 
 

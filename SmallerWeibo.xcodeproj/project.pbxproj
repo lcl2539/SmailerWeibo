@@ -53,6 +53,10 @@
 		36CF1F611D6ACF0C0098EB09 /* CommentsStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CF1F601D6ACF0C0098EB09 /* CommentsStatusModel.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
 		CC0303311D716678003FE795 /* Image.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC0303301D716678003FE795 /* Image.bundle */; };
+		CC0B35C11D7ABCAF0082B01D /* NewStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0B35C01D7ABCAF0082B01D /* NewStatusViewController.m */; };
+		CC0B35C71D7ACD880082B01D /* FaceKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0B35C61D7ACD880082B01D /* FaceKeyBoard.m */; };
+		CC0B35CB1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0B35C91D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.m */; };
+		CC0B35CC1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC0B35CA1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.xib */; };
 		CC1C30EB1D73C304003A9C2C /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30EA1D73C304003A9C2C /* FriendsViewController.m */; };
 		CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */; };
 		CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */; };
@@ -165,6 +169,13 @@
 		4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.debug.xcconfig"; sourceTree = "<group>"; };
 		C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmallerWeibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0303301D716678003FE795 /* Image.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Image.bundle; sourceTree = "<group>"; };
+		CC0B35BF1D7ABCAF0082B01D /* NewStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewStatusViewController.h; sourceTree = "<group>"; };
+		CC0B35C01D7ABCAF0082B01D /* NewStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewStatusViewController.m; sourceTree = "<group>"; };
+		CC0B35C51D7ACD880082B01D /* FaceKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceKeyBoard.h; sourceTree = "<group>"; };
+		CC0B35C61D7ACD880082B01D /* FaceKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceKeyBoard.m; sourceTree = "<group>"; };
+		CC0B35C81D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceKeyBoardCollectionViewCell.h; sourceTree = "<group>"; };
+		CC0B35C91D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceKeyBoardCollectionViewCell.m; sourceTree = "<group>"; };
+		CC0B35CA1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceKeyBoardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CC1C30E91D73C304003A9C2C /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		CC1C30EA1D73C304003A9C2C /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		CC1C30F21D73C71D003A9C2C /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
@@ -348,6 +359,7 @@
 				36C5EF521D57161F006511B9 /* AppDelegate */,
 				36C5EF931D571A13006511B9 /* GeneralClass */,
 				36C5EF551D57164F006511B9 /* Main */,
+				CC0B35BE1D7ABC500082B01D /* NewStatus */,
 				CCEDB62B1D6F2E8200AA4976 /* More */,
 				CCEDB5DB1D6EBC4300AA4976 /* DetailStatus */,
 				CC22C6011D7971E5004960A7 /* Topic */,
@@ -497,6 +509,20 @@
 				E87709EF3301DB26FA66DE96 /* Pods-SmallerWeibo.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CC0B35BE1D7ABC500082B01D /* NewStatus */ = {
+			isa = PBXGroup;
+			children = (
+				CC0B35BF1D7ABCAF0082B01D /* NewStatusViewController.h */,
+				CC0B35C01D7ABCAF0082B01D /* NewStatusViewController.m */,
+				CC0B35C51D7ACD880082B01D /* FaceKeyBoard.h */,
+				CC0B35C61D7ACD880082B01D /* FaceKeyBoard.m */,
+				CC0B35C81D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.h */,
+				CC0B35C91D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.m */,
+				CC0B35CA1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.xib */,
+			);
+			name = NewStatus;
 			sourceTree = "<group>";
 		};
 		CC1C30EC1D73C3D8003A9C2C /* People */ = {
@@ -698,6 +724,7 @@
 				CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */,
 				CCBD8B391D77ED6E001C71DD /* TitleView.xib in Resources */,
 				CC0303311D716678003FE795 /* Image.bundle in Resources */,
+				CC0B35CC1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.xib in Resources */,
 				36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */,
 				CC4D1C031D75900B00F9B4C8 /* face.plist in Resources */,
 				36994D561D57136C0078372C /* LaunchScreen.storyboard in Resources */,
@@ -776,6 +803,7 @@
 				368E17461D5ABA630006234D /* StatusCell.m in Sources */,
 				36C5EF8F1D571936006511B9 /* LoginViewController.m in Sources */,
 				36C5EF851D5716BA006511B9 /* UIImage+WebP.m in Sources */,
+				CC0B35C11D7ABCAF0082B01D /* NewStatusViewController.m in Sources */,
 				CCE7D4791D751DDF00EAB495 /* UserShowViewController.m in Sources */,
 				36C5EF881D5716BA006511B9 /* UIView+WebCacheOperation.m in Sources */,
 				CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */,
@@ -788,6 +816,7 @@
 				36C5EF841D5716BA006511B9 /* UIImage+MultiFormat.m in Sources */,
 				3687B2491D5C46BF0084887F /* MLLabel.m in Sources */,
 				36C5EF7F1D5716BA006511B9 /* SDWebImageDownloaderOperation.m in Sources */,
+				CC0B35CB1D7AD0920082B01D /* FaceKeyBoardCollectionViewCell.m in Sources */,
 				3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */,
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
 				CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */,
@@ -810,6 +839,7 @@
 				361C36B01D589C660064E76C /* UserModel.m in Sources */,
 				3687B2481D5C46BF0084887F /* MLLabelLayoutManager.m in Sources */,
 				CCEDB5E31D6EBFEE00AA4976 /* CommentsTableViewCell.m in Sources */,
+				CC0B35C71D7ACD880082B01D /* FaceKeyBoard.m in Sources */,
 				36C5EF831D5716BA006511B9 /* UIImage+GIF.m in Sources */,
 				36994D481D57136C0078372C /* main.m in Sources */,
 				363C0A7B1D6310A000CED9DB /* ReviewImgController.m in Sources */,

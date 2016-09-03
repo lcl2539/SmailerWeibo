@@ -18,4 +18,5 @@
 - (void)showDetailStatusVcWithModel:(StatusModel *)model;
 - (void)showUserShowVcWithUserName:(NSString *)name;
 - (void)showTopicVcWithTopic:(NSString *)topic;
+- (void)showNewStatusVc;
 @end
