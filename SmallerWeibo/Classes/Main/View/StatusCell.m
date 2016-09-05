@@ -19,7 +19,7 @@
 #import "UIView+extend.h"
 #import "HttpRequest.h"
 #define lineCount 3
-#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -16)
+#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -8)
 #define constants(layout) layout.constant
 @interface StatusCell ()<MLLinkLabelDelegate>
 {

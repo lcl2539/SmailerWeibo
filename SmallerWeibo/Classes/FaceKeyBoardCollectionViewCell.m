@@ -10,7 +10,6 @@
 @interface FaceKeyBoardCollectionViewCell ()
 {
     __weak IBOutlet UIImageView *_img;
-    
 }
 @end
 @implementation FaceKeyBoardCollectionViewCell
@@ -20,7 +19,7 @@
     _image = image;
     static NSBundle *bundle;
     bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"Image.bundle" ofType:nil]];
-    [_img setImage:[UIImage imageWithContentsOfFile:[bundle pathForResource:image ofType:@"png"]]];
+    [_img setImage:[UIImage imageWithContentsOfFile:[bundle pathForResource:image ofType:nil]]];
 }
 
 @end

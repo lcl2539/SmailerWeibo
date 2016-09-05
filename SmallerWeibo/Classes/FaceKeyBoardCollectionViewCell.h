@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FaceKeyBoardCollectionViewCell : UICollectionViewCell
+@property (nonatomic,copy)NSString *name;
 @property (nonatomic,copy)NSString *image;
 @end

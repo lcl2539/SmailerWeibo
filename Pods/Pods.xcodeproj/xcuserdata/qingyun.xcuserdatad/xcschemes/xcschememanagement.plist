@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>YYText.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -58,11 +63,6 @@
 			<true/>
 		</dict>
 		<key>A345C1899C2AFA5214286B8BC515F356</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DC309454CDFC70EA6BF1C24B0F418FB3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

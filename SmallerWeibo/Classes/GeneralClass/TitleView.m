@@ -11,7 +11,6 @@
 @interface TitleView ()
 {
     __weak IBOutlet UILabel *_title;
-    
 }
 @end
 @implementation TitleView

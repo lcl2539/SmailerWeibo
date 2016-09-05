@@ -11,6 +11,7 @@
 #import "PrefixHeader.pch"
 #import "UIView+extend.h"
 #import "LoginViewController.h"
+#import <Chameleon.h>
 @interface AppDelegate ()
 
 @end
