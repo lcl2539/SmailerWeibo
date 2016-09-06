@@ -91,7 +91,7 @@
         }
         NSString *toast = [[NSUserDefaults standardUserDefaults]objectForKey:@"toastImg"];
         if ([toast integerValue] < 6 || !toast) {
-            [self.view toastWithString:@"长按可以保存图片哦~"];
+            [self.view toastWithString:@"长按可以保存图片哦~" type:kLabPostionTypeBottom];
             NSInteger num = (toast) ? [toast integerValue] : 0;
             num += 1;
             [NSString writeUserInfoWithKey:@"toastImg" value:[NSNumber numberWithInteger:num]];
@@ -269,7 +269,7 @@
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
-    [self.view toastWithString:@"保存完成"];
+    [self.view toastWithString:@"保存完成" type:kLabPostionTypeBottom];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{

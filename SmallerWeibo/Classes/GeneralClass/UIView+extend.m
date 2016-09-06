@@ -17,14 +17,27 @@
 #import "TopicViewController.h"
 #import "NewStatusViewController.h"
 @implementation UIView (extend)
-- (void)toastWithString:(NSString *)str{
+- (void)toastWithString:(NSString *)str type:(LabPostionType)type{
     UILabel *lab = [[UILabel alloc]init];
     UIFont *font = [UIFont systemFontOfSize:15];
     CGRect frame = [str boundingRectWithSize:self.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : font} context:nil];
     frame.size.width += 40;
     frame.size.height +=10;
     frame.origin.x = ([UIScreen mainScreen].bounds.size.width - frame.size.width)/2;
-    frame.origin.y = [UIScreen mainScreen].bounds.size.height - 80;
+    
+    switch (type) {
+        case kLabPostionTypeTop:
+            frame.origin.y = 120;
+            break;
+        case kLabPostionTypeCenter:
+            frame.origin.y = ([UIScreen mainScreen].bounds.size.height - 80)/2;
+            break;
+        case kLabPostionTypeBottom:
+            frame.origin.y = [UIScreen mainScreen].bounds.size.height - 80;
+            break;
+        default:
+            break;
+    }
     lab.frame = frame;
     lab.text = str;
     lab.layer.cornerRadius = frame.size.height/2;
@@ -92,7 +105,9 @@
 }
 
 - (void)showUserShowVcWithUserName:(NSString *)name{
-    if ([[self superViewController] isKindOfClass:[UserShowViewController class]])return;
+    if ([[self superViewController] isKindOfClass:[UserShowViewController class]]){
+        if ([((UserShowViewController *)[self superViewController]).model.strScreenName isEqualToString:name])return;
+    }
     UserShowViewController *vc = [[UserShowViewController alloc]init];
     vc.name = name;
     vc.fromVc = [self superViewController];

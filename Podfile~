@@ -10,6 +10,7 @@ pod 'AFNetworking'
 pod 'Masonry'
 pod 'MJRefresh'
 pod 'ChameleonFramework'
+pod 'YYText'
  # Pods for SmallerWeibo
 
 end

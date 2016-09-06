@@ -28,8 +28,8 @@
 }
 
 - (void)loadSomeSetting{
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)loadTitleView{
@@ -55,7 +55,7 @@
 
 - (void)editChange:(NSNotification *)noti{
     CGRect keyboardBounds = [noti.userInfo[@"UIKeyboardBoundsUserInfoKey"] CGRectValue];
-    CGFloat height = ([noti.name isEqualToString:@"UIKeyboardWillShowNotification"]) ? self.view.frame.size.height - (40 + [UIApplication sharedApplication].statusBarFrame.size.height + keyboardBounds.size.height) : (self.view.frame.size.height - (40 + [UIApplication sharedApplication].statusBarFrame.size.height));
+    CGFloat height = ([noti.name isEqualToString:@"UIKeyboardDidShowNotification"]) ? self.view.frame.size.height - (40 + [UIApplication sharedApplication].statusBarFrame.size.height + keyboardBounds.size.height) : (self.view.frame.size.height - (40 + [UIApplication sharedApplication].statusBarFrame.size.height));
     [_statusText mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_title.mas_bottom);
         make.leading.trailing.equalTo(_title);

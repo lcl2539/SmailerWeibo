@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface StatusTextView : UIView
+@property (nonatomic,copy)NSArray *imgArr;
 + (instancetype)statusTextView;
 @end

@@ -13,11 +13,14 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckA-OE-SII">
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="e1R-TG-jdi"/>
+                        <constraint firstAttribute="height" constant="30" id="e1R-TG-jdi"/>
                         <constraint firstAttribute="width" constant="45" id="gSW-bU-fdM"/>
                     </constraints>
                     <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" image="delect"/>
+                    <connections>
+                        <action selector="delectBtnDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="2Yk-f7-BHO"/>
+                    </connections>
                 </button>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKS-NS-u5R">
                     <subviews>
@@ -38,7 +41,7 @@
                 </scrollView>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpL-Xj-Q4S">
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="wUk-Qe-bhE"/>
+                        <constraint firstAttribute="height" constant="30" id="wUk-Qe-bhE"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="默认">
@@ -53,7 +56,7 @@
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24s-4V-KQD">
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="NpG-7r-dCx"/>
+                        <constraint firstAttribute="height" constant="30" id="NpG-7r-dCx"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="浪小花">
@@ -70,7 +73,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="24s-4V-KQD" firstAttribute="width" secondItem="FpL-Xj-Q4S" secondAttribute="width" id="0db-wa-MSp"/>
-                <constraint firstAttribute="trailing" secondItem="ckA-OE-SII" secondAttribute="trailing" id="Hn7-Yy-NnP"/>
+                <constraint firstAttribute="trailing" secondItem="ckA-OE-SII" secondAttribute="trailing" constant="20" id="Hn7-Yy-NnP"/>
                 <constraint firstItem="MKS-NS-u5R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="K2T-4O-Did"/>
                 <constraint firstItem="ckA-OE-SII" firstAttribute="leading" secondItem="24s-4V-KQD" secondAttribute="trailing" id="S4y-rL-t4o"/>
                 <constraint firstAttribute="bottom" secondItem="24s-4V-KQD" secondAttribute="bottom" id="Tv2-uh-65W"/>

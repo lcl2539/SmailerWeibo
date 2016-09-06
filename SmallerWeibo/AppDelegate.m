@@ -59,6 +59,6 @@
 - (void)loadMainViewController{
     UIViewController *vc= [[ViewController alloc]init];
     [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:vc]];
-    [vc.view toastWithString:@"登陆成功"];
+    [vc.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
 }
 @end

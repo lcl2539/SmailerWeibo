@@ -11,6 +11,8 @@ pod 'Masonry'
 pod 'MJRefresh'
 pod 'ChameleonFramework'
 pod 'YYText'
+pod 'TZImagePickerController'
+
  # Pods for SmallerWeibo
 
 end

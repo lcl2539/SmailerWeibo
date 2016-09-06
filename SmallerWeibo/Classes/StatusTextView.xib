@@ -13,12 +13,14 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCu-Gn-ySz">
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jof-P9-WJj">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jof-P9-WJj">
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="2Vr-FY-RSF"/>
                             </constraints>
-                            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" image="emoji"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" image="emoji">
+                                <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
                             <connections>
                                 <action selector="imageBtnAction:" destination="V5o-zk-TNd" eventType="touchUpInside" id="0KR-Se-Ox5"/>
                             </connections>
@@ -27,8 +29,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="RwS-lv-ec0"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
                             <state key="normal" title="@"/>
                             <connections>
@@ -46,8 +47,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="Wx6-vg-tsO"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="#"/>
                             <connections>
                                 <action selector="topicBtnAction:" destination="V5o-zk-TNd" eventType="touchUpInside" id="j7F-0E-Nmt"/>
@@ -78,23 +78,6 @@
                         <constraint firstItem="Jof-P9-WJj" firstAttribute="leading" secondItem="uCu-Gn-ySz" secondAttribute="leading" constant="20" id="xG5-QG-aXn"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXx-dW-cgI">
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GdU-nr-aXq">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="392" id="tUi-Dv-tgb"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="9ey-nn-jzC"/>
-                        <constraint firstItem="GdU-nr-aXq" firstAttribute="leading" secondItem="IXx-dW-cgI" secondAttribute="leading" id="AZ1-yU-ZUM"/>
-                        <constraint firstItem="GdU-nr-aXq" firstAttribute="top" secondItem="IXx-dW-cgI" secondAttribute="top" id="UK8-Vb-xs9"/>
-                        <constraint firstItem="GdU-nr-aXq" firstAttribute="centerY" secondItem="IXx-dW-cgI" secondAttribute="centerY" id="YBM-61-vcz"/>
-                        <constraint firstAttribute="bottom" secondItem="GdU-nr-aXq" secondAttribute="bottom" id="f4g-nb-TxS"/>
-                        <constraint firstAttribute="trailing" secondItem="GdU-nr-aXq" secondAttribute="trailing" id="hlE-DF-c3l"/>
-                    </constraints>
-                </scrollView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="YG2-7k-fbz" customClass="YYTextView">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="fontIsBold_" value="NO"/>
@@ -124,17 +107,23 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgv-59-ii1">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="Uvg-gH-MlC"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="uCu-Gn-ySz" firstAttribute="leading" secondItem="V5o-zk-TNd" secondAttribute="leading" id="1rt-ou-5eT"/>
                 <constraint firstAttribute="trailing" secondItem="YG2-7k-fbz" secondAttribute="trailing" id="743-km-ipT"/>
                 <constraint firstAttribute="trailing" secondItem="uCu-Gn-ySz" secondAttribute="trailing" id="GiF-Pn-ate"/>
-                <constraint firstItem="uCu-Gn-ySz" firstAttribute="top" secondItem="IXx-dW-cgI" secondAttribute="bottom" id="Nxc-17-HRk"/>
-                <constraint firstItem="IXx-dW-cgI" firstAttribute="leading" secondItem="V5o-zk-TNd" secondAttribute="leading" id="bHe-FU-RMO"/>
-                <constraint firstAttribute="trailing" secondItem="IXx-dW-cgI" secondAttribute="trailing" id="c4A-Pe-wKg"/>
-                <constraint firstItem="IXx-dW-cgI" firstAttribute="top" secondItem="YG2-7k-fbz" secondAttribute="bottom" id="dyw-th-mIB"/>
+                <constraint firstItem="fgv-59-ii1" firstAttribute="top" secondItem="YG2-7k-fbz" secondAttribute="bottom" id="UVg-xm-buX"/>
+                <constraint firstAttribute="trailing" secondItem="fgv-59-ii1" secondAttribute="trailing" id="aJo-gG-J8E"/>
+                <constraint firstItem="fgv-59-ii1" firstAttribute="leading" secondItem="V5o-zk-TNd" secondAttribute="leading" id="e9Y-ZC-WEb"/>
                 <constraint firstAttribute="bottom" secondItem="uCu-Gn-ySz" secondAttribute="bottom" id="eGT-He-jty"/>
+                <constraint firstItem="uCu-Gn-ySz" firstAttribute="top" secondItem="fgv-59-ii1" secondAttribute="bottom" id="jpA-5r-gvk"/>
                 <constraint firstItem="YG2-7k-fbz" firstAttribute="top" secondItem="V5o-zk-TNd" secondAttribute="top" id="mej-2E-yUI"/>
                 <constraint firstItem="YG2-7k-fbz" firstAttribute="leading" secondItem="V5o-zk-TNd" secondAttribute="leading" id="oeE-XV-BTJ"/>
             </constraints>
@@ -142,8 +131,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="_imageBtn" destination="Jof-P9-WJj" id="pV3-qC-swg"/>
-                <outlet property="_scroll" destination="GdU-nr-aXq" id="Yfl-iW-Enb"/>
-                <outlet property="_scrollWidth" destination="tUi-Dv-tgb" id="c86-E9-FxV"/>
+                <outlet property="_imgView" destination="fgv-59-ii1" id="WlD-L4-OIg"/>
                 <outlet property="_surplus" destination="xa0-jn-RTs" id="462-3V-hht"/>
                 <outlet property="_text" destination="YG2-7k-fbz" id="auc-cA-Aa0"/>
                 <outlet property="_topicBtn" destination="1p4-qU-z2m" id="eR8-Fd-6a2"/>

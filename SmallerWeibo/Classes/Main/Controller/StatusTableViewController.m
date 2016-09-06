@@ -128,7 +128,7 @@
 }
 
 - (void)toastWithString:(NSString *)str{
-    [self.view toastWithString:str];
+    [self.view toastWithString:str type:kLabPostionTypeBottom];
 }
 
 @end
