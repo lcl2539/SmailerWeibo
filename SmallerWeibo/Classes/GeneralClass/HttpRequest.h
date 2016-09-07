@@ -25,4 +25,6 @@ typedef void (^failure)(NSError *error);
 + (void)newStatusWithStatusText:(NSString *)status success:(success)success failure:(failure)failure;
 + (void)uploadImgWithData:(NSData *)img success:(success)success failurl:(failure)failure;
 + (void)sendStatusWithStatus:(NSString *)status picID:(NSArray *)picID success:(success)success failure:(failure)failure;
++ (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
++ (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
 @end

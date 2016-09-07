@@ -9,3 +9,10 @@
 
 @interface SearchViewController : UIViewController
 @end
+
+@interface SearchUserCell : UICollectionViewCell
+@end
+
+@interface SearchAllUserVc :UIViewController
+
+@end

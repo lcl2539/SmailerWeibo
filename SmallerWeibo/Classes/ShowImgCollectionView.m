@@ -75,15 +75,9 @@
     UIImage *img = self.data[indexPath.row];
     if (img.size.height == 0 && img.size.width == 0) {
         ImgShowCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddCell" forIndexPath:indexPath];
-        if (!cell) {
-            cell = [[NSBundle mainBundle]loadNibNamed:@"ShowImgCollectionViewCell" owner:nil options:nil].firstObject;
-        }
         return cell;
     }else{
         ImgShowCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCell" forIndexPath:indexPath];
-        if (!cell) {
-            cell = [[NSBundle mainBundle]loadNibNamed:@"ImgShowCollectionViewCell" owner:nil options:nil].firstObject;
-        }
         __weak typeof(self) weakSelf = self;
         cell.cancelImg = ^(UIImage *image){
             [weakSelf removeImg:image];

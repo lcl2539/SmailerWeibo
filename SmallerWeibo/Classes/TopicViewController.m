@@ -60,10 +60,12 @@
         make.top.equalTo(_title.mas_bottom);
         make.leading.trailing.bottom.equalTo(self.view);
     }];
+    tab.separatorInset  =UIEdgeInsetsMake(0, 66, 0, 0);
     _statusLists = tab;
     _statusLists.delegate = self;
     _statusLists.dataSource = self;
     _statusLists.estimatedRowHeight = 50;
+    _statusLists.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
     _statusLists.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(httpRequest)];
     __weak typeof(self) weakSelf = self;
     _statusLists.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -100,12 +102,8 @@
     [_statusLists reloadData];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.data.count;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    return self.data.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController">
+            <connections>
+                <outlet property="_backBtn" destination="jqu-fW-87G" id="gt8-Ga-qV9"/>
+                <outlet property="_bgView" destination="FKc-0q-8UW" id="w7F-3I-SCo"/>
+                <outlet property="_searchBar" destination="OaR-a4-9Mb" id="45m-Dc-spX"/>
+                <outlet property="_searchBtn" destination="m46-Ok-REc" id="L1z-yj-nJB"/>
+                <outlet property="view" destination="iN0-l3-epB" id="dAe-sB-m5d"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FKc-0q-8UW">
+                    <subviews>
+                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="搜点什么吧~~" translatesAutoresizingMaskIntoConstraints="NO" id="OaR-a4-9Mb">
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqu-fW-87G">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="23z-HZ-OrG"/>
+                                <constraint firstAttribute="width" constant="30" id="An4-AI-j0f"/>
+                            </constraints>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" image="back">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="PEO-kb-ALZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m46-Ok-REc">
+                            <state key="normal" title="搜索">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="search:" destination="-1" eventType="touchUpInside" id="lhz-xv-8nI"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="m46-Ok-REc" secondAttribute="trailing" constant="8" id="H7i-UR-HgP"/>
+                        <constraint firstAttribute="height" constant="60" id="L6b-zj-1nM"/>
+                        <constraint firstItem="OaR-a4-9Mb" firstAttribute="leading" secondItem="jqu-fW-87G" secondAttribute="trailing" constant="8" id="LAt-dC-9c5"/>
+                        <constraint firstItem="jqu-fW-87G" firstAttribute="centerY" secondItem="FKc-0q-8UW" secondAttribute="centerY" constant="10" id="dkE-mg-a2u"/>
+                        <constraint firstItem="m46-Ok-REc" firstAttribute="leading" secondItem="OaR-a4-9Mb" secondAttribute="trailing" constant="8" id="jCK-t4-Yj8"/>
+                        <constraint firstItem="m46-Ok-REc" firstAttribute="centerY" secondItem="OaR-a4-9Mb" secondAttribute="centerY" id="oiE-3M-ECg"/>
+                        <constraint firstItem="jqu-fW-87G" firstAttribute="leading" secondItem="FKc-0q-8UW" secondAttribute="leading" constant="8" id="p4x-74-Ae0"/>
+                        <constraint firstItem="OaR-a4-9Mb" firstAttribute="centerY" secondItem="jqu-fW-87G" secondAttribute="centerY" id="yrt-Yi-wKo"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="FKc-0q-8UW" secondAttribute="trailing" id="CHN-ti-BJV"/>
+                <constraint firstItem="FKc-0q-8UW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XMc-EY-gMj"/>
+                <constraint firstItem="FKc-0q-8UW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lGy-yM-F22"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back" width="53" height="32"/>
+    </resources>
+</document>

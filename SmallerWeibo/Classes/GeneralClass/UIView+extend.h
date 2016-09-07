@@ -24,4 +24,5 @@ typedef enum : NSUInteger {
 - (void)showUserShowVcWithUserName:(NSString *)name;
 - (void)showTopicVcWithTopic:(NSString *)topic;
 - (void)showNewStatusVc;
+- (void)showSearchVc;
 @end

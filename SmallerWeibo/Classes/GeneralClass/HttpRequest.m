@@ -215,4 +215,36 @@
         failure(error);
     } isGET:NO type:type_json];
 }
+
++ (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"http://api.weibo.cn/2/search/users";
+    NSDictionary *dict = @{@"q":text,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"http://api.weibo.cn/2/search/statuses";
+    NSDictionary *dict = @{@"q":text,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
 @end

@@ -16,6 +16,7 @@
 #import "ReViewImgAnimation.h"
 #import "TopicViewController.h"
 #import "NewStatusViewController.h"
+#import "SearchViewController.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str type:(LabPostionType)type{
     UILabel *lab = [[UILabel alloc]init];
@@ -146,5 +147,8 @@
     [vc show];
 }
 
-
+- (void)showSearchVc{
+    SearchViewController *vc = [[SearchViewController alloc]init];
+    [[self superViewController].navigationController pushViewController:vc animated:YES];
+}
 @end

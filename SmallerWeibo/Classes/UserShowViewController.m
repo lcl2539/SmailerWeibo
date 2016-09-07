@@ -167,6 +167,8 @@
     tab.delegate = self;
     tab.dataSource = self;
     tab.estimatedRowHeight = 100;
+    tab.separatorInset  =UIEdgeInsetsMake(0, 66, 0, 0);
+    tab.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
     tab.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         weakSelf.data = [[NSArray alloc]init];
         [weakSelf httpRequest];
@@ -199,16 +201,12 @@
     return 0.1;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.data.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    id model = self.data[indexPath.section];
+    id model = self.data[indexPath.row];
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     cell.model = model;
     return cell;

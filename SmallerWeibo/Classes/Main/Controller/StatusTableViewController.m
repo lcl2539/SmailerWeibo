@@ -42,9 +42,9 @@
 }
 
 - (void)loadSomeSetting{
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 66, 0, 0);
     self.tableView.estimatedRowHeight = 100;
-    self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 3)];
+    self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0.1)];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
 }
@@ -62,17 +62,12 @@
 
 #pragma mark - Table view data source
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    id model = self.dataArr[indexPath.section];
+    id model = self.dataArr[indexPath.row];
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     cell.model = model;
     cell.delegate = self;
