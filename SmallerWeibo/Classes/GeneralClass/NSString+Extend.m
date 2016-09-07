@@ -7,6 +7,8 @@
 //
 
 #import "NSString+Extend.h"
+#import "MLExpressionManager.h"
+#import "SingExp.h"
 @implementation NSString (extend)
 + (void)writeUserInfoWithKey:(NSString *)key value:(id)value{
     [[NSUserDefaults standardUserDefaults]setObject:value forKey:key];
@@ -50,4 +52,12 @@
     return time;
 }
 
+- (NSAttributedString *)attributedStr{
+    return [MLExpressionManager expressionAttributedStringWithString:self expression:[SingExp shareExp]];
+}
+
+- (NSArray *)shortUrlResult{
+    NSRegularExpression *rex = [SingExp shareRex];
+    return [rex matchesInString:self options:0 range:NSMakeRange(0, self.length)];
+}
 @end

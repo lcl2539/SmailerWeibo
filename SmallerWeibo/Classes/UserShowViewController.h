@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class UserModel;
-@interface UserShowViewController : UIViewController
+@interface UserShowViewController : UIViewController<UINavigationControllerDelegate>
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,strong)UIImageView *placeHoldView;
 @property (nonatomic,strong)UIViewController *fromVc;
+@property (nonatomic,copy)NSString *name;
 - (void)show;
 @end

@@ -11,11 +11,15 @@
 #import "UserTableViewCell.h"
 #import "HttpRequest.h"
 #import <MJRefresh.h>
+#import "TitleView.h"
+#import <Masonry.h>
 @interface FriendsViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
+    __weak TitleView *_titleView;
 }
 @property (nonatomic,copy)NSArray *data;
+@property (nonatomic,copy)NSString *strTitle;
 @end
 
 @implementation FriendsViewController
@@ -27,23 +31,44 @@
     return _data;
 }
 
+- (void)setModel:(UserModel *)model{
+    _model = model;
+    _strTitle = (self.type == kFriendsVcFollows) ? [NSString stringWithFormat:@"%@的粉丝",model.strScreenName] :[NSString stringWithFormat:@"%@的关注",model.strScreenName];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadTitleView];
     [self loadTabView];
     [self httpRequest];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:0 target:self action:@selector(back)];
-    self.navigationItem.leftBarButtonItem = back;
-    back.tintColor = [UIColor whiteColor];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [_titleView title:self.strTitle];
+}
+
+- (void)loadTitleView{
+    TitleView *view = [TitleView titleViewWithTitle:self.strTitle];
+    [self.view addSubview:view];
+    _titleView = view;
+    [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.mas_equalTo([[UIApplication sharedApplication]statusBarFrame].size.height+50);
+    }];
 }
 
 - (void)loadTabView{
-    UITableView *tab = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.view addSubview:tab];
     _tab = tab;
-    _tab.estimatedRowHeight = 50;
+    _tab.estimatedRowHeight = 40;
     tab.delegate = self;
     tab.dataSource = self;
+    [_tab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_titleView.mas_bottom);
+        make.leading.trailing.bottom.equalTo(self.view);
+    }];
 }
 
 - (void)httpRequest{
@@ -52,7 +77,7 @@
         [weakSelf loadData:object[@"users"]];
     } failure:^(NSError *error) {
         
-    } cursor:0 type:self.type];
+    } cursor:0 type:self.type userID:self.model.strIdstr];
 }
 
 - (void)loadData:(NSArray *)arr{
@@ -80,6 +105,13 @@
     return 0.1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.1;
+}
+
+- (void)show{
+    [self.fromVc.navigationController pushViewController:self animated:YES];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -87,8 +119,4 @@
     [cell showUser];
 }
 
-- (void)back{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 @end

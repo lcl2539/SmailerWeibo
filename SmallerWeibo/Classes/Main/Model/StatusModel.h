@@ -46,6 +46,7 @@
 /** pic_urls array 微博图片 */
 @property (nonatomic, copy) NSArray *arrPicUrls;
 
+@property (nonatomic,copy)NSAttributedString *attributedStr;
 /** QYStatusModel模型初始化方法 */
 + (instancetype)statusModelWithDictionary:(NSDictionary *)dicData;
 

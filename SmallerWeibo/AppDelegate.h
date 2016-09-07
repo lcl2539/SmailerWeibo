@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class SendStatus;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) SendStatus *send;
 - (void)loadMainViewController;
 
 @end

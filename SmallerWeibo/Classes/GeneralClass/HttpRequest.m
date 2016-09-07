@@ -100,11 +100,11 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type{
++ (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid{
     static NSArray *url;
     url = @[@"https://api.weibo.com/2/friendships/friends.json",
             @"https://api.weibo.com/2/friendships/followers.json"];
-    NSDictionary *dict = @{@"uid":userId,
+    NSDictionary *dict = @{@"uid":uid,
                            @"count":@200,
                            @"cursor":[NSNumber numberWithInteger:cursor]};
     [self httpRequestWithUrl:url[type] parameter:dict success:^(id object) {
@@ -118,6 +118,124 @@
     static NSString *url;
     url = @"http://api.weibo.cn/2/statuses/user_timeline";
     NSDictionary *dict = @{@"uid":uid,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)userModelFromUserName:(NSString *)name success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/users/show.json?";
+    NSDictionary *dict = @{@"screen_name":name};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)topicStatusWithTopic:(NSString *)topic page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/search/topics.json";
+    NSDictionary *dict = @{@"q":topic,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)shortUrlWithurl:(NSString *)shortUrl success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/short_url/info.json";
+    NSDictionary *dict = @{@"url_short":shortUrl};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)newStatusWithStatusText:(NSString *)status success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/statuses/update.json";
+    NSDictionary *dict = @{@"status":status};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:NO type:type_json];
+}
+
++ (void)uploadImgWithData:(NSData *)img success:(success)success failurl:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/statuses/upload_pic.json";
+    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    static NSDictionary *dict;
+    dict = @{@"access_token":myToken};
+    [manger POST:url parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        NSString *newfileName = [NSString stringWithFormat:@"%@.png", str];
+        [formData appendPartWithFileData:img name:@"pic" fileName:newfileName mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+}
+
++ (void)sendStatusWithStatus:(NSString *)status picID:(NSArray *)picID success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/statuses/upload_url_text.json";
+    NSString *allPicID = @"";
+    for (NSInteger index = 0; index < picID.count; index ++ ) {
+        allPicID = [allPicID stringByAppendingString:picID[index]];
+        if (index < picID.count - 1) {
+           allPicID = [allPicID stringByAppendingString:@","];
+        }
+    }
+    NSDictionary *dict = @{@"status":status,
+                           @"pic_id":allPicID};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:NO type:type_json];
+}
+
++ (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"http://api.weibo.cn/2/search/users";
+    NSDictionary *dict = @{@"q":text,
+                           @"page":[NSNumber numberWithInteger:page],
+                           @"count":@20,
+                           @"s":@"dd9d1bb3",
+                           @"c":@"weicoandroid",
+                           @"gsid":gsid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"http://api.weibo.cn/2/search/statuses";
+    NSDictionary *dict = @{@"q":text,
                            @"page":[NSNumber numberWithInteger:page],
                            @"count":@20,
                            @"s":@"dd9d1bb3",

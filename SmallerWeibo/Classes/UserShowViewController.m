@@ -15,7 +15,7 @@
 #import "UserModel.h"
 #import "ReViewImgAnimation.h"
 #import <MJRefresh.h>
-@interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UIViewControllerTransitioningDelegate,UserHeadDelegate>
+@interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UserHeadDelegate>
 {
     __weak UITableView *_statusList;
     __weak UserInfoHeadView *_head;
@@ -26,6 +26,7 @@
 @property (nonatomic,assign)NSInteger height;
 @property (nonatomic,assign)CGFloat lastOffsetY;
 @property (nonatomic,assign)CGPoint lastCenter;
+@property (nonatomic,strong)NSString *lastVc;
 @end
 
 @implementation UserShowViewController
@@ -39,24 +40,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadHeadView];
-    [self loadTableView];
-    [self httpRequest];
-    _head.alpha = 0;
-    _statusList.alpha = 0;
-    _head.userImage = self.placeHoldView.image;
-    [self.view addSubview:self.placeHoldView];
-    [self.view sendSubviewToBack:_statusList];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self judgeDoWhat];
+}
+
+- (void)judgeDoWhat{
+    if (self.model) {
+        [self loadHeadView];
+        [self loadTableView];
+        [self httpRequest];
+        if (self.placeHoldView) {
+            _head.userImage = self.placeHoldView.image;
+            _head.alpha = 0;
+            _statusList.alpha = 0;
+            [self.view addSubview:self.placeHoldView];
+        }else{
+            [_head userImgShow];
+            CGRect frame = CGRectMake(0, 0, 0, CGFLOAT_MIN);
+            _statusList.tableHeaderView = [[UIView alloc]initWithFrame:frame];
+        }
+        [self.view sendSubviewToBack:_statusList];
+    }else{
+        __weak typeof(self) weakSelf = self;
+        [HttpRequest userModelFromUserName:self.name success:^(id object) {
+            weakSelf.model = [UserModel userModelWithDictionary:object];
+            [weakSelf judgeDoWhat];
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    Class class = NSClassFromString(@"ReviewImgController");
-    if ([self.presentedViewController isKindOfClass:[class class]] || !self.placeHoldView) {
+    if (self.lastVc || !self.placeHoldView) {
         return;
     }
-    self.lastCenter = self.placeHoldView.center;
-    self.lastFrame = self.placeHoldView.frame;
+    if (self.lastFrame.size.height == 0) {
+        self.lastCenter = self.placeHoldView.center;
+        self.lastFrame = self.placeHoldView.frame;
+    }
     [UIView animateWithDuration:0.5 animations:^{
         self.placeHoldView.transform = CGAffineTransformMakeScale(1.4, 1.4);
         self.placeHoldView.center = CGPointMake(self.view.center.x, 55);
@@ -70,14 +94,16 @@
             self.isFinish = YES;
         }
     }];
+    self.lastVc = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.lastVc = NSStringFromClass([self.navigationController.viewControllers.lastObject class]);
 }
 
 - (void)show{
-    if (self.placeHoldView) {
-        self.fromVc.transitioningDelegate = self;
-        self.transitioningDelegate = self;
-    }
-    [self.fromVc presentViewController:self animated:YES completion:nil];
+    [self.fromVc.navigationController pushViewController:self animated:YES];
 }
 
 - (void)httpRequest{
@@ -141,6 +167,8 @@
     tab.delegate = self;
     tab.dataSource = self;
     tab.estimatedRowHeight = 100;
+    tab.separatorInset  =UIEdgeInsetsMake(0, 66, 0, 0);
+    tab.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
     tab.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         weakSelf.data = [[NSArray alloc]init];
         [weakSelf httpRequest];
@@ -160,8 +188,9 @@
             self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
             self.placeHoldView.center = self.lastCenter;
         }];
+        self.navigationController.delegate = self;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.fromVc.navigationController popViewControllerAnimated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -172,16 +201,12 @@
     return 0.1;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.data.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    id model = self.data[indexPath.section];
+    id model = self.data[indexPath.row];
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     cell.model = model;
     return cell;
@@ -211,15 +236,10 @@
     self.lastOffsetY = scrollView.contentOffset.y;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kPresentAnimationType;
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    ReViewImgAnimation *animation = [ReViewImgAnimation shareAnimation];
+    animation.type = (fromVC == self) ? kPopAnimationType : kPushAnimationType;
     return animation;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kDismissAnimationType;
-    return animation;
-}
 @end

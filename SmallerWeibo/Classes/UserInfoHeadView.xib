@@ -36,13 +36,16 @@
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="微博"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGq-xR-lBW">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGq-xR-lBW">
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="yVW-3A-a1u"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="粉丝"/>
+                    <connections>
+                        <action selector="peopleBtnDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="zFL-22-WPz"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTh-Yx-X2j">
                     <constraints>
@@ -51,6 +54,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-11"/>
                     <state key="normal" title="关注"/>
+                    <connections>
+                        <action selector="peopleBtnDidClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="vmI-bI-IUZ"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyf-Ne-bed">
                     <state key="normal" title="返回"/>
@@ -81,7 +87,7 @@
             <constraints>
                 <constraint firstAttribute="trailingMargin" secondItem="6b3-OF-RKa" secondAttribute="trailing" id="1CL-8S-UHC"/>
                 <constraint firstAttribute="bottom" secondItem="UGq-xR-lBW" secondAttribute="bottom" id="1uB-Sw-xjI"/>
-                <constraint firstItem="aM6-83-XvT" firstAttribute="top" secondItem="5Ho-ma-G7C" secondAttribute="bottom" constant="10" id="2Ch-6d-Chg"/>
+                <constraint firstItem="aM6-83-XvT" firstAttribute="top" secondItem="5Ho-ma-G7C" secondAttribute="bottom" constant="6" id="2Ch-6d-Chg"/>
                 <constraint firstItem="UGq-xR-lBW" firstAttribute="width" secondItem="w5F-z4-qMb" secondAttribute="width" id="4ez-qF-r3U"/>
                 <constraint firstItem="Iu9-vv-PLR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6df-lV-Uuj"/>
                 <constraint firstItem="Iu9-vv-PLR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="8N1-oY-hBz"/>

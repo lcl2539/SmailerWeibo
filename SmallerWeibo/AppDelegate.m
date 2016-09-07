@@ -11,6 +11,8 @@
 #import "PrefixHeader.pch"
 #import "UIView+extend.h"
 #import "LoginViewController.h"
+#import <Chameleon.h>
+#import "SendStatus.h"
 @interface AppDelegate ()
 
 @end
@@ -24,6 +26,7 @@
     }else{
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
     }
+    self.send = [SendStatus shareSendStatus];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -58,6 +61,6 @@
 - (void)loadMainViewController{
     UIViewController *vc= [[ViewController alloc]init];
     [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:vc]];
-    [vc.view toastWithString:@"登陆成功"];
+    [vc.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
 }
 @end

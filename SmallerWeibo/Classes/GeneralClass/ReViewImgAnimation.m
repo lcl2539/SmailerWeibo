@@ -9,6 +9,15 @@
 #import "ReViewImgAnimation.h"
 @implementation ReViewImgAnimation
 
++ (instancetype)shareAnimation{
+    static ReViewImgAnimation *animation;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        animation = [[self alloc]init];
+    });
+    return animation;
+}
+
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext{
     return 0.3;
 }
@@ -19,8 +28,8 @@
     UIView *containerView = [transitionContext containerView];
     [containerView addSubview:fromVc.view];
     [containerView addSubview:toVc.view];
-    toVc.view.frame = [UIScreen mainScreen].bounds;
-    if (self.type == kPresentAnimationType) {
+    toVc.view.frame = fromVc.view.frame;
+    if (self.type == kPushAnimationType) {
         toVc.view.backgroundColor = [UIColor clearColor];
         [UIView animateKeyframesWithDuration:[self transitionDuration:transitionContext] delay:0 options:2 animations:^{
             toVc.view.backgroundColor = [UIColor whiteColor];

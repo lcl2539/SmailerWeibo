@@ -11,5 +11,5 @@
 @interface SingExp : MLExpression
 
 + (MLExpression *)shareExp;
-
++ (NSRegularExpression *)shareRex;
 @end

@@ -21,4 +21,13 @@
     return exp;
 }
 
++ (NSRegularExpression *)shareRex{
+    static NSRegularExpression *rex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        rex = [NSRegularExpression regularExpressionWithPattern:@"http://t.cn/\\w{7}" options:0 error:nil];
+    });
+    return rex;
+}
+
 @end

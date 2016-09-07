@@ -15,7 +15,7 @@
 #import "NSString+Extend.h"
 #define  screenSize [UIScreen mainScreen].bounds.size
 #define lineCount 3
-@interface ReviewImgController ()<UIScrollViewDelegate,UIViewControllerTransitioningDelegate>
+@interface ReviewImgController ()<UIScrollViewDelegate>
 {
     __weak UIScrollView *_imageScroll;
     __weak UILabel *_numLab;
@@ -78,7 +78,7 @@
         frame.origin.y = screenSize.height/2 - frame.size.height/2;
     }
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.7 options:UIViewAnimationOptionTransitionNone animations:^{
         weakSelf.placeHoldimageView.frame = frame;
         _numLab.alpha = 1;
     } completion:^(BOOL finished) {
@@ -91,12 +91,13 @@
         }
         NSString *toast = [[NSUserDefaults standardUserDefaults]objectForKey:@"toastImg"];
         if ([toast integerValue] < 6 || !toast) {
-            [self.view toastWithString:@"长按可以保存图片哦~"];
+            [self.view toastWithString:@"长按可以保存图片哦~" type:kLabPostionTypeBottom];
             NSInteger num = (toast) ? [toast integerValue] : 0;
             num += 1;
             [NSString writeUserInfoWithKey:@"toastImg" value:[NSNumber numberWithInteger:num]];
         }
     }];
+    
 }
 
 - (void)loadScrollView{
@@ -110,7 +111,7 @@
         ImgScroll.tag = 100 + index;
         [ImgScroll setBackgroundColor:[UIColor clearColor]];
         NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index]];
-        [imgURL replaceOccurrencesOfString:@"bmiddle" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
+        [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
@@ -205,6 +206,7 @@
     }];
     [alert addAction:cancelAction];
     [alert addAction:okAction];
+    if (!((UIImageView *)lp.view.subviews.firstObject).image)return;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -244,16 +246,13 @@
 }
 
 - (void)show{
-    self.fromVc.transitioningDelegate = self;
-    self.transitioningDelegate = self;
-    [self.fromVc presentViewController:self animated:YES completion:nil];
+    [self.fromVc.navigationController pushViewController:self animated:YES];
 }
 
 - (void)back{
-    [self dismissViewControllerAnimated:YES completion:nil];
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
     UIView *img = view.subviews.firstObject;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.8 options:UIViewAnimationOptionTransitionNone animations:^{
         if (self.placeHoldimageView) {
             self.placeHoldimageView.frame = self.lastFrame;
             view.alpha = 0;
@@ -261,26 +260,22 @@
             view.contentOffset  =CGPointZero;
             img.frame = self.lastFrame;
         }
-    }];
+    } completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)prefersStatusBarHidden{
     return YES;
 }
 
-- (void)image: (UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
-    [self.view toastWithString:@"保存完成"];
+- (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *)contextInfo{
+    [self.view toastWithString:@"保存完成" type:kLabPostionTypeBottom];
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
     ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kPresentAnimationType;
+    animation.type = (fromVC == self) ? kPopAnimationType : kPushAnimationType;
     return animation;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    ReViewImgAnimation *animation = [[ReViewImgAnimation alloc]init];
-    animation.type = kDismissAnimationType;
-    return animation;
-}
 @end

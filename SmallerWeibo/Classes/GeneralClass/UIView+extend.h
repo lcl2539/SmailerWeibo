@@ -7,10 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef enum : NSUInteger {
+    kLabPostionTypeTop,
+    kLabPostionTypeCenter,
+    kLabPostionTypeBottom
+} LabPostionType;
 @class UserModel;
+@class StatusModel;
 @interface UIView (extend)
-- (void)toastWithString:(NSString *)str;
+- (void)toastWithString:(NSString *)str type:(LabPostionType)type;
 - (UIViewController *)superViewController;
 - (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr button:(UIButton *)btn;
 - (void)showUserShowVcWithUserModel:(UserModel *)model button:(UIButton *)sender;
+- (void)showFriendsVcWithType:(NSInteger)type userModel:(UserModel *)model;
+- (void)showDetailStatusVcWithModel:(StatusModel *)model;
+- (void)showUserShowVcWithUserName:(NSString *)name;
+- (void)showTopicVcWithTopic:(NSString *)topic;
+- (void)showNewStatusVc;
+- (void)showSearchVc;
 @end

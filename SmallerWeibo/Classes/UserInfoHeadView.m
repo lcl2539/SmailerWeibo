@@ -10,6 +10,7 @@
 #import "UserModel.h"
 #import "UIImageView+WebCache.h"
 #import <Chameleon.h>
+#import "UIView+extend.h"
 @interface UserInfoHeadView ()
 {
     __weak IBOutlet UIImageView *_userImg;
@@ -32,8 +33,8 @@
 
 - (void)setUserImage:(UIImage *)userImage{
     _userImage = userImage;
-    self.backgroundColor = AverageColorFromImage(userImage);
-    self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:NO];
+    self.backgroundColor = GradientColor(UIGradientStyleRadial, self.frame, [NSArray arrayOfColorsFromImage:userImage withFlatScheme:NO]);
+    self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:YES];
 }
 
 - (void)setTextColor:(UIColor *)textColor{
@@ -69,7 +70,8 @@
         if (weakSelf.downloadFinish) {
             weakSelf.downloadFinish();
         }
-        self.backgroundColor = AverageColorFromImage(image);
+        self.backgroundColor = GradientColor(UIGradientStyleRadial, self.frame, [NSArray arrayOfColorsFromImage:image withFlatScheme:NO]);
+        self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:YES];
     }];
     _userName.text = model.strScreenName;
     _userText.text = model.strUserDescription;
@@ -95,6 +97,9 @@
     _userImgWeight.constant = 70 - 20 *(1-alpha);
     _userImgHeight.constant = 70 - 20 *(1-alpha);
     _userImg.layer.cornerRadius = _userImgHeight.constant/2;
+}
+- (IBAction)peopleBtnDidClick:(UIButton *)sender {
+    [self showFriendsVcWithType:sender.tag userModel:self.model];
 }
 
 - (void)userImgShow{

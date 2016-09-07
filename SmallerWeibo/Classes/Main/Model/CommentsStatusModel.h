@@ -18,5 +18,6 @@
 @property (nonatomic, strong) UserModel *user;
 @property (nonatomic,copy)NSString *strSource;
 @property (nonatomic,strong)StatusModel *status;
+@property (nonatomic,copy)NSAttributedString *attributedStr;
 + (instancetype)commentsModelWithDictionary:(NSDictionary *)dicData;
 @end

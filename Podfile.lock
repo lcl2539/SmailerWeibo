@@ -19,19 +19,25 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - Masonry (1.0.1)
   - MJRefresh (3.1.12)
+  - TZImagePickerController (1.6.1)
+  - YYText (1.0.5)
 
 DEPENDENCIES:
   - AFNetworking
   - ChameleonFramework
   - Masonry
   - MJRefresh
+  - TZImagePickerController
+  - YYText
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  TZImagePickerController: 1f8c9186e6fcfd949cfed563770bf426a049edd6
+  YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
 
-PODFILE CHECKSUM: c6e6015e621ac404a1e1058300643f50713faeaa
+PODFILE CHECKSUM: 6233d709acfcde8cc9f72aa352470472df913b21
 
 COCOAPODS: 1.0.1

@@ -13,10 +13,14 @@
 #import "CommentsTableViewCell.h"
 #import "StatusModel.h"
 #import <MJRefresh.h>
+#import "TitleView.h"
+#import <Masonry.h>
 @interface DetailStatusViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_commentsTabview;
+    __weak TitleView *_titleView;
 }
+@property (nonatomic,copy)NSString *strTitle;
 @property (nonatomic,copy)NSArray *data;
 @end
 
@@ -31,31 +35,39 @@
 
 - (void)setStatusModel:(StatusModel *)statusModel{
     _statusModel = statusModel;
+    _strTitle = @"微博详情";
     [self httprRequest];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self loadTitleView];
     [self loadCommentsTableview];
-    [self loadNavBar];
+}
+
+- (void)loadTitleView{
+    TitleView *view = [TitleView titleViewWithTitle:self.strTitle];
+    [self.view addSubview:view];
+    _titleView = view;
+    [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.leading.trailing.equalTo(self.view);
+        make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + 40);
+    }];
 }
 
 - (void)loadCommentsTableview{
-    UITableView *tab = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.view addSubview:tab];
+    [tab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_titleView.mas_bottom);
+        make.leading.trailing.bottom.equalTo(self.view);
+    }];
     _commentsTabview = tab;
     _commentsTabview.delegate = self;
     _commentsTabview.dataSource = self;
     _commentsTabview.estimatedRowHeight = 50;
     _commentsTabview.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
     _commentsTabview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(httprRequest)];
-}
-
-- (void)loadNavBar{
-    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:0 target:self action:@selector(back)];
-    back.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (void)httprRequest{
@@ -132,10 +144,4 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-- (void)back{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 @end

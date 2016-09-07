@@ -9,6 +9,7 @@
 #import "NavigationScroll.h"
 #import "NavigationCollectionViewCell.h"
 #import "NSString+Extend.h"
+#import "UIView+extend.h"
 #import <Masonry.h>
 @interface NavigationScroll ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -55,10 +56,10 @@
     lab.font = [UIFont systemFontOfSize:20];
     [self addSubview:lab];
     [lab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(user.mas_trailing).offset(15);
+        make.leading.equalTo(user.mas_trailing).offset(16);
         make.centerY.equalTo(user.mas_centerY);
     }];
-    /*UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *search = [UIButton buttonWithType:UIButtonTypeSystem];
     [search setTintColor:[UIColor whiteColor]];
     [search setImage:[UIImage imageNamed:@"Search"] forState:UIControlStateNormal];
     [search addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
@@ -66,8 +67,8 @@
     [search mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(user.mas_top).offset(1);
         make.trailing.equalTo(self.mas_trailing).offset(-8);
-        make.width.height.equalTo(@28);
-    }];*/
+        make.width.height.equalTo(@23);
+    }];
 }
 
 - (void)loadCollectionView{
@@ -84,7 +85,9 @@
     _collectionView = scroll;
     [self addSubview:scroll];
     [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.bottom.equalTo(self);
+        make.leading.equalTo(self.mas_leading).offset(0);
+        make.trailing.equalTo(self.mas_trailing).offset(-8);
+        make.bottom.equalTo(self);
         make.height.mas_equalTo(30);
     }];
 }
@@ -121,5 +124,8 @@
     }
 }
 
+- (void)search{
+    [self showSearchVc];
+}
 
 @end
