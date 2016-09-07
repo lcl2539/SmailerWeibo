@@ -10,5 +10,8 @@
 
 @interface StatusTextView : UIView
 @property (nonatomic,copy)NSArray *imgArr;
+@property (nonatomic,copy)NSString *status;
+@property (nonatomic,copy)void (^sendStatus)();
+- (void)beginEdit;
 + (instancetype)statusTextView;
 @end

@@ -12,6 +12,7 @@
 #import "UIView+extend.h"
 #import "LoginViewController.h"
 #import <Chameleon.h>
+#import "SendStatus.h"
 @interface AppDelegate ()
 
 @end
@@ -25,6 +26,7 @@
     }else{
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
     }
+    self.send = [SendStatus shareSendStatus];
     [self.window makeKeyAndVisible];
     return YES;
 }

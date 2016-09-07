@@ -25,32 +25,11 @@
                                 <action selector="imageBtnAction:" destination="V5o-zk-TNd" eventType="touchUpInside" id="0KR-Se-Ox5"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCa-Gy-XT6">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="RwS-lv-ec0"/>
-                            </constraints>
-                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
-                            <state key="normal" title="@"/>
-                            <connections>
-                                <action selector="userBtnAction:" destination="V5o-zk-TNd" eventType="touchUpInside" id="7I7-tY-WNh"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMy-OX-QJT">
                             <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" image="send"/>
                             <connections>
                                 <action selector="sendStatus:" destination="V5o-zk-TNd" eventType="touchUpInside" id="Yul-1p-Qq7"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1p4-qU-z2m">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="Wx6-vg-tsO"/>
-                            </constraints>
-                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="#"/>
-                            <connections>
-                                <action selector="topicBtnAction:" destination="V5o-zk-TNd" eventType="touchUpInside" id="j7F-0E-Nmt"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140/140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa0-jn-RTs">
@@ -62,19 +41,13 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="HMy-OX-QJT" secondAttribute="trailing" constant="10" id="40c-OE-RHW"/>
-                        <constraint firstAttribute="bottom" secondItem="1p4-qU-z2m" secondAttribute="bottom" id="4f7-cy-QRB"/>
                         <constraint firstAttribute="trailing" secondItem="xa0-jn-RTs" secondAttribute="trailing" constant="121" id="4w0-hl-9HA"/>
-                        <constraint firstItem="xa0-jn-RTs" firstAttribute="centerY" secondItem="1p4-qU-z2m" secondAttribute="centerY" id="AqW-yr-tzG"/>
                         <constraint firstItem="HMy-OX-QJT" firstAttribute="top" secondItem="uCu-Gn-ySz" secondAttribute="top" id="FaF-zp-V2U"/>
-                        <constraint firstItem="dCa-Gy-XT6" firstAttribute="leading" secondItem="Jof-P9-WJj" secondAttribute="trailing" constant="20" id="GXS-C4-MYR"/>
-                        <constraint firstItem="1p4-qU-z2m" firstAttribute="leading" secondItem="dCa-Gy-XT6" secondAttribute="trailing" constant="20" id="UBo-7V-zu0"/>
                         <constraint firstItem="Jof-P9-WJj" firstAttribute="top" secondItem="uCu-Gn-ySz" secondAttribute="top" constant="2.5" id="UcD-Hk-N3g"/>
-                        <constraint firstItem="dCa-Gy-XT6" firstAttribute="top" secondItem="uCu-Gn-ySz" secondAttribute="top" id="X56-Oq-80u"/>
                         <constraint firstAttribute="bottom" secondItem="Jof-P9-WJj" secondAttribute="bottom" constant="2.5" id="dZX-8P-NqW"/>
                         <constraint firstAttribute="bottom" secondItem="HMy-OX-QJT" secondAttribute="bottom" id="ehJ-7X-ubh"/>
                         <constraint firstAttribute="height" constant="30" id="fgQ-Qt-tJf"/>
-                        <constraint firstAttribute="bottom" secondItem="dCa-Gy-XT6" secondAttribute="bottom" id="ihV-Pd-eRt"/>
-                        <constraint firstItem="1p4-qU-z2m" firstAttribute="top" secondItem="uCu-Gn-ySz" secondAttribute="top" id="poa-t5-z36"/>
+                        <constraint firstItem="xa0-jn-RTs" firstAttribute="centerY" secondItem="Jof-P9-WJj" secondAttribute="centerY" id="iLD-Sf-gtY"/>
                         <constraint firstItem="Jof-P9-WJj" firstAttribute="leading" secondItem="uCu-Gn-ySz" secondAttribute="leading" constant="20" id="xG5-QG-aXn"/>
                     </constraints>
                 </view>
@@ -134,8 +107,6 @@
                 <outlet property="_imgView" destination="fgv-59-ii1" id="WlD-L4-OIg"/>
                 <outlet property="_surplus" destination="xa0-jn-RTs" id="462-3V-hht"/>
                 <outlet property="_text" destination="YG2-7k-fbz" id="auc-cA-Aa0"/>
-                <outlet property="_topicBtn" destination="1p4-qU-z2m" id="eR8-Fd-6a2"/>
-                <outlet property="_userBtn" destination="dCa-Gy-XT6" id="2qd-1q-Tod"/>
             </connections>
             <point key="canvasLocation" x="19" y="315"/>
         </view>

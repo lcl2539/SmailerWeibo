@@ -17,9 +17,8 @@
     __weak IBOutlet YYTextView *_text;
     __weak IBOutlet UILabel *_surplus;
     __weak IBOutlet UIButton *_imageBtn;
-    __weak IBOutlet UIButton *_userBtn;
-    __weak IBOutlet UIButton *_topicBtn;
     __weak IBOutlet UIView *_imgView;
+    __weak ShowImgCollectionView *_imgShowView;
 }
 @property (nonatomic,strong)FaceKeyBoard *faceKeyBoard;
 
@@ -53,6 +52,10 @@
     [self loadImgShow];
 }
 
+- (void)beginEdit{
+    [_text becomeFirstResponder];
+}
+
 - (void)loadSomeSetting{
     _text.delegate = self;
     _text.placeholderText = @"写点什么吧....";
@@ -78,14 +81,15 @@
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.trailing.bottom.equalTo(_imgView);
     }];
+    _imgShowView = view;
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-    _surplus.text = [NSString stringWithFormat:@"%ld/140",140-textView.attributedText.length];
+    _surplus.text = [NSString stringWithFormat:@"%ld/140",140-textView.text.length];
 }
 
 - (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if (_text.attributedText.length + text.length >140) {
+    if (_text.text.length + text.length >140) {
         [self toastWithString:@"太长啦，受不了啦" type:kLabPostionTypeCenter];
         return NO;
     }
@@ -99,7 +103,6 @@
     [strTemp addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18] range:NSMakeRange(0, strTemp.length)];
     _text.attributedText = strTemp;
     _text.selectedRange = NSMakeRange(range.location + 1, 0);
-    NSLog(@"%@",_text.text);
 }
 
 - (void)delectBtnDidClick{
@@ -114,12 +117,6 @@
     _text.selectedRange = NSMakeRange(range.location - 1, 0);
 }
 
-- (IBAction)topicBtnAction:(id)sender {
-}
-
-- (IBAction)userBtnAction:(id)sender {
-}
-
 - (IBAction)imageBtnAction:(id)sender {
     _text.inputView = (_text.inputView == self.faceKeyBoard) ? nil : self.faceKeyBoard;
     [_text resignFirstResponder];
@@ -128,6 +125,22 @@
 }
 
 - (IBAction)sendStatus:(id)sender {
+    if (_text.text.length > 0) {
+        if (self.sendStatus) {
+            if (_imgShowView.data.count > 1) {
+                NSMutableArray *arrTemp = [_imgShowView.data mutableCopy];
+                UIImage *imgTemp = _imgShowView.data.lastObject;
+                if (imgTemp.size.height == 0 && imgTemp.size.width == 0) {
+                    [arrTemp removeObject:arrTemp.lastObject];
+                }
+                self.imgArr = arrTemp;
+            }
+            self.status = _text.text;
+            self.sendStatus();
+        } 
+    }else{
+        [self toastWithString:@"再写点东西吧~~" type:kLabPostionTypeCenter];
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 typedef void (^success)(id object);
 typedef void (^failure)(NSError *error);
 @interface HttpRequest : NSObject
@@ -21,4 +22,7 @@ typedef void (^failure)(NSError *error);
 + (void)userModelFromUserName:(NSString *)name success:(success)success failure:(failure)failure;
 + (void)topicStatusWithTopic:(NSString *)topic page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)shortUrlWithurl:(NSString *)shortUrl success:(success)success failure:(failure)failure;
++ (void)newStatusWithStatusText:(NSString *)status success:(success)success failure:(failure)failure;
++ (void)uploadImgWithData:(NSData *)img success:(success)success failurl:(failure)failure;
++ (void)sendStatusWithStatus:(NSString *)status picID:(NSArray *)picID success:(success)success failure:(failure)failure;
 @end

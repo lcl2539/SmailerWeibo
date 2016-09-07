@@ -67,6 +67,8 @@
 		CC700C0C1D7ECB2000F77F08 /* ShowImgCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC700C0B1D7ECB2000F77F08 /* ShowImgCollectionViewCell.xib */; };
 		CC8ABC341D7672B300A40525 /* UIView+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8ABC331D7672B300A40525 /* UIView+extend.m */; };
 		CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8F1CA51D716D3A0028D0D9 /* SingExp.m */; };
+		CC9372CE1D7FDD9A00ADDBDF /* SendStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */; };
+		CC9372F81D80025300ADDBDF /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9372F71D80025300ADDBDF /* SearchViewController.m */; };
 		CCA2C1031D7D4F5400B7AA37 /* StatusTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA2C1021D7D4F5400B7AA37 /* StatusTextView.xib */; };
 		CCA2C1061D7D50C800B7AA37 /* StatusTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA2C1051D7D50C800B7AA37 /* StatusTextView.m */; };
 		CCA2C1091D7D74EE00B7AA37 /* FacesKeyboard-LXH.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCA2C1071D7D74EE00B7AA37 /* FacesKeyboard-LXH.plist */; };
@@ -198,6 +200,10 @@
 		CC8ABC331D7672B300A40525 /* UIView+extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+extend.m"; sourceTree = "<group>"; };
 		CC8F1CA41D716D3A0028D0D9 /* SingExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingExp.h; sourceTree = "<group>"; };
 		CC8F1CA51D716D3A0028D0D9 /* SingExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingExp.m; sourceTree = "<group>"; };
+		CC9372CC1D7FDD9A00ADDBDF /* SendStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendStatus.h; sourceTree = "<group>"; };
+		CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendStatus.m; sourceTree = "<group>"; };
+		CC9372F61D80025300ADDBDF /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		CC9372F71D80025300ADDBDF /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		CCA2C1021D7D4F5400B7AA37 /* StatusTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusTextView.xib; sourceTree = "<group>"; };
 		CCA2C1041D7D50C800B7AA37 /* StatusTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTextView.h; sourceTree = "<group>"; };
 		CCA2C1051D7D50C800B7AA37 /* StatusTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTextView.m; sourceTree = "<group>"; };
@@ -374,6 +380,7 @@
 				36C5EF521D57161F006511B9 /* AppDelegate */,
 				36C5EF931D571A13006511B9 /* GeneralClass */,
 				36C5EF551D57164F006511B9 /* Main */,
+				CC9372F51D80020B00ADDBDF /* Search */,
 				CC0B35BE1D7ABC500082B01D /* NewStatus */,
 				CCEDB62B1D6F2E8200AA4976 /* More */,
 				CCEDB5DB1D6EBC4300AA4976 /* DetailStatus */,
@@ -403,6 +410,8 @@
 			children = (
 				36994D491D57136C0078372C /* AppDelegate.h */,
 				36994D4A1D57136C0078372C /* AppDelegate.m */,
+				CC9372CC1D7FDD9A00ADDBDF /* SendStatus.h */,
+				CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */,
 			);
 			name = AppDelegate;
 			sourceTree = "<group>";
@@ -590,6 +599,15 @@
 				CC700C0B1D7ECB2000F77F08 /* ShowImgCollectionViewCell.xib */,
 			);
 			name = ShowImgView;
+			sourceTree = "<group>";
+		};
+		CC9372F51D80020B00ADDBDF /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CC9372F61D80025300ADDBDF /* SearchViewController.h */,
+				CC9372F71D80025300ADDBDF /* SearchViewController.m */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		CCA2C0FD1D7D4EE000B7AA37 /* StatusTextView */ = {
@@ -850,6 +868,7 @@
 				36C5EF801D5716BA006511B9 /* SDWebImageManager.m in Sources */,
 				36C5EF9F1D571B2B006511B9 /* NavigationScroll.m in Sources */,
 				36C5EF7E1D5716BA006511B9 /* SDWebImageDownloader.m in Sources */,
+				CC9372F81D80025300ADDBDF /* SearchViewController.m in Sources */,
 				CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */,
 				3687B24A1D5C46BF0084887F /* MLLinkLabel.m in Sources */,
 				36C5EF981D571A13006511B9 /* HttpRequest.m in Sources */,
@@ -896,6 +915,7 @@
 				36C5EF831D5716BA006511B9 /* UIImage+GIF.m in Sources */,
 				36994D481D57136C0078372C /* main.m in Sources */,
 				CCA2C1061D7D50C800B7AA37 /* StatusTextView.m in Sources */,
+				CC9372CE1D7FDD9A00ADDBDF /* SendStatus.m in Sources */,
 				363C0A7B1D6310A000CED9DB /* ReviewImgController.m in Sources */,
 				36CF1F611D6ACF0C0098EB09 /* CommentsStatusModel.m in Sources */,
 			);

@@ -11,6 +11,9 @@
 #import "FaceKeyBoard.h"
 #import "TitleView.h"
 #import "StatusTextView.h"
+#import "HttpRequest.h"
+#import "UIView+extend.h"
+#import "SendStatus.h"
 @interface NewStatusViewController ()
 {
     __weak TitleView *_title;
@@ -25,6 +28,11 @@
     [self loadTitleView];
     [self loadTextView];
     [self loadSomeSetting];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [_statusText beginEdit];
 }
 
 - (void)loadSomeSetting{
@@ -50,6 +58,10 @@
         make.leading.trailing.equalTo(_title);
         make.height.mas_equalTo(self.view.frame.size.height - (40 + [UIApplication sharedApplication].statusBarFrame.size.height));
     }];
+    __weak typeof(self) weakSelf = self;
+    view.sendStatus = ^(){
+        [weakSelf sendStatus];
+    };
     _statusText = view;
 }
 
@@ -63,9 +75,18 @@
     }];
 }
 
+- (void)sendStatus{
+    SendStatus *send = [SendStatus shareSendStatus];
+    NewStatusModel *model = [NewStatusModel newStatusMoldeWithStatus:_statusText.status imgArr:_statusText.imgArr];
+    [[send mutableArrayValueForKey:@"status"] addObject:model];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)show{
     [self.fromVc.navigationController pushViewController:self animated:YES];
 }
 
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 @end

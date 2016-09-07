@@ -111,7 +111,6 @@
     [arrTemp removeObject:img];
     self.data = arrTemp;
     [self deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-    
     if (self.data.count == 8 ) {
         UIImage *imageTemp = self.data.lastObject;
         if (imageTemp.size.height != 0 && imageTemp.size.width != 0) {
