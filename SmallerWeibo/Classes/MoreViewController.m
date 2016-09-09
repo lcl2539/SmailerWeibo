@@ -11,13 +11,15 @@
 #import "HttpRequest.h"
 #import "UserModel.h"
 #import "FriendsViewController.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "ViewController.h"
 #import "UIView+extend.h"
+#import "UserMangerViewController.h"
+#import "PrefixHeader.pch"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
-    __weak UIImageView *_userHeadImg;
+    __weak UIButton *_userHeadImg;
     __weak UILabel *_userName;
     __weak UIImageView *_bgImg;
 }
@@ -29,7 +31,7 @@
 
 - (NSArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = @[@"我的关注",@"我的粉丝",@"我的私信",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
+        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
     }
     return _titleArr;
 }
@@ -38,7 +40,7 @@
     [super viewDidLoad];
     [self loadTab];
     __weak typeof(self) weakSelf = self;
-    [HttpRequest userInfoHttpRequestWithSuccess:^(id object) {
+    [HttpRequest userInfoWithToken:myToken userID:userId success:^(id object){
         [weakSelf loadData:object];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -46,10 +48,10 @@
 }
 
 - (void)loadData:(id)object{
-    UserModel *user = [UserModel CreatMyModle:object];
-    [_userHeadImg sd_setImageWithURL:[NSURL URLWithString:user.strAvatarLarge]];
-    [_userName setText:user.strScreenName];
+    UserModel *user = [UserModel userModelWithDictionary:object];
     self.model = user;
+    [_userHeadImg sd_setImageWithURL:[NSURL URLWithString:self.model.strAvatarHd] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
+    [_userName setText:user.strScreenName];
 }
 
 - (void)loadTab{
@@ -59,7 +61,7 @@
     [_tab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.bottom.trailing.equalTo(self.view);
     }];
-    _tab.separatorStyle = UIAccessibilityTraitNone;
+    _tab.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tab.delegate = self;
     _tab.dataSource = self;
     [self loadHeadView];
@@ -73,7 +75,7 @@
     UIImageView *bgImg = [[UIImageView alloc]init];
     [head addSubview:bgImg];
     _bgImg = bgImg;
-    UIImageView *img = [[UIImageView alloc]init];
+    UIButton *img = [[UIButton alloc]init];
     img.layer.cornerRadius = 25;
     img.clipsToBounds = YES;
     [head addSubview:img];
@@ -94,6 +96,11 @@
         make.leading.equalTo(_userHeadImg.mas_leading);
         make.bottom.equalTo(head).offset(-5);
     }];
+    [_userHeadImg addTarget:self action:@selector(showMe) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMe{
+    [self.view showUserShowVcWithUserModel:self.model button:_userHeadImg];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -112,8 +119,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ViewController *vc = (ViewController *)self.parentViewController;
-    [vc moreBtndidClick];
+    [self back];
     switch (indexPath.row) {
         case 0:
         case 1:
@@ -122,7 +128,11 @@
         }
             break;
         case 2:
-            
+        {
+            UserMangerViewController *vc = [[UserMangerViewController alloc]init];
+            vc.currentUser = self.model.strScreenName;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
             break;
         case 3:
             
@@ -133,19 +143,13 @@
         case 5:
             
             break;
-        case 6:
-            
-            break;
         default:
             break;
     }
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    CGRect frame = self.view.frame;
-    frame.origin.x = (frame.origin.x != 0) ? 0 : -self.view.frame.size.width;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.view.frame = frame;
-    }];
+- (void)back{
+    ViewController *vc = (ViewController *)self.parentViewController;
+    [vc moreBtndidClick];
 }
 @end

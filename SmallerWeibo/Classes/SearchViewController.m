@@ -35,7 +35,7 @@
 
 - (void)setModel:(UserModel *)model{
     _model = model;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] forState:UIControlStateNormal];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _userName.text = model.strScreenName;
 }
 
@@ -235,10 +235,7 @@
         __weak typeof(self) weakSelf = self;
         SearchUserCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AllUserCell" forIndexPath:indexPath];
         cell.allUser = ^(){
-            SearchAllUserVc *vc = [[SearchAllUserVc alloc]init];
-            vc.data = weakSelf.userData;
-            vc.text = weakSelf.text;
-            [weakSelf.navigationController pushViewController:vc animated:YES];
+            [weakSelf searchUser];
         };
         return cell;
     }else{
@@ -246,6 +243,13 @@
         cell.model = self.userData[indexPath.row];
         return cell;
     }
+}
+
+- (void)searchUser{
+    SearchAllUserVc *vc = [[SearchAllUserVc alloc]init];
+    vc.data = self.userData;
+    vc.text = self.text;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)search:(id)sender {

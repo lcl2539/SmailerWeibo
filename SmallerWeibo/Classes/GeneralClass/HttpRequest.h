@@ -13,10 +13,8 @@ typedef void (^failure)(NSError *error);
 @interface HttpRequest : NSObject
 + (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(success)success failure:(failure)failure isGET:(BOOL)isget type:(NSString *)type;
 + (void)statusHttpRequestWithType:(NSInteger)type page:(NSInteger)page success:(success)success failure:(failure)failure;
-+ (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(success)sucess failure:(failure)faliure;
 + (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure;
 + (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(success)success failure:(failure)failure;
-+ (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure;
 + (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid;
 + (void)userShowHttpRequestWithId:(NSString *)name page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)userModelFromUserName:(NSString *)name success:(success)success failure:(failure)failure;
@@ -27,4 +25,5 @@ typedef void (^failure)(NSError *error);
 + (void)sendStatusWithStatus:(NSString *)status picID:(NSArray *)picID success:(success)success failure:(failure)failure;
 + (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
++ (void)userInfoWithToken:(NSString *)token userID:(NSString *)uid success:(success)success failure:(failure)failure;
 @end

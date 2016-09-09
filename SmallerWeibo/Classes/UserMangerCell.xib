@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserMangerCell" selectionStyle="default" indentationWidth="10" rowHeight="80" id="Xkw-zv-jHv" customClass="UserMangerCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xkw-zv-jHv" id="mvM-e8-12x">
+                <frame key="frameInset" width="375" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NBX-Uv-y1Q">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="J90-TT-hxr"/>
+                            <constraint firstAttribute="height" constant="50" id="Oia-L8-ZiU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ua-6Y-1mV">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEM-EV-5YO">
+                        <state key="normal" title="删除">
+                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="delect:" destination="Xkw-zv-jHv" eventType="touchUpInside" id="iAU-k1-YdB"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NBX-Uv-y1Q" firstAttribute="top" secondItem="mvM-e8-12x" secondAttribute="top" constant="10" id="TjT-GV-iqN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="XEM-EV-5YO" secondAttribute="trailing" id="Uny-S3-Q5O"/>
+                    <constraint firstItem="6Ua-6Y-1mV" firstAttribute="leading" secondItem="NBX-Uv-y1Q" secondAttribute="trailing" constant="10" id="dUt-dt-jRe"/>
+                    <constraint firstItem="XEM-EV-5YO" firstAttribute="centerY" secondItem="6Ua-6Y-1mV" secondAttribute="centerY" id="ev2-46-Wzr"/>
+                    <constraint firstItem="6Ua-6Y-1mV" firstAttribute="centerY" secondItem="NBX-Uv-y1Q" secondAttribute="centerY" id="iMZ-CZ-bom"/>
+                    <constraint firstItem="NBX-Uv-y1Q" firstAttribute="leading" secondItem="mvM-e8-12x" secondAttribute="leading" constant="8" id="uUn-8x-fLY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_delectBtn" destination="XEM-EV-5YO" id="3Af-fD-69S"/>
+                <outlet property="_userImg" destination="NBX-Uv-y1Q" id="dCx-wM-tEA"/>
+                <outlet property="_userName" destination="6Ua-6Y-1mV" id="tHh-rW-E4B"/>
+            </connections>
+            <point key="canvasLocation" x="49.5" y="69"/>
+        </tableViewCell>
+    </objects>
+</document>

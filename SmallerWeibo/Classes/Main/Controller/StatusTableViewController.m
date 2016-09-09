@@ -14,7 +14,7 @@
 #import "CommentsStatusModel.h"
 #import "UIView+extend.h"
 #import "DetailStatusViewController.h"
-@interface StatusTableViewController ()<StatusCellDelegate>
+@interface StatusTableViewController ()
 @property (nonatomic,assign)NSInteger lastOffsetY;
 @end
 
@@ -70,7 +70,6 @@
     id model = self.dataArr[indexPath.row];
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
     cell.model = model;
-    cell.delegate = self;
     return cell;
 }
 
@@ -98,28 +97,6 @@
         self.changeTop(value,self.index);
     }
     self.lastOffsetY = scrollView.contentOffset.y;
-}
-
-
-- (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId{
-    __weak typeof(self) weakSelf = self;
-    switch (index) {
-        case 1:
-        case 2:{
-            [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:index success:^(id object) {
-                NSString *toast = (index == 1) ? @"收藏成功" : @"转发成功";
-                [weakSelf toastWithString:toast];
-            } failure:^(NSError *error) {
-                NSLog(@"%@",error);
-            }];
-        }
-            break;
-        case 3:
-            
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)toastWithString:(NSString *)str{

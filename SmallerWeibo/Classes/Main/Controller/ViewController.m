@@ -71,6 +71,7 @@
     [self loadShadeView];
     [self loadSlideVc];
     [self loadSlideGesTure];
+    [self loadChangeUserNoti];
 }
 
 - (void)loadSomeSetting{
@@ -122,7 +123,7 @@
 }
 
 - (void)loadSlideVc{
-    self.slideVc = [[MoreViewController alloc]init];
+    _slideVc = [[MoreViewController alloc]init];
     [self addChildViewController:self.slideVc];
     [self.view addSubview:self.slideVc.view];
     CGRect frame = [UIScreen mainScreen].bounds;
@@ -183,6 +184,10 @@
     [self loadVisibleTableViewData:0];
 }
 
+- (void)loadChangeUserNoti{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(viewControllerDie) name:@"ChangeUser" object:nil];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self judgeStatusScrollIndex];
 }
@@ -195,7 +200,7 @@
 - (void)loadVisibleTableViewData:(NSInteger)index{
     for (StatusTableViewController *vc in self.visibleTabViewControllers) {
         if (vc.index == index) {
-            NSArray *arr = [self.allData valueForKey:dictKey(index)];
+            NSArray *arr = [self.allData valueForKey:dictKey((long)index)];
             if (arr) {
                 vc.dataArr = arr;
             }else{
@@ -210,14 +215,14 @@
 - (void)tableViewLoadData:(StatusTableViewController *)vc isReLoad:(BOOL)isReLoad{
     __weak typeof(self) weakSelf = self;
     NSInteger page = 0;
-    NSArray *arrTemp = self.allData[[NSString stringWithFormat:@"%ld",vc.index]];
+    NSArray *arrTemp = self.allData[[NSString stringWithFormat:@"%ld",(long)vc.index]];
     page = arrTemp.count/20 + 1;
     if (arrTemp.count>0 && page == 1) {
         page += 1;
     }
     if (isReLoad && page >= 1) {
         page = 1;
-        [self.allData setObject:[NSArray array] forKey:dictKey(vc.index)];
+        [self.allData setObject:[NSArray array] forKey:dictKey((long)vc.index)];
     }
     [HttpRequest statusHttpRequestWithType:vc.index page:page success:^(id Object) {
         NSArray *arr;
@@ -244,7 +249,7 @@
 }
 
 - (void)loadDataWithArr:(NSArray *)arr tableView:(StatusTableViewController *)vc {
-    NSArray *arrOrigin = self.allData[dictKey(vc.index)];
+    NSArray *arrOrigin = self.allData[dictKey((long)vc.index)];
     NSMutableArray *arrTemp = [arrOrigin mutableCopy];
     if (!arrTemp || arrTemp.count == 0) {
         arrTemp = [[NSMutableArray alloc]init];
@@ -269,7 +274,7 @@
         }
         [arrTemp addObject:model];
     }
-    [self.allData setObject:arrTemp forKey:dictKey(vc.index)];
+    [self.allData setObject:arrTemp forKey:dictKey((long)vc.index)];
     vc.dataArr = [arrTemp copy];
 }
 
@@ -393,8 +398,17 @@
     [_newStatus showNewStatusVc];
 }
 
+- (void)viewControllerDie{
+    [self.visibleTabViewControllers removeAllObjects];
+    [self.reusedTableViewControllers removeAllObjects];
+    for (UIViewController *vc in self.childViewControllers) {
+        [vc removeFromParentViewController];
+    }
+}
+
 - (void)dealloc{
     [self.slideVc removeObserver:self forKeyPath:@"view.frame"];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 @end

@@ -14,11 +14,21 @@
 @end
 
 @implementation HttpRequest
++ (AFHTTPSessionManager *)shareManger{
+    static AFHTTPSessionManager *manager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer.timeoutInterval = 10;
+    });
+    return manager;
+}
+
 + (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(success)success failure:(failure)failure isGET:(BOOL)isget type:(NSString *)type{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    __weak AFHTTPSessionManager *manager = [self shareManger];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type, nil];
     static NSDictionary *baseDict;
-    baseDict = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]};
+    baseDict = @{@"access_token":myToken};
     NSMutableDictionary *para = [baseDict mutableCopy];
     [para setValuesForKeysWithDictionary:dict];
     if (isget) {
@@ -58,10 +68,6 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)searchHttpRequestWithKey:(NSString *)key page:(NSInteger)page success:(success)sucess failure:(failure)faliure{
-    
-}
-
 + (void)detailsStatusHttpRequestWithStatusID:(NSString *)statusId page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
     url = @"https://api.weibo.com/2/comments/show.json";
@@ -87,17 +93,6 @@
     } failure:^(NSError *error) {
         faliure(error);
     } isGET:NO type:type_json];
-}
-
-+ (void)userInfoHttpRequestWithSuccess:(success)success failure:(failure)faliure{
-    static NSString *url;
-    url = @"https://api.weibo.com/2/users/show.json";
-    NSDictionary *dict = @{@"uid":userId};
-    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
-        success(object);
-    } failure:^(NSError *error) {
-        faliure(error);
-    } isGET:YES type:type_json];
 }
 
 + (void)friendsHttpRequestWithSuccess:(success)success failure:(failure)failure cursor:(NSInteger)cursor type:(NSInteger)type userID:(NSString *)uid{
@@ -179,10 +174,10 @@
 + (void)uploadImgWithData:(NSData *)img success:(success)success failurl:(failure)failure{
     static NSString *url;
     url = @"https://api.weibo.com/2/statuses/upload_pic.json";
-    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    __weak AFHTTPSessionManager *manager = [self shareManger];
     static NSDictionary *dict;
     dict = @{@"access_token":myToken};
-    [manger POST:url parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:url parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyyMMddHHmmss";
         NSString *str = [formatter stringFromDate:[NSDate date]];
@@ -247,4 +242,18 @@
         failure(error);
     } isGET:YES type:type_json];
 }
+
++ (void)userInfoWithToken:(NSString *)token userID:(NSString *)uid success:(success)success failure:(failure)failure{
+    __weak AFHTTPSessionManager *manager = [self shareManger];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_json, nil];
+    [manager GET:@"https://api.weibo.com/2/users/show.json" parameters:@{@"access_token":token,
+@"uid":uid} progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+    }];
+}
+
 @end

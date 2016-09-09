@@ -21,7 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"uid"]) {
+    if (!userId) {
         self.window.rootViewController = [[LoginViewController alloc]init];
     }else{
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
@@ -59,8 +59,8 @@
 }
 
 - (void)loadMainViewController{
-    UIViewController *vc= [[ViewController alloc]init];
-    [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:vc]];
-    [vc.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
+    ViewController *mainVc= [[ViewController alloc]init];
+    [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:mainVc]];
+    //[vc.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
 }
 @end

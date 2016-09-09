@@ -7,14 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class StatusModel;
-@protocol StatusCellDelegate <NSObject>
-
-- (void)cellBtnActionWithIndex:(NSInteger)index withStatusId:(NSInteger)statusId;
-
-@end
 @interface StatusCell : UITableViewCell
 @property (nonatomic,strong)id model;
-@property (nonatomic,weak)id <StatusCellDelegate> delegate;
 + (instancetype)statusCellWithTableView:(UITableView *)tableView;
 @end

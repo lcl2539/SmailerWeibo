@@ -28,7 +28,7 @@
     status.strSource = dicData[@"source"];
     
     /** favorited	boolean	是否已收藏，true：是，false：否 */
-    status.favorited = dicData[@"favorited"];
+    status.favorited = [dicData[@"favorited"] boolValue];
     
     /** user	object	微博作者的用户信息字段 详细 */
     status.user = [UserModel userModelWithDictionary:dicData[@"user"]];

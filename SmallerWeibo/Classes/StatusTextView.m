@@ -85,7 +85,7 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-    _surplus.text = [NSString stringWithFormat:@"%ld/140",140-textView.text.length];
+    _surplus.text = [NSString stringWithFormat:@"%lu/140",140-textView.text.length];
 }
 
 - (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{

@@ -105,15 +105,15 @@
 }
 
 - (void)updataWithStatusModle:(StatusModel *)model{
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strAvatarLarge] forState:UIControlStateNormal];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strAvatarLarge] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _creatTime.text = [NSString dateFromString:model.strCreatedAt];
     _nicknName.text = model.user.strName;
     _from.text = model.strSourceDes;
     _status.attributedText = model.attributedStr;
     //[self shortUrlWithStr:_status.attributedText];
-    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",model.commentsCount] forState:UIControlStateNormal];
-    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",model.repostsCount] forState:UIControlStateNormal];
-    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",model.attitudesCount] forState:UIControlStateNormal];
+    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",(long)model.commentsCount] forState:UIControlStateNormal];
+    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.repostsCount] forState:UIControlStateNormal];
+    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.attitudesCount] forState:UIControlStateNormal];
     if (model.arrPicUrls){
         [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:model.arrPicUrls];
     }
@@ -132,14 +132,14 @@
 }
 
 - (void)updataWithCommentsModle:(CommentsStatusModel *)model{
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strAvatarLarge] forState:UIControlStateNormal];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strAvatarLarge] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _creatTime.text = [NSString dateFromString:model.strCreatedAt];
     _nicknName.text = model.user.strScreenName;
     _from.text = model.strSource;
     _status.attributedText = model.attributedStr;
-    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",model.status.commentsCount] forState:UIControlStateNormal];
-    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",model.status.repostsCount] forState:UIControlStateNormal];
-    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",model.status.attitudesCount] forState:UIControlStateNormal];
+    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",(long)model.status.commentsCount] forState:UIControlStateNormal];
+    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.status.repostsCount] forState:UIControlStateNormal];
+    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.status.attitudesCount] forState:UIControlStateNormal];
     NSMutableAttributedString *strTemp = [model.status.attributedStr mutableCopy];
     [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.user.strScreenName]] atIndex:0];
     _repeatStatus.attributedText = strTemp;
@@ -254,7 +254,8 @@
 - (UIButton *)creatImgBtnWith:(NSString *)url index:(NSInteger)index{
     UIButton *imageBtn = [[UIButton alloc]init];
     [imageBtn addTarget:self action:@selector(imgDidTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
+    [imageBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeHold"]];
+    imageBtn.tintColor = [UIColor grayColor];
     imageBtn.contentMode = UIViewContentModeScaleAspectFill;
     imageBtn.tag = index;
     imageBtn.clipsToBounds = YES;

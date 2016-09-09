@@ -81,6 +81,8 @@
 		CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBA4C901D7063BE0046E20F /* MoreViewController.m */; };
 		CCBD8B371D77ED53001C71DD /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCBD8B361D77ED53001C71DD /* TitleView.m */; };
 		CCBD8B391D77ED6E001C71DD /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCBD8B381D77ED6E001C71DD /* TitleView.xib */; };
+		CCDCCBE91D8132B30008DE1C /* UserMangerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDCCBE81D8132B30008DE1C /* UserMangerViewController.m */; };
+		CCDCCBEB1D8136770008DE1C /* UserMangerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCDCCBEA1D8136770008DE1C /* UserMangerCell.xib */; };
 		CCE7D4791D751DDF00EAB495 /* UserShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE7D4781D751DDF00EAB495 /* UserShowViewController.m */; };
 		CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D41D6E90A800AA4976 /* ReViewImgAnimation.m */; };
 		CCEDB5D91D6EBC2C00AA4976 /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEDB5D81D6EBC2C00AA4976 /* DetailStatusViewController.m */; };
@@ -223,6 +225,9 @@
 		CCBD8B351D77ED53001C71DD /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
 		CCBD8B361D77ED53001C71DD /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
 		CCBD8B381D77ED6E001C71DD /* TitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
+		CCDCCBE71D8132B30008DE1C /* UserMangerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMangerViewController.h; sourceTree = "<group>"; };
+		CCDCCBE81D8132B30008DE1C /* UserMangerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMangerViewController.m; sourceTree = "<group>"; };
+		CCDCCBEA1D8136770008DE1C /* UserMangerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserMangerCell.xib; sourceTree = "<group>"; };
 		CCE7D4771D751DDF00EAB495 /* UserShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserShowViewController.h; sourceTree = "<group>"; };
 		CCE7D4781D751DDF00EAB495 /* UserShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShowViewController.m; sourceTree = "<group>"; };
 		CCEDB5D31D6E90A800AA4976 /* ReViewImgAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReViewImgAnimation.h; sourceTree = "<group>"; };
@@ -640,6 +645,16 @@
 			name = KeyBoard;
 			sourceTree = "<group>";
 		};
+		CCDCCBE61D8132430008DE1C /* UserManger */ = {
+			isa = PBXGroup;
+			children = (
+				CCDCCBE71D8132B30008DE1C /* UserMangerViewController.h */,
+				CCDCCBE81D8132B30008DE1C /* UserMangerViewController.m */,
+				CCDCCBEA1D8136770008DE1C /* UserMangerCell.xib */,
+			);
+			name = UserManger;
+			sourceTree = "<group>";
+		};
 		CCE7D4761D751D6B00EAB495 /* UserShow */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,6 +741,7 @@
 				CCBA4C8F1D7063BE0046E20F /* MoreViewController.h */,
 				CCBA4C901D7063BE0046E20F /* MoreViewController.m */,
 				CC1C30EC1D73C3D8003A9C2C /* People */,
+				CCDCCBE61D8132430008DE1C /* UserManger */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -804,6 +820,7 @@
 				CC7031D51D8040E400E9103C /* AllUserCell.xib in Resources */,
 				36C5EFA41D572378006511B9 /* NavigationCollectionViewCell.xib in Resources */,
 				CC4D1C031D75900B00F9B4C8 /* face.plist in Resources */,
+				CCDCCBEB1D8136770008DE1C /* UserMangerCell.xib in Resources */,
 				36994D561D57136C0078372C /* LaunchScreen.storyboard in Resources */,
 				36994D531D57136C0078372C /* Assets.xcassets in Resources */,
 				CCA2C10F1D7D76B200B7AA37 /* FaceKeyBoard.xib in Resources */,
@@ -908,6 +925,7 @@
 				CC22C6041D79720E004960A7 /* TopicViewController.m in Sources */,
 				36994D4B1D57136C0078372C /* AppDelegate.m in Sources */,
 				360256EC1D5E065F006C8EF8 /* StatusTableViewController.m in Sources */,
+				CCDCCBE91D8132B30008DE1C /* UserMangerViewController.m in Sources */,
 				36C5EF821D5716BA006511B9 /* UIButton+WebCache.m in Sources */,
 				3687B2471D5C46BF0084887F /* NSString+MLExpression.m in Sources */,
 				CCEDB5D91D6EBC2C00AA4976 /* DetailStatusViewController.m in Sources */,

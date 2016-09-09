@@ -119,12 +119,12 @@
         [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (self.isFinishLoad && index == self.showWhichImg) {
+            if (weakSelf.isFinishLoad && index == weakSelf.showWhichImg && image) {
                 [weakSelf.placeHoldimageView removeFromSuperview];
                 weakSelf.placeHoldimageView = nil;
             }
-            if (index == self.showWhichImg) {
-                self.isFinishLoad = YES;
+            if (index == weakSelf.showWhichImg && image) {
+                weakSelf.isFinishLoad = YES;
             }
             [progress removeFromSuperview];
             [weakSelf creatImg:image scrollView:ImgScroll];

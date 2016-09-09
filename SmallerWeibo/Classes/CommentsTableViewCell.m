@@ -52,7 +52,7 @@
 
 - (void)setModel:(commentsModel *)model{
     _model = model;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strProfileImageUrl] forState:UIControlStateNormal];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strProfileImageUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _userName.text = model.user.strScreenName;
     _creatTime.text = model.creatTime;
     _comments.attributedText = [MLExpressionManager expressionAttributedStringWithString:model.commentsText expression:self.exp];

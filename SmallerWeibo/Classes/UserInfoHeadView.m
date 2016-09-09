@@ -66,7 +66,7 @@
 - (void)setModel:(UserModel *)model{
     _model = model;
     __weak typeof(self) weakSelf = self;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (weakSelf.downloadFinish) {
             weakSelf.downloadFinish();
         }
@@ -75,9 +75,9 @@
     }];
     _userName.text = model.strScreenName;
     _userText.text = model.strUserDescription;
-    _statusNum.text = [NSString stringWithFormat:@"%ld",model.statusesCount];
-    _fansNum.text = [NSString stringWithFormat:@"%ld",model.followersCount];
-    _friendsNum.text = [NSString stringWithFormat:@"%ld",model.friendsCount];
+    _statusNum.text = [NSString stringWithFormat:@"%ld",(long)model.statusesCount];
+    _fansNum.text = [NSString stringWithFormat:@"%ld",(long)model.followersCount];
+    _friendsNum.text = [NSString stringWithFormat:@"%ld",(long)model.friendsCount];
     _userImgFrame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-35, 20, 70, 70);
 }
 

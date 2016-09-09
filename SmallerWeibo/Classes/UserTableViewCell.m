@@ -37,7 +37,7 @@
 
 - (void)setModel:(UserModel *)model{
     _model = model;
-    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] forState:UIControlStateNormal];
+    [_userImg sd_setImageWithURL:[NSURL URLWithString:model.strAvatarLarge] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _userName.text = model.strScreenName;
     _userInfo.text = model.strUserDescription;
     self.followType = (model.following) ? kUserFriendsFollowing : kUserFriendsFollowMe;

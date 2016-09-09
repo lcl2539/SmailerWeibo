@@ -83,7 +83,7 @@
             [weakSelf removeImg:image];
         };
         cell.index = indexPath;
-        cell.img = self.data[indexPath.row];
+        cell.img = weakSelf.data[indexPath.row];
         return cell;
     }
     return nil;
