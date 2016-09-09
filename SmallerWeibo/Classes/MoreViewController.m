@@ -135,7 +135,10 @@
         }
             break;
         case 3:
-            
+        {
+            ViewController *vc = (ViewController *)self.parentViewController;
+            [vc chooseColorTheme];
+        }
             break;
         case 4:
             

@@ -6,7 +6,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "comments.png",
+      "filename" : "ColorSelected.png",
       "scale" : "2x"
     },
     {
@@ -19,6 +19,6 @@
     "author" : "xcode"
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

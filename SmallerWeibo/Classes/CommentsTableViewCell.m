@@ -29,6 +29,9 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _comments.delegate = self;
+    _userName.textColor = ThemeColor;
+    _comments.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated{

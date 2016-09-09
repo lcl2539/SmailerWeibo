@@ -13,12 +13,20 @@
 @interface ImgShowCollectionViewCell ()
 {
     __weak IBOutlet UIImageView *_image;
+    __weak IBOutlet UILabel *_add;
+    __weak IBOutlet UIButton *_delected;
 }
 @property (nonatomic,strong)NSIndexPath *index;
 @property (nonatomic,copy)void (^cancelImg)(UIImage *);
 @property (nonatomic,strong)UIImage *img;
 @end
 @implementation ImgShowCollectionViewCell
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    _add.textColor = ThemeColor;
+    _delected.tintColor = ThemeColor;
+}
 
 - (void)setImg:(UIImage *)img{
     _img = img;

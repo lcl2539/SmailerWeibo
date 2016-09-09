@@ -89,14 +89,16 @@
                             <action selector="repateAndCommentBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cwN-Pd-Inh"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJF-iW-GCf">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJF-iW-GCf">
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="2w0-pm-L5L"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="收藏"/>
+                        <state key="normal" title="收藏">
+                            <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
                         <state key="selected" title="已收藏"/>
                         <connections>
                             <action selector="likeAndSupportBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kcc-ri-F2l"/>

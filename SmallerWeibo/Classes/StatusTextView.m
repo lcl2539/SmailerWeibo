@@ -18,6 +18,7 @@
     __weak IBOutlet UILabel *_surplus;
     __weak IBOutlet UIButton *_imageBtn;
     __weak IBOutlet UIView *_imgView;
+    __weak IBOutlet UIButton *_sendBtn;
     __weak ShowImgCollectionView *_imgShowView;
 }
 @property (nonatomic,strong)FaceKeyBoard *faceKeyBoard;
@@ -50,6 +51,8 @@
     [super awakeFromNib];
     [self loadText];
     [self loadImgShow];
+    [_sendBtn setTintColor:ThemeColor];
+    _surplus.textColor = ThemeColor;
 }
 
 - (void)beginEdit{
@@ -121,7 +124,7 @@
     _text.inputView = (_text.inputView == self.faceKeyBoard) ? nil : self.faceKeyBoard;
     [_text resignFirstResponder];
     [_text becomeFirstResponder];
-    _imageBtn.tintColor = (_imageBtn.tintColor == [UIColor darkGrayColor]) ? [UIColor orangeColor] : [UIColor darkGrayColor];
+    _imageBtn.tintColor = (_imageBtn.tintColor == ThemeColor) ? [UIColor darkGrayColor] : ThemeColor;
 }
 
 - (IBAction)sendStatus:(id)sender {

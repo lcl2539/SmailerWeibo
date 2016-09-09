@@ -67,10 +67,15 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
+    _nicknName.textColor = ThemeColor;
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds = YES;
     _status.delegate = self;
     _status.lineSpacing = 5;
+    [_likeBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_repateBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_supportBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_commentsBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
     _status.font = [UIFont systemFontOfSize:17];
     _status.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineSpacing = 3;
@@ -79,6 +84,8 @@
     _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
+    _status.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};
+    _repeatStatus.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};
 }
 
 - (void)setModel:(id)model{

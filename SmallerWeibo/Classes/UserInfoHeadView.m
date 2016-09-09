@@ -9,7 +9,6 @@
 #import "UserInfoHeadView.h"
 #import "UserModel.h"
 #import "UIImageView+WebCache.h"
-#import <Chameleon.h>
 #import "UIView+extend.h"
 @interface UserInfoHeadView ()
 {

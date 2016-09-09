@@ -24,3 +24,4 @@
 #define type_html @"text/html"
 #define type_json @"application/json"
 #define userId [[NSUserDefaults standardUserDefaults]objectForKey:@"CurrentUser"][@"uid"]
+#define Theme [[NSUserDefaults standardUserDefaults] objectForKey:@"ColorTheme"]

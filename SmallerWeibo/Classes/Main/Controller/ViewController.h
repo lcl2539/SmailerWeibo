@@ -11,5 +11,6 @@
 @interface ViewController : UIViewController
 - (void)viewControllerDie;
 - (void)moreBtndidClick;
+- (void)chooseColorTheme;
 @end
 

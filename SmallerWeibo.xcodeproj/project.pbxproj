@@ -53,12 +53,15 @@
 		36CF1F611D6ACF0C0098EB09 /* CommentsStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CF1F601D6ACF0C0098EB09 /* CommentsStatusModel.m */; };
 		47B3A5C3F7E103DB605E4324 /* libPods-SmallerWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */; };
 		CC0303311D716678003FE795 /* Image.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC0303301D716678003FE795 /* Image.bundle */; };
+		CC09A7F61D8290A80054DBAF /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC09A7F51D8290A80054DBAF /* ThemeViewController.xib */; };
+		CC09A7FA1D82A61B0054DBAF /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = CC09A7F91D82A61B0054DBAF /* Theme.m */; };
 		CC0B35C11D7ABCAF0082B01D /* NewStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0B35C01D7ABCAF0082B01D /* NewStatusViewController.m */; };
 		CC1C30EB1D73C304003A9C2C /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30EA1D73C304003A9C2C /* FriendsViewController.m */; };
 		CC1C30F51D73C71D003A9C2C /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1C30F31D73C71D003A9C2C /* UserTableViewCell.m */; };
 		CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1C30F41D73C71D003A9C2C /* UserTableViewCell.xib */; };
 		CC22C6041D79720E004960A7 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC22C6031D79720E004960A7 /* TopicViewController.m */; };
 		CC4D1C031D75900B00F9B4C8 /* face.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC4D1C021D75900B00F9B4C8 /* face.plist */; };
+		CC6640CA1D828ADF00C7EEA7 /* ThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6640C81D828ADF00C7EEA7 /* ThemeViewController.m */; };
 		CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */; };
 		CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */; };
 		CC700C031D7EAEAE00F77F08 /* ShowImgCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC700C021D7EAEAE00F77F08 /* ShowImgCollectionView.m */; };
@@ -183,6 +186,10 @@
 		4E9207BE03FA49DFE0F75765 /* Pods-SmallerWeibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmallerWeibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmallerWeibo/Pods-SmallerWeibo.debug.xcconfig"; sourceTree = "<group>"; };
 		C7523AEFC4F0049EADA61E1D /* libPods-SmallerWeibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmallerWeibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0303301D716678003FE795 /* Image.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Image.bundle; sourceTree = "<group>"; };
+		CC09A7F51D8290A80054DBAF /* ThemeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
+		CC09A7F71D829E5F0054DBAF /* Color.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Color.pch; sourceTree = "<group>"; };
+		CC09A7F81D82A61B0054DBAF /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
+		CC09A7F91D82A61B0054DBAF /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		CC0B35BF1D7ABCAF0082B01D /* NewStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewStatusViewController.h; sourceTree = "<group>"; };
 		CC0B35C01D7ABCAF0082B01D /* NewStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewStatusViewController.m; sourceTree = "<group>"; };
 		CC1C30E91D73C304003A9C2C /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
@@ -193,6 +200,8 @@
 		CC22C6021D79720E004960A7 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
 		CC22C6031D79720E004960A7 /* TopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicViewController.m; sourceTree = "<group>"; };
 		CC4D1C021D75900B00F9B4C8 /* face.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = face.plist; sourceTree = "<group>"; };
+		CC6640C71D828ADF00C7EEA7 /* ThemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeViewController.h; sourceTree = "<group>"; };
+		CC6640C81D828ADF00C7EEA7 /* ThemeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeViewController.m; sourceTree = "<group>"; };
 		CC668C2B1D74713D00631A97 /* UserInfoHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoHeadView.h; sourceTree = "<group>"; };
 		CC668C2C1D74713D00631A97 /* UserInfoHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHeadView.m; sourceTree = "<group>"; };
 		CC668C2E1D74715000631A97 /* UserInfoHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoHeadView.xib; sourceTree = "<group>"; };
@@ -531,6 +540,9 @@
 			isa = PBXGroup;
 			children = (
 				36C5EF561D5716AB006511B9 /* PrefixHeader.pch */,
+				CC09A7F71D829E5F0054DBAF /* Color.pch */,
+				CC09A7F81D82A61B0054DBAF /* Theme.h */,
+				CC09A7F91D82A61B0054DBAF /* Theme.m */,
 				CCEDB5D61D6E90AF00AA4976 /* Animation */,
 				CCEDB5D11D6E8AD500AA4976 /* String */,
 				CCEDB5D01D6E8AC500AA4976 /* View */,
@@ -599,6 +611,16 @@
 				CC22C6031D79720E004960A7 /* TopicViewController.m */,
 			);
 			name = Topic;
+			sourceTree = "<group>";
+		};
+		CC6640C61D828A9600C7EEA7 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				CC6640C71D828ADF00C7EEA7 /* ThemeViewController.h */,
+				CC6640C81D828ADF00C7EEA7 /* ThemeViewController.m */,
+				CC09A7F51D8290A80054DBAF /* ThemeViewController.xib */,
+			);
+			name = Theme;
 			sourceTree = "<group>";
 		};
 		CC700BFB1D7EABF300F77F08 /* ShowImgView */ = {
@@ -742,6 +764,7 @@
 				CCBA4C901D7063BE0046E20F /* MoreViewController.m */,
 				CC1C30EC1D73C3D8003A9C2C /* People */,
 				CCDCCBE61D8132430008DE1C /* UserManger */,
+				CC6640C61D828A9600C7EEA7 /* Theme */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -811,6 +834,7 @@
 			files = (
 				CC1C30F61D73C71D003A9C2C /* UserTableViewCell.xib in Resources */,
 				CC668C2F1D74715000631A97 /* UserInfoHeadView.xib in Resources */,
+				CC09A7F61D8290A80054DBAF /* ThemeViewController.xib in Resources */,
 				CC700C0A1D7ECA6B00F77F08 /* FaceKeyBoardCollectionViewCell.xib in Resources */,
 				CCEDB5E41D6EBFEE00AA4976 /* CommentsTableViewCell.xib in Resources */,
 				CC700C081D7EB08600F77F08 /* ImgShowCollectionViewCell.xib in Resources */,
@@ -911,6 +935,7 @@
 				CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */,
 				36C5EF7B1D5716BA006511B9 /* SDImageCache.m in Sources */,
 				CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */,
+				CC09A7FA1D82A61B0054DBAF /* Theme.m in Sources */,
 				3697C37D1D5849D100C2DD01 /* StatusModel.m in Sources */,
 				CCEDB5E81D6EC43100AA4976 /* commentsModel.m in Sources */,
 				36C5EF791D5716BA006511B9 /* MKAnnotationView+WebCache.m in Sources */,
@@ -918,6 +943,7 @@
 				36C5EF841D5716BA006511B9 /* UIImage+MultiFormat.m in Sources */,
 				3687B2491D5C46BF0084887F /* MLLabel.m in Sources */,
 				36C5EF7F1D5716BA006511B9 /* SDWebImageDownloaderOperation.m in Sources */,
+				CC6640CA1D828ADF00C7EEA7 /* ThemeViewController.m in Sources */,
 				3687B2431D5C46BF0084887F /* NSString+MLLabel.m in Sources */,
 				3687B2411D5C46BF0084887F /* NSAttributedString+MLLabel.m in Sources */,
 				CC668C2D1D74713D00631A97 /* UserInfoHeadView.m in Sources */,
@@ -1063,6 +1089,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
+				GCC_PREFIX_HEADER = SmallerWeibo/Classes/GeneralClass/Color.pch;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1081,6 +1108,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7U6N45WL2E;
+				GCC_PREFIX_HEADER = SmallerWeibo/Classes/GeneralClass/Color.pch;
 				INFOPLIST_FILE = SmallerWeibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

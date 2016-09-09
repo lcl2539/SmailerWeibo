@@ -18,6 +18,7 @@
 + (instancetype)titleViewWithTitle:(NSString *)title{
     TitleView *view = [[NSBundle mainBundle]loadNibNamed:@"TitleView" owner:nil options:nil].firstObject;
     view->_title.text = title;
+    view.backgroundColor = ThemeColor;
     return view;
 }
 

@@ -32,6 +32,10 @@
     [super awakeFromNib];
     _userImg.clipsToBounds = YES;
     _userImg.layer.cornerRadius = 25;
+    _userName.textColor = ThemeColor;
+    _userInfo.textColor = ThemeColor;
+    _userInfo.alpha = 0.8;
+    [_cancelFansBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
     [_userImg addTarget:self action:@selector(showUser) forControlEvents:UIControlEventTouchUpInside];
 }
 

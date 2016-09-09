@@ -47,6 +47,8 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds  = YES;
+    _userName.textColor = ThemeColor;
+    [_delectBtn setTitleColor:ThemeColor forState:UIControlStateDisabled];
 }
 
 - (IBAction)delect:(id)sender {

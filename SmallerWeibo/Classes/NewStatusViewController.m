@@ -37,7 +37,7 @@
 
 - (void)loadSomeSetting{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(editChange:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)loadTitleView{

@@ -1,0 +1,17 @@
+//
+//  Color.pch
+//  SmallerWeibo
+//
+//  Created by qingyun on 2016/9/9.
+//  Copyright © 2016年 鲁成龙. All rights reserved.
+//
+
+#ifndef Color_pch
+#define Color_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <Chameleon.h>
+#import "Theme.h"
+#define ThemeColor [Theme shareColor].color
+#endif /* Color_pch */

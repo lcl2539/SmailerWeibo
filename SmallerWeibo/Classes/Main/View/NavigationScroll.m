@@ -37,7 +37,7 @@
 }
 
 - (void)loadSomeSetting{
-    self.backgroundColor = [UIColor darkGrayColor];
+    self.backgroundColor = ThemeColor;
 }
 
 - (void)loadTopView{

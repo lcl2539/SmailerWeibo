@@ -21,6 +21,7 @@
 {
     __weak IBOutlet UIButton *_userImg;
     __weak IBOutlet UILabel *_userName;
+    __weak IBOutlet UIButton *_all;
 }
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,copy)void (^allUser)();
@@ -31,6 +32,8 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds = YES;
+    _userName.textColor = ThemeColor;;
+    _all.tintColor = ThemeColor;
 }
 
 - (void)setModel:(UserModel *)model{
@@ -173,6 +176,7 @@
 
 - (void)loadSomeSetting{
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    _bgView.backgroundColor = ThemeColor;
 }
 
 - (void)loadStatusList{
