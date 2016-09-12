@@ -14,9 +14,8 @@
 #import "HttpRequest.h"
 #import "NSString+Extend.h"
 #import "UserModel.h"
-
-#define baseUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&scope=all&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
-#define gsidUrl [NSString stringWithFormat:@"http://api.weibo.cn/2/account/login?access_token=%@&source=%d",self.token,3]
+#import "UIView+extend.h"
+#define baseUrl [NSString stringWithFormat:@"https://api.weibo.com/oauth2/authorize?forcelogin=true&scope=all&client_id=%@&response_type=code&redirect_uri=%@",client_Id,redirect_Url]
 
 @interface LoginViewController ()<UIWebViewDelegate>
 {
@@ -24,7 +23,6 @@
 }
 @property (nonatomic,strong)NSMutableArray *allUser;
 @property (nonatomic,strong)NSMutableDictionary *user;
-@property (nonatomic,copy)NSString *token;
 @property (nonatomic,assign)BOOL isHave;
 @end
 
@@ -70,41 +68,31 @@
     self.navigationItem.leftBarButtonItem = btn;
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    __weak typeof(self) weakSelf = self;
-    if ([request.URL.absoluteString containsString:@"access_token"]) {
-        [webView loadHTMLString:@"\n请稍等" baseURL:nil];
-        NSArray *arr = [[request.URL.absoluteString componentsSeparatedByString:@"?"].lastObject componentsSeparatedByString:@"&"];
-        for (NSString *str in arr) {
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *jsToGetHTMLSource = @"document.getElementsByTagName('html')[0].innerHTML";
+    NSString *responseObject = [webView stringByEvaluatingJavaScriptFromString:jsToGetHTMLSource];
+    if ([responseObject containsString:@"验证成功"]) {
+        NSRange left = [responseObject rangeOfString:@"done?"];
+        NSRange right = [responseObject rangeOfString:@"setTime"];
+        NSRange range = NSMakeRange(left.location + left.length,right.location - left.location + left.length -right.length -6);
+        NSArray *Temp = [[responseObject substringWithRange:range]componentsSeparatedByString:@"&"];
+        for (NSString *str in Temp) {
             if ([str containsString:@"access"] || [str containsString:@"uid"]) {
                 NSArray *arr = [str componentsSeparatedByString:@"="];
                 [self.user setObject:arr.lastObject forKey:arr.firstObject];
                 if ([str containsString:@"access"]) {
-                    self.token = arr.lastObject;
+                    for ( NSDictionary *dict in self.allUser) {
+                        if ([dict[@"uid"] isEqualToString:arr.lastObject]) {
+                            self.isHave = YES;
+                        }
+                    }
                 }
             }
         }
-        AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
-        manger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_json, nil];
-        [manger POST:gsidUrl parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [weakSelf.user setObject:responseObject[@"gsid"] forKey:@"gsid"];
-            for (NSDictionary *user in weakSelf.allUser) {
-                if ([user[@"uid"] isEqualToString:self.user[@"uid"]]) {
-                    weakSelf.isHave = YES;
-                }
-            }
-            if (!weakSelf.isHave) {
-                [weakSelf.allUser addObject:weakSelf.user];
-            }
-            [weakSelf successForAccess_Token];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
-        return NO;
+        [self.allUser addObject:self.user];
+        [self.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
+        [self successForAccess_Token];
     }
-    return YES;
 }
 
 - (void)back{

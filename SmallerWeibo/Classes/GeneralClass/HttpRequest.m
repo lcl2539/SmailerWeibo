@@ -27,12 +27,13 @@
 + (void)httpRequestWithUrl:(NSString *)url parameter:(NSDictionary *)dict success:(success)success failure:(failure)failure isGET:(BOOL)isget type:(NSString *)type{
     __weak AFHTTPSessionManager *manager = [self shareManger];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type, nil];
-    static NSDictionary *baseDict;
-    baseDict = @{@"access_token":myToken};
-    NSMutableDictionary *para = [baseDict mutableCopy];
-    [para setValuesForKeysWithDictionary:dict];
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"OAuth2 %@",myToken] forHTTPHeaderField:@"Authorization"];
+    //static NSDictionary *baseDict;
+    //baseDict = @{@"access_token":myToken};
+    //NSMutableDictionary *para = [baseDict mutableCopy];
+    //[para setValuesForKeysWithDictionary:dict];
     if (isget) {
-        [manager GET:url parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
+        [manager GET:url parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             success(responseObject);
@@ -40,7 +41,7 @@
             failure(error);
         }];
     }else{
-        [manager POST:url parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
+        [manager POST:url parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             success(responseObject);
@@ -111,13 +112,11 @@
 
 + (void)userShowHttpRequestWithId:(NSString *)uid page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"http://api.weibo.cn/2/statuses/user_timeline";
+    url = @"https://api.weibo.com/2/statuses/user_timeline.json";
     NSDictionary *dict = @{@"uid":uid,
                            @"page":[NSNumber numberWithInteger:page],
                            @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
+                           };
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
@@ -213,18 +212,15 @@
 
 + (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"http://api.weibo.cn/2/search/users";
+    url = @"https://api.weibo.com/2/search/users.json";
     NSDictionary *dict = @{@"q":text,
                            @"page":[NSNumber numberWithInteger:page],
-                           @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
+                           @"count":@20};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
         failure(error);
-    } isGET:YES type:type_json];
+    } isGET:YES type:type_text];
 }
 
 + (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
@@ -233,9 +229,7 @@
     NSDictionary *dict = @{@"q":text,
                            @"page":[NSNumber numberWithInteger:page],
                            @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
+                           };
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {

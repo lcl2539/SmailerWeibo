@@ -92,7 +92,8 @@
 
 - (void)loadDataWithArr:(NSArray *)arr{
     NSMutableArray *arrTemp = [self.data mutableCopy];
-    for (NSDictionary *dict in arr) {
+    NSArray *ar = [arr copy];
+    for (NSDictionary *dict in ar) {
         StatusModel *model = [StatusModel statusModelWithDictionary:dict];
         [arrTemp addObject:model];
     }
@@ -108,7 +109,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-    cell.model = self.data[indexPath.section];
+    cell.model = self.data[indexPath.row];
     return cell;
 }
 

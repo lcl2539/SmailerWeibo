@@ -75,6 +75,7 @@
     UIImageView *bgImg = [[UIImageView alloc]init];
     [head addSubview:bgImg];
     _bgImg = bgImg;
+    _bgImg.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:[NSString stringWithFormat:@"bg_%@",Theme] ofType:@"png"]];
     UIButton *img = [[UIButton alloc]init];
     img.layer.cornerRadius = 25;
     img.clipsToBounds = YES;
