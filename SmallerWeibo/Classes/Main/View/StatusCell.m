@@ -282,6 +282,10 @@
 - (void)imgDidTouch:(UIButton *)btn{
     NSArray *arr;
     NSMutableArray *frameArr = [NSMutableArray array];
+    NSMutableArray *placeHoldImages = [NSMutableArray array];
+    for (UIButton *btnTemp in btn.superview.subviews) {
+        [placeHoldImages addObject:btnTemp.currentBackgroundImage];
+    }
     for (UIView *view in btn.superview.subviews) {
         [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
     }
@@ -296,7 +300,7 @@
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
         arr = modelTemp.status.arrPicUrls;
     }
-    [self showReViewImgVCWithImageArr:arr frameArr:frameArr button:btn];
+    [self showReViewImgVCWithImageArr:arr frameArr:frameArr placeHoldImages:placeHoldImages button:btn];
 }
 
 - (IBAction)repateAndCommentBtnClick:(UIButton *)sender {

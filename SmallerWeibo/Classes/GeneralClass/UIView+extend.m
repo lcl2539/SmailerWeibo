@@ -71,7 +71,7 @@
     return nil;
 }
 
-- (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr button:(UIButton *)btn {
+- (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr placeHoldImages:(NSArray *)placeHoldImages button:(UIButton *)btn {
     ReviewImgController *vc = [[ReviewImgController alloc]init];
     vc.picArr = arr;
     vc.showWhichImg = btn.tag;
@@ -84,6 +84,7 @@
     vc.fromVc = [self superViewController];
     vc.fromVc.navigationController.delegate = vc;
     vc.navigationController.delegate = vc;
+    vc.placeHoldImages = placeHoldImages;
     [vc show];
 }
 

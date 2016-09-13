@@ -15,5 +15,6 @@
 @property (nonatomic,assign)CGRect lastFrame;
 @property (nonatomic,copy)NSArray *frameArr;
 @property (nonatomic,strong)UIViewController *fromVc;
+@property (nonatomic,strong)NSArray *placeHoldImages;
 - (void)show;
 @end

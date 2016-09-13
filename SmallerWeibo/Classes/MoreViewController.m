@@ -31,7 +31,7 @@
 
 - (NSArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
+        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"清除缓存",@"关于"];
     }
     return _titleArr;
 }
@@ -64,6 +64,7 @@
     _tab.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tab.delegate = self;
     _tab.dataSource = self;
+    _tab.rowHeight = 50;
     [self loadHeadView];
 }
 
@@ -82,6 +83,7 @@
     [head addSubview:img];
     _userHeadImg = img;
     UILabel *name = [[UILabel alloc]init];
+    name.textColor = [UIColor flatWhiteColor];
     name.textAlignment = NSTextAlignmentCenter;
     [head addSubview:name];
     _userName = name;
@@ -113,6 +115,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
         cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor grayColor];
     }
     cell.textLabel.text = self.titleArr[indexPath.row];
     return cell;
@@ -142,7 +145,9 @@
         }
             break;
         case 4:
-            
+        {
+            [self.view toastWithString:@"清除成功!" type:kLabPostionTypeBottom];
+        }
             break;
         case 5:
             
