@@ -20,6 +20,7 @@
     __weak IBOutlet UIView *_imgView;
     __weak IBOutlet UIButton *_sendBtn;
     __weak ShowImgCollectionView *_imgShowView;
+    __weak IBOutlet NSLayoutConstraint *_imageShowViewHeight;
 }
 @property (nonatomic,strong)FaceKeyBoard *faceKeyBoard;
 
@@ -62,6 +63,10 @@
 - (void)loadSomeSetting{
     _text.delegate = self;
     _text.placeholderText = @"写点什么吧....";
+}
+
+- (void)changeTypeToMini{
+    _imageShowViewHeight.constant = 0;
 }
 
 - (void)loadText{

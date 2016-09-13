@@ -75,6 +75,7 @@
 		CC8F1CA61D716D3A0028D0D9 /* SingExp.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8F1CA51D716D3A0028D0D9 /* SingExp.m */; };
 		CC9372CE1D7FDD9A00ADDBDF /* SendStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */; };
 		CC9372F81D80025300ADDBDF /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9372F71D80025300ADDBDF /* SearchViewController.m */; };
+		CC9A3E071D8893B100158922 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9A3E051D8893B100158922 /* WebViewController.m */; };
 		CCA2C1031D7D4F5400B7AA37 /* StatusTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA2C1021D7D4F5400B7AA37 /* StatusTextView.xib */; };
 		CCA2C1061D7D50C800B7AA37 /* StatusTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA2C1051D7D50C800B7AA37 /* StatusTextView.m */; };
 		CCA2C1091D7D74EE00B7AA37 /* FacesKeyboard-LXH.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCA2C1071D7D74EE00B7AA37 /* FacesKeyboard-LXH.plist */; };
@@ -230,6 +231,8 @@
 		CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendStatus.m; sourceTree = "<group>"; };
 		CC9372F61D80025300ADDBDF /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		CC9372F71D80025300ADDBDF /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		CC9A3E041D8893B100158922 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		CC9A3E051D8893B100158922 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		CCA2C1021D7D4F5400B7AA37 /* StatusTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusTextView.xib; sourceTree = "<group>"; };
 		CCA2C1041D7D50C800B7AA37 /* StatusTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTextView.h; sourceTree = "<group>"; };
 		CCA2C1051D7D50C800B7AA37 /* StatusTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTextView.m; sourceTree = "<group>"; };
@@ -425,6 +428,7 @@
 				CC22C6011D7971E5004960A7 /* Topic */,
 				363C0A781D630FB200CED9DB /* ReviewImgController */,
 				36C5EF541D57163D006511B9 /* Login */,
+				CC9A3E031D88938A00158922 /* Web */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -663,6 +667,15 @@
 				CC7031D41D8040E400E9103C /* AllUserCell.xib */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		CC9A3E031D88938A00158922 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				CC9A3E041D8893B100158922 /* WebViewController.h */,
+				CC9A3E051D8893B100158922 /* WebViewController.m */,
+			);
+			name = Web;
 			sourceTree = "<group>";
 		};
 		CCA2C0FD1D7D4EE000B7AA37 /* StatusTextView */ = {
@@ -978,6 +991,7 @@
 				36C5EF881D5716BA006511B9 /* UIView+WebCacheOperation.m in Sources */,
 				CCBA4C911D7063BE0046E20F /* MoreViewController.m in Sources */,
 				36C5EF7B1D5716BA006511B9 /* SDImageCache.m in Sources */,
+				CC9A3E071D8893B100158922 /* WebViewController.m in Sources */,
 				CCEDB5D51D6E90A800AA4976 /* ReViewImgAnimation.m in Sources */,
 				CC09A7FA1D82A61B0054DBAF /* Theme.m in Sources */,
 				3697C37D1D5849D100C2DD01 /* StatusModel.m in Sources */,

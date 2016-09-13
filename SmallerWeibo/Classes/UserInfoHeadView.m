@@ -78,6 +78,7 @@
     _fansNum.text = [NSString stringWithFormat:@"%ld",(long)model.followersCount];
     _friendsNum.text = [NSString stringWithFormat:@"%ld",(long)model.friendsCount];
     _userImgFrame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-35, 20, 70, 70);
+    [_likeBtn setTitle:model.following ? @"取消关注" : @"关注" forState:UIControlStateNormal];
 }
 
 - (IBAction)backBtnAction {

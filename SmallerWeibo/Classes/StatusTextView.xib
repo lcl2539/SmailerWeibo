@@ -104,6 +104,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="_imageBtn" destination="Jof-P9-WJj" id="pV3-qC-swg"/>
+                <outlet property="_imageShowViewHeight" destination="Uvg-gH-MlC" id="XgZ-oU-nKk"/>
                 <outlet property="_imgView" destination="fgv-59-ii1" id="WlD-L4-OIg"/>
                 <outlet property="_sendBtn" destination="HMy-OX-QJT" id="psm-eG-Rus"/>
                 <outlet property="_surplus" destination="xa0-jn-RTs" id="462-3V-hht"/>

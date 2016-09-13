@@ -63,6 +63,9 @@
         [weakSelf sendStatus];
     };
     _statusText = view;
+    if (self.type == kSearchTypeMini) {
+        [_statusText changeTypeToMini];
+    }
 }
 
 - (void)editChange:(NSNotification *)noti{
