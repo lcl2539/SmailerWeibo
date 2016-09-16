@@ -407,7 +407,7 @@
 }
 
 - (void)newStatus{
-    [_newStatus showNewStatusVc];
+    [_newStatus showNewStatusVcWithType:0 StatusId:nil];
 }
 
 - (void)viewControllerDie{

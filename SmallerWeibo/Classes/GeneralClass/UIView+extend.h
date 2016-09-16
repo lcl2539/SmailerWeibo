@@ -23,6 +23,7 @@ typedef enum : NSUInteger {
 - (void)showDetailStatusVcWithModel:(StatusModel *)model;
 - (void)showUserShowVcWithUserName:(NSString *)name;
 - (void)showTopicVcWithTopic:(NSString *)topic;
-- (void)showNewStatusVc;
+- (void)showNewStatusVcWithType:(NSInteger)type StatusId:(NSString *)statusId;
 - (void)showSearchVc;
+- (void)showWebVcWithUrl:(NSString *)url;
 @end

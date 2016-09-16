@@ -83,13 +83,14 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure{
++ (void)likeStatusHttpRequestWithStatusId:(NSString *)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/favorites/create.json",//收藏
-               @"https://api.weibo.com/2/statuses/repost.json"//转发
+               @"https://api.weibo.com/2/attitudes/create.json"//点赞
                ];
-    NSDictionary *dict = @{@"id":[NSNumber numberWithInteger:statusId]};
-    [self httpRequestWithUrl:urlArr[type - 1] parameter:dict success:^(id object) {
+    NSDictionary *dict = type == 1 ? @{@"id":statusId} : @{@"id":statusId,
+                                                                                        @"attitudes":@"heart"};
+    [self httpRequestWithUrl:urlArr[type] parameter:dict success:^(id object) {
         sucess(object);
     } failure:^(NSError *error) {
         faliure(error);

@@ -19,17 +19,13 @@
 
 @implementation WebViewController
 
-- (void)setUrl:(NSString *)url{
-    _url = url;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [_web loadRequest:request];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSomeSetting];
     [self loadTitleView];
     [self loadWebView];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+    [_web loadRequest:request];
 }
 
 - (void)loadSomeSetting{

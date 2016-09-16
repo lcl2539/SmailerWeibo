@@ -18,6 +18,7 @@
 #import "UserShowViewController.h"
 #import "UIView+extend.h"
 #import "HttpRequest.h"
+#import "WebViewController.h"
 #define lineCount 3
 #define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -8)
 #define constants(layout) layout.constant
@@ -304,11 +305,17 @@
 }
 
 - (IBAction)repateAndCommentBtnClick:(UIButton *)sender {
-    
+    [self showNewStatusVcWithType:1 StatusId:[self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr];
 }
 
 - (IBAction)likeAndSupportBtnClick:(UIButton *)sender {
-    
+    __weak typeof(self) weakSelf = self;
+    NSString *statusId = [self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr;
+    [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:sender.tag success:^(id object) {
+        [weakSelf toastWithString:@"收藏成功" type:kLabPostionTypeBottom];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
@@ -318,7 +325,7 @@
     }else if([linkText hasPrefix:@"@"]){
         [self showUserShowVcWithUserName:[linkText substringWithRange:NSMakeRange(1, linkText.length-1)]];
     }else{
-        NSLog(@"link");
+        [self showWebVcWithUrl:linkText];
     }
 }
 

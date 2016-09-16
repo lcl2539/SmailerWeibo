@@ -48,7 +48,7 @@
 }
 
 - (void)loadSomeSetting{
-    self.view.backgroundColor = Color(255, 255, 255, 1);
+    self.view.backgroundColor =[UIColor whiteColor];
     if (self.navigationController) {
         [self loadNavbar];
     }

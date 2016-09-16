@@ -17,6 +17,7 @@
 #import "TopicViewController.h"
 #import "NewStatusViewController.h"
 #import "SearchViewController.h"
+#import "WebViewController.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str type:(LabPostionType)type{
     UILabel *lab = [[UILabel alloc]init];
@@ -141,15 +142,23 @@
 
 }
 
-- (void)showNewStatusVc{
+- (void)showNewStatusVcWithType:(NSInteger)type StatusId:(NSString *)statusId{
     NewStatusViewController *vc = [[NewStatusViewController alloc]init];
     vc.lastPoint = [self.window convertPoint:self.center fromView:self.superview];
     vc.fromVc = [self superViewController];
+    vc.type = type;
+    vc.statusId = statusId ? statusId : nil;
     [vc show];
 }
 
 - (void)showSearchVc{
     SearchViewController *vc = [[SearchViewController alloc]init];
     [[self superViewController].navigationController pushViewController:vc animated:YES];
+}
+
+- (void)showWebVcWithUrl:(NSString *)url{
+    WebViewController *vc = [[WebViewController alloc]init];
+    vc.url = url;
+    [self.superViewController.navigationController pushViewController:vc animated:YES];
 }
 @end

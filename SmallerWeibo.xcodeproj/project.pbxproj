@@ -563,9 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				36C5EF561D5716AB006511B9 /* PrefixHeader.pch */,
-				CC09A7F71D829E5F0054DBAF /* Color.pch */,
-				CC09A7F81D82A61B0054DBAF /* Theme.h */,
-				CC09A7F91D82A61B0054DBAF /* Theme.m */,
+				CC96DD791D8C49B3003F2141 /* Color */,
 				CCEDB5D61D6E90AF00AA4976 /* Animation */,
 				CCEDB5D11D6E8AD500AA4976 /* String */,
 				CCEDB5D01D6E8AC500AA4976 /* View */,
@@ -667,6 +665,16 @@
 				CC7031D41D8040E400E9103C /* AllUserCell.xib */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		CC96DD791D8C49B3003F2141 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				CC09A7F71D829E5F0054DBAF /* Color.pch */,
+				CC09A7F81D82A61B0054DBAF /* Theme.h */,
+				CC09A7F91D82A61B0054DBAF /* Theme.m */,
+			);
+			name = Color;
 			sourceTree = "<group>";
 		};
 		CC9A3E031D88938A00158922 /* Web */ = {

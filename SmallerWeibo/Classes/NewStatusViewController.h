@@ -9,10 +9,11 @@
 typedef enum : NSUInteger {
     kSearchTypeNormal,
     kSearchTypeMini
-} SearchVcType;
+} NewStatusVcType;
 @interface NewStatusViewController : UIViewController
 @property (nonatomic,strong)UIViewController *fromVc;
 @property (nonatomic,assign)CGPoint lastPoint;
-@property (nonatomic,assign)SearchVcType type;
+@property (nonatomic,assign)NewStatusVcType type;
+@property (nonatomic,copy)NSString *statusId;
 - (void)show;
 @end
