@@ -312,7 +312,8 @@
     __weak typeof(self) weakSelf = self;
     NSString *statusId = [self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr;
     [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:sender.tag success:^(id object) {
-        [weakSelf toastWithString:@"收藏成功" type:kLabPostionTypeBottom];
+        [weakSelf toastWithString:sender.tag == 0 ? @"已收藏！" : @"已赞！" type:kLabPostionTypeBottom];
+        [sender setTitle:sender.tag == 0 ? @"已收藏" : @"已赞"  forState:UIControlStateNormal];
     } failure:^(NSError *error) {
         
     }];
