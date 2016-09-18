@@ -57,7 +57,14 @@
         title = (followType == kUserFriendsFollowMe) ? @"关注" : @"取消关注";
     }
     [_cancelFansBtn setTitle:title forState:UIControlStateNormal];
-    
+}
+- (IBAction)changeUserFollowState {
+    __weak typeof(self) weakSelf = self;
+    [self followUser:self.model.strIdstr isFollowed:self.model.following success:^{
+        weakSelf.model.following = !weakSelf.model.following;
+        weakSelf.followType = (weakSelf.model.following) ? kUserFriendsFollowing : kUserFriendsFollowMe;
+        if(weakSelf.model.followMe && weakSelf.model.following)weakSelf.followType = kUserFriendsAll;
+    }];
 }
 
 - (void)showUser{

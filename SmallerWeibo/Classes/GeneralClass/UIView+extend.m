@@ -18,6 +18,7 @@
 #import "NewStatusViewController.h"
 #import "SearchViewController.h"
 #import "WebViewController.h"
+#import "HttpRequest.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str type:(LabPostionType)type{
     UILabel *lab = [[UILabel alloc]init];
@@ -160,5 +161,13 @@
     WebViewController *vc = [[WebViewController alloc]init];
     vc.url = url;
     [self.superViewController.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)followUser:(NSString *)uid isFollowed:(BOOL)isFollowed success:(void (^)())success{
+    [HttpRequest followUserWithUserId:uid isFollowed:isFollowed success:^(id object) {
+        success();
+    } failure:^(NSError *error) {
+        
+    }];
 }
 @end

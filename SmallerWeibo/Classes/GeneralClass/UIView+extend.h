@@ -26,4 +26,5 @@ typedef enum : NSUInteger {
 - (void)showNewStatusVcWithType:(NSInteger)type StatusId:(NSString *)statusId;
 - (void)showSearchVc;
 - (void)showWebVcWithUrl:(NSString *)url;
+- (void)followUser:(NSString *)uid isFollowed:(BOOL)isFollowed success:(void (^)())success;
 @end

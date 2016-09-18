@@ -7,8 +7,9 @@
 //
 #import <UIKit/UIKit.h>
 typedef enum : NSUInteger {
-    kSearchTypeNormal,
-    kSearchTypeMini
+    kNewStatusTypeNormal,
+    kNewStatusTypeRepate,
+    kNewStatusTypeComment
 } NewStatusVcType;
 @interface NewStatusViewController : UIViewController
 @property (nonatomic,strong)UIViewController *fromVc;

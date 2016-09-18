@@ -249,6 +249,12 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (_searchBar.isFirstResponder) {
+        [_searchBar resignFirstResponder];
+    }
+}
+
 - (void)searchUser{
     SearchAllUserVc *vc = [[SearchAllUserVc alloc]init];
     vc.data = self.userData;
@@ -275,7 +281,7 @@
     NSInteger page = 1;
     page = self.statusData.count/20 + 1;
     page = (self.statusData.count%20 > 0) ? page + 1 : page;
-    [HttpRequest searchForStatusWithText:_searchBar.text page:page success:^(id object) {
+    [HttpRequest topicStatusWithTopic:_searchBar.text page:page success:^(id object) {
         [weakSelf loadStatusWithArr:object[@"statuses"]];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

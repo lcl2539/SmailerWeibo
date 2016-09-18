@@ -16,6 +16,7 @@
 #import "UIView+extend.h"
 #import "UserMangerViewController.h"
 #import "PrefixHeader.pch"
+#import "AboutViewController.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
@@ -146,11 +147,15 @@
             break;
         case 4:
         {
+            [[SDImageCache sharedImageCache] cleanDisk];
             [self.view toastWithString:@"清除成功!" type:kLabPostionTypeBottom];
         }
             break;
         case 5:
-            
+        {
+            AboutViewController *vc = [[AboutViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
             break;
         default:
             break;

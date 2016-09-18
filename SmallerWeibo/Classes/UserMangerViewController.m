@@ -15,6 +15,7 @@
 #import "UserModel.h"
 #import "LoginViewController.h"
 #import "NSString+Extend.h"
+#import "UIView+extend.h"
 #import "AppDelegate.h"
 @interface UserMangerCell ()
 {
@@ -181,6 +182,10 @@
 }
 
 - (void)addUserFinish:(NSDictionary *)user{
+    if (!user){
+        [self.view toastWithString:@"此用户已登录，无需再次登录" type:kLabPostionTypeBottom];
+        return;
+    }
     [self changeUserWithTitle:@"添加用户成功" user:user];
     [self reloadData];
 }

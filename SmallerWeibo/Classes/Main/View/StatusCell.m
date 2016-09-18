@@ -106,10 +106,6 @@
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)model;
         [self updataWithCommentsModle:modelTemp];
     }
-    _imgView.layer.cornerRadius = 5;
-    _repeatImgView.layer.cornerRadius = 5;
-    _imgView.clipsToBounds = YES;
-    _repeatImgView.clipsToBounds = YES;
 }
 
 - (void)updataWithStatusModle:(StatusModel *)model{
@@ -127,7 +123,7 @@
     }
     if (model.retweetedStatus) {
         NSMutableAttributedString *strTemp = [model.retweetedStatus.attributedStr mutableCopy];
-        [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.user.strScreenName]] atIndex:0];
+        [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.retweetedStatus.user.strScreenName]] atIndex:0];
         //[self shortUrlWithStr:strTemp];
         _repeatStatus.attributedText = strTemp;
         if (model.retweetedStatus.arrPicUrls){
@@ -149,7 +145,7 @@
     [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.status.repostsCount] forState:UIControlStateNormal];
     [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.status.attitudesCount] forState:UIControlStateNormal];
     NSMutableAttributedString *strTemp = [model.status.attributedStr mutableCopy];
-    [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.user.strScreenName]] atIndex:0];
+    [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.status.user.strScreenName]] atIndex:0];
     _repeatStatus.attributedText = strTemp;
     if (model.status.arrPicUrls) {
         [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:model.status.arrPicUrls];
@@ -305,7 +301,7 @@
 }
 
 - (IBAction)repateAndCommentBtnClick:(UIButton *)sender {
-    [self showNewStatusVcWithType:1 StatusId:[self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr];
+    [self showNewStatusVcWithType:sender.tag + 1 StatusId:[self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr];
 }
 
 - (IBAction)likeAndSupportBtnClick:(UIButton *)sender {

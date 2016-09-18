@@ -24,6 +24,7 @@ typedef void (^failure)(NSError *error);
 + (void)uploadImgWithData:(NSData *)img success:(success)success failurl:(failure)failure;
 + (void)sendStatusWithStatus:(NSString *)status picID:(NSArray *)picID success:(success)success failure:(failure)failure;
 + (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
-+ (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure;
 + (void)userInfoWithToken:(NSString *)token userID:(NSString *)uid success:(success)success failure:(failure)failure;
++ (void)repateAndCommentsWithstatusId:(NSString *)statusId status:(NSString *)status success:(success)success failure:(failure)failure isComment:(BOOL)isComment;
++ (void)followUserWithUserId:(NSString *)uid isFollowed:(BOOL)isFollowed success:(success)success failure:(failure)failure;
 @end

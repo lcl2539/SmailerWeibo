@@ -55,7 +55,7 @@
     Theme *theme = [Theme shareColor];
     theme.color = self.colors[sender.tag];
     sender.selected = YES;
-    [NSString writeUserInfoWithKey:@"ColorTheme" value:[NSString stringWithFormat:@"%ld",sender.tag]];
+    [NSString writeUserInfoWithKey:@"ColorTheme" value:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
     if (sender.tag != self.currentColor) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeTheme" object:nil];
         AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

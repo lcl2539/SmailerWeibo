@@ -63,7 +63,8 @@
         [weakSelf sendStatus];
     };
     _statusText = view;
-    if (self.type == kSearchTypeMini) {
+    if (self.type != kNewStatusTypeNormal) {
+        [_title title:(self.type == kNewStatusTypeRepate) ? @"转发微博" : @"评论微博"];
         [_statusText changeTypeToMini];
     }
 }
@@ -79,9 +80,18 @@
 }
 
 - (void)sendStatus{
-    SendStatus *send = [SendStatus shareSendStatus];
-    NewStatusModel *model = [NewStatusModel newStatusMoldeWithStatus:_statusText.status imgArr:_statusText.imgArr];
-    [[send mutableArrayValueForKey:@"status"] addObject:model];
+    __weak typeof(UIView) *weakKeyWindows = [UIApplication sharedApplication].keyWindow;
+    if (self.type != kNewStatusTypeNormal) {
+        [HttpRequest repateAndCommentsWithstatusId:self.statusId status:_statusText.status success:^(id object) {
+            [weakKeyWindows toastWithString:(self.type == kNewStatusTypeComment) ? @"评论成功" : @"转发成功" type:kLabPostionTypeBottom];
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        } isComment:self.type == kNewStatusTypeComment];
+    }else{
+        SendStatus *send = [SendStatus shareSendStatus];
+        NewStatusModel *model = [NewStatusModel newStatusMoldeWithStatus:_statusText.status imgArr:_statusText.imgArr];
+        [[send mutableArrayValueForKey:@"status"] addObject:model];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -32,7 +32,7 @@
 
 - (void)setUserImage:(UIImage *)userImage{
     _userImage = userImage;
-    self.backgroundColor = GradientColor(UIGradientStyleRadial, self.frame, [NSArray arrayOfColorsFromImage:userImage withFlatScheme:NO]);
+    self.backgroundColor = [UIColor colorWithAverageColorFromImage:userImage];
     self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:YES];
 }
 
@@ -69,7 +69,7 @@
         if (weakSelf.downloadFinish) {
             weakSelf.downloadFinish();
         }
-        self.backgroundColor = GradientColor(UIGradientStyleRadial, self.frame, [NSArray arrayOfColorsFromImage:image withFlatScheme:NO]);
+        self.backgroundColor = [UIColor colorWithAverageColorFromImage:image];
         self.textColor = [UIColor colorWithContrastingBlackOrWhiteColorOn:self.backgroundColor isFlat:YES];
     }];
     _userName.text = model.strScreenName;
@@ -83,6 +83,12 @@
 
 - (IBAction)backBtnAction {
     [self.delegate back];
+}
+- (IBAction)changeFollow {
+    __weak typeof(self) weakSelf = self;
+    [self followUser:self.model.strIdstr isFollowed:self.model.following success:^{
+        [_likeBtn setTitle:(!weakSelf.model.following) ? @"取消关注" : @"关注" forState:UIControlStateNormal];
+    }];
 }
 
 - (void)changeAlpha:(CGFloat)alpha{
