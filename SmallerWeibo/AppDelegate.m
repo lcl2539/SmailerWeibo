@@ -11,7 +11,6 @@
 #import "PrefixHeader.pch"
 #import "UIView+extend.h"
 #import "LoginViewController.h"
-#import <Chameleon.h>
 #import "SendStatus.h"
 @interface AppDelegate ()
 
@@ -21,6 +20,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    if (!Theme) {
+        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"ColorTheme"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
     if (!userId) {
         self.window.rootViewController = [[LoginViewController alloc]init];
     }else{

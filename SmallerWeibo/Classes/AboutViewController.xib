@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="QSs-bT-EpH">
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="QSs-bT-EpH" secondAttribute="height" multiplier="1:1" id="v9u-9L-Trx"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反馈请发邮件至lcl253908634@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sc-6G-tBJ">
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="QSs-bT-EpH" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="UWp-V0-BEk"/>
+                <constraint firstItem="7sc-6G-tBJ" firstAttribute="top" secondItem="QSs-bT-EpH" secondAttribute="bottom" constant="40" id="ZLL-vo-7hh"/>
+                <constraint firstItem="QSs-bT-EpH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="flj-kf-EYw"/>
+                <constraint firstAttribute="trailing" secondItem="QSs-bT-EpH" secondAttribute="trailing" constant="30" id="hfh-5k-71m"/>
+                <constraint firstItem="7sc-6G-tBJ" firstAttribute="centerX" secondItem="QSs-bT-EpH" secondAttribute="centerX" id="ubb-GD-APy"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="AppImage.png" width="1024" height="1024"/>
+    </resources>
+</document>

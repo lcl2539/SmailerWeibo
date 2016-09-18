@@ -67,6 +67,9 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6b3-OF-RKa">
                     <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="changeFollow" destination="iN0-l3-epB" eventType="touchUpInside" id="rSH-Pk-G3K"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TP8-vV-qKy">
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>

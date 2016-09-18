@@ -21,6 +21,7 @@
 {
     __weak IBOutlet UIButton *_userImg;
     __weak IBOutlet UILabel *_userName;
+    __weak IBOutlet UIButton *_all;
 }
 @property (nonatomic,strong)UserModel *model;
 @property (nonatomic,copy)void (^allUser)();
@@ -31,6 +32,8 @@
     [super awakeFromNib];
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds = YES;
+    _userName.textColor = ThemeColor;;
+    _all.tintColor = ThemeColor;
 }
 
 - (void)setModel:(UserModel *)model{
@@ -173,6 +176,7 @@
 
 - (void)loadSomeSetting{
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    _bgView.backgroundColor = ThemeColor;
 }
 
 - (void)loadStatusList{
@@ -245,6 +249,12 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (_searchBar.isFirstResponder) {
+        [_searchBar resignFirstResponder];
+    }
+}
+
 - (void)searchUser{
     SearchAllUserVc *vc = [[SearchAllUserVc alloc]init];
     vc.data = self.userData;
@@ -271,7 +281,7 @@
     NSInteger page = 1;
     page = self.statusData.count/20 + 1;
     page = (self.statusData.count%20 > 0) ? page + 1 : page;
-    [HttpRequest searchForStatusWithText:_searchBar.text page:page success:^(id object) {
+    [HttpRequest topicStatusWithTopic:_searchBar.text page:page success:^(id object) {
         [weakSelf loadStatusWithArr:object[@"statuses"]];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

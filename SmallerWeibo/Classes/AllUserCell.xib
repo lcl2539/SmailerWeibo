@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -41,6 +41,10 @@
                 <constraint firstItem="XSa-eh-QpE" firstAttribute="centerX" secondItem="0MG-vO-GTs" secondAttribute="centerX" id="xoe-Dd-JGf"/>
             </constraints>
             <size key="customSize" width="122" height="137"/>
+            <connections>
+                <outlet property="_all" destination="XSa-eh-QpE" id="V3E-es-txv"/>
+                <outlet property="_userName" destination="PoP-Nf-aR9" id="b7I-aO-aE0"/>
+            </connections>
             <point key="canvasLocation" x="287" y="123.5"/>
         </collectionViewCell>
     </objects>

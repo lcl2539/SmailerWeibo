@@ -18,6 +18,7 @@
 #import "CommentsStatusModel.h"
 #import "MoreViewController.h"
 #import "UIView+extend.h"
+#import "ThemeViewController.h"
 @interface ViewController ()<NavigationScrollDeleagte,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 {
     __weak NavigationScroll *_navigationScroll;
@@ -71,12 +72,11 @@
     [self loadShadeView];
     [self loadSlideVc];
     [self loadSlideGesTure];
-    [self loadChangeUserNoti];
+    [self loadNoti];
 }
 
 - (void)loadSomeSetting{
-    self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
-    [self.view setBackgroundColor:[UIColor darkGrayColor]];
+    //self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBarHidden = YES;
@@ -85,7 +85,7 @@
 
 - (void)loadPlaceHoldView{
     UIView *view = [[UIView alloc]init];
-    view.backgroundColor = [UIColor darkGrayColor];
+    view.backgroundColor = ThemeColor;
     [self.view addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.leading.trailing.equalTo(self.view);
@@ -98,7 +98,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
     btn.layer.cornerRadius = 25;
     btn.clipsToBounds = YES;
-    btn.backgroundColor = [UIColor darkGrayColor];
+    btn.backgroundColor = ThemeColor;
     [btn setImage:[UIImage imageNamed:@"newStatus"] forState:UIControlStateNormal];
     [btn setTintColor:[UIColor whiteColor]];
     [btn addTarget:self action:@selector(newStatus) forControlEvents:UIControlEventTouchUpInside];
@@ -184,8 +184,20 @@
     [self loadVisibleTableViewData:0];
 }
 
-- (void)loadChangeUserNoti{
+- (void)loadNoti{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(viewControllerDie) name:@"ChangeUser" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(viewControllerDie) name:@"changeTheme" object:nil];
+}
+
+- (void)chooseColorTheme{
+    ThemeViewController *vc =[[ThemeViewController alloc]init];
+    [self addChildViewController:vc];
+    vc.view.frame = self.view.bounds;
+    vc.view.alpha = 0;
+    [self.view addSubview:vc.view];
+    [UIView animateWithDuration:0.25 animations:^{
+        vc.view.alpha = 1;
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -395,7 +407,7 @@
 }
 
 - (void)newStatus{
-    [_newStatus showNewStatusVc];
+    [_newStatus showNewStatusVcWithType:0 StatusId:nil];
 }
 
 - (void)viewControllerDie{

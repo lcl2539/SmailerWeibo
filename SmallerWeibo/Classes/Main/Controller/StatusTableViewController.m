@@ -54,9 +54,10 @@
     if (self.tableView.contentOffset.y <= 100) {
         isReLoad = YES;
     }
-    if (self.reloadDate) {
-        self.reloadDate(self,isReLoad);
+    if (isReLoad) {
+        self.dataArr = nil;
     }
+    self.reloadDate(self,isReLoad);
 }
 
 

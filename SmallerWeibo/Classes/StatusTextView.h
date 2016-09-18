@@ -13,5 +13,6 @@
 @property (nonatomic,copy)NSString *status;
 @property (nonatomic,copy)void (^sendStatus)();
 - (void)beginEdit;
+- (void)changeTypeToMini;
 + (instancetype)statusTextView;
 @end

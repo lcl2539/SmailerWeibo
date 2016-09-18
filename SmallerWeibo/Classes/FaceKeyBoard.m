@@ -96,6 +96,9 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
+    [_defultFaceBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    [_lxhFaceBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    _delectBtn.tintColor = ThemeColor;
     _scrollViewWidth.constant = [UIScreen mainScreen].bounds.size.width*2;
     _scrollView.delegate = self;
     FaceKeyBoardCollectionView *defultFace = [FaceKeyBoardCollectionView faceKeyBoardWithPlistPath:[[NSBundle mainBundle] pathForResource:@"FacesKeyboard.plist" ofType:nil]];

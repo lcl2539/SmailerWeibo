@@ -16,6 +16,7 @@
 #import "UIView+extend.h"
 #import "UserMangerViewController.h"
 #import "PrefixHeader.pch"
+#import "AboutViewController.h"
 @interface MoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     __weak UITableView *_tab;
@@ -31,7 +32,7 @@
 
 - (NSArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"夜间模式",@"关于"];
+        _titleArr = @[@"我的关注",@"我的粉丝",@"账号管理",@"主题风格",@"清除缓存",@"关于"];
     }
     return _titleArr;
 }
@@ -64,6 +65,7 @@
     _tab.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tab.delegate = self;
     _tab.dataSource = self;
+    _tab.rowHeight = 50;
     [self loadHeadView];
 }
 
@@ -75,12 +77,14 @@
     UIImageView *bgImg = [[UIImageView alloc]init];
     [head addSubview:bgImg];
     _bgImg = bgImg;
+    _bgImg.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:[NSString stringWithFormat:@"bg_%@",Theme] ofType:@"png"]];
     UIButton *img = [[UIButton alloc]init];
     img.layer.cornerRadius = 25;
     img.clipsToBounds = YES;
     [head addSubview:img];
     _userHeadImg = img;
     UILabel *name = [[UILabel alloc]init];
+    name.textColor = [UIColor flatWhiteColor];
     name.textAlignment = NSTextAlignmentCenter;
     [head addSubview:name];
     _userName = name;
@@ -112,6 +116,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
         cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor grayColor];
     }
     cell.textLabel.text = self.titleArr[indexPath.row];
     return cell;
@@ -135,13 +140,22 @@
         }
             break;
         case 3:
-            
+        {
+            ViewController *vc = (ViewController *)self.parentViewController;
+            [vc chooseColorTheme];
+        }
             break;
         case 4:
-            
+        {
+            [[SDImageCache sharedImageCache] cleanDisk];
+            [self.view toastWithString:@"清除成功!" type:kLabPostionTypeBottom];
+        }
             break;
         case 5:
-            
+        {
+            AboutViewController *vc = [[AboutViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
             break;
         default:
             break;

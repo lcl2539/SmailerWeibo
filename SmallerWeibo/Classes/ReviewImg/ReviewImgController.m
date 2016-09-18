@@ -21,7 +21,6 @@
     __weak UILabel *_numLab;
     __weak UIButton *_saveBtn;
 }
-@property (nonatomic,assign)BOOL isFinishLoad;
 @end
 
 @implementation ReviewImgController
@@ -83,12 +82,8 @@
         _numLab.alpha = 1;
     } completion:^(BOOL finished) {
         _imageScroll.alpha = 1;
-        if (self.isFinishLoad) {
-            [weakSelf.placeHoldimageView removeFromSuperview];
-            weakSelf.placeHoldimageView = nil;
-        }else{
-            self.isFinishLoad = YES;
-        }
+        [weakSelf.placeHoldimageView removeFromSuperview];
+        weakSelf.placeHoldimageView = nil;
         NSString *toast = [[NSUserDefaults standardUserDefaults]objectForKey:@"toastImg"];
         if ([toast integerValue] < 6 || !toast) {
             [self.view toastWithString:@"长按可以保存图片哦~" type:kLabPostionTypeBottom];
@@ -116,19 +111,14 @@
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
         [ImgScroll addSubview:progress];
-        [[SDWebImageManager sharedManager]downloadImageWithURL:bigImgURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        UIImageView *image = [weakSelf creatImg:(UIImage *)self.placeHoldImages[index] scrollView:ImgScroll];
+        [image sd_setImageWithURL:bigImgURL placeholderImage:self.placeHoldImages[index] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (weakSelf.isFinishLoad && index == weakSelf.showWhichImg && image) {
-                [weakSelf.placeHoldimageView removeFromSuperview];
-                weakSelf.placeHoldimageView = nil;
-            }
-            if (index == weakSelf.showWhichImg && image) {
-                weakSelf.isFinishLoad = YES;
-            }
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [progress removeFromSuperview];
-            [weakSelf creatImg:image scrollView:ImgScroll];
         }];
+        [ImgScroll addSubview:image];
+        [ImgScroll bringSubviewToFront:progress];
         [self creatGeature:ImgScroll];
     }
     _imageScroll = scroll;
@@ -159,8 +149,8 @@
     return ImgScroll;
 }
 
-- (void)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
-    if (!image)return;
+- (UIImageView *)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
+    if (!image)return nil;
     UIImageView * img = [[UIImageView alloc]initWithImage:image];
     CGRect frame = img.frame;
     CGFloat proportion = (CGFloat)screenSize.width/frame.size.width;
@@ -173,7 +163,7 @@
     }
     img.frame = frame;
     scrollView.contentSize = frame.size;
-    [scrollView addSubview:img];
+    return img;
 }
 
 - (void)creatGeature:(UIView *)view{
@@ -252,14 +242,9 @@
 - (void)back{
     UIScrollView *view = [_imageScroll viewWithTag:(_imageScroll.contentOffset.x/screenSize.width) + 100];
     UIView *img = view.subviews.firstObject;
-    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.8 options:UIViewAnimationOptionTransitionNone animations:^{
-        if (self.placeHoldimageView) {
-            self.placeHoldimageView.frame = self.lastFrame;
-            view.alpha = 0;
-        }else{
-            view.contentOffset  =CGPointZero;
-            img.frame = self.lastFrame;
-        }
+    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.8 options:UIViewAnimationOptionTransitionNone animations:^{
+        view.contentOffset = CGPointZero;
+        img.frame = self.lastFrame;
     } completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }

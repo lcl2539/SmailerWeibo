@@ -26,14 +26,9 @@
                             <action selector="userImgDidClick" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MYE-Pl-Teh"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SII-eW-lZg">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SII-eW-lZg">
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqG-Co-pyu">
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-Lv-pRl" customClass="MLLinkLabel">
@@ -41,16 +36,21 @@
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XqG-Co-pyu">
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="xsP-Lv-pRl" secondAttribute="trailing" constant="8" id="0Cu-eA-b9d"/>
-                    <constraint firstItem="XqG-Co-pyu" firstAttribute="bottom" secondItem="fmR-zY-65R" secondAttribute="bottom" id="HkS-bH-cxB"/>
-                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="top" secondItem="fmR-zY-65R" secondAttribute="bottom" constant="8" id="NgL-2T-VS7"/>
+                    <constraint firstItem="XqG-Co-pyu" firstAttribute="centerY" secondItem="SII-eW-lZg" secondAttribute="centerY" id="GrS-if-FVX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="XqG-Co-pyu" secondAttribute="trailing" constant="8" id="O1J-ju-L8T"/>
                     <constraint firstItem="fmR-zY-65R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qjb-9i-ob9"/>
-                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Ve0-gS-VjV"/>
+                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="leading" secondItem="SII-eW-lZg" secondAttribute="leading" id="b4S-q5-KNc"/>
+                    <constraint firstItem="xsP-Lv-pRl" firstAttribute="top" secondItem="SII-eW-lZg" secondAttribute="bottom" constant="10" id="fQ7-Fe-rDV"/>
                     <constraint firstItem="fmR-zY-65R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="gZD-G1-p07"/>
                     <constraint firstItem="SII-eW-lZg" firstAttribute="leading" secondItem="fmR-zY-65R" secondAttribute="trailing" constant="16" id="hhE-f6-07G"/>
-                    <constraint firstItem="XqG-Co-pyu" firstAttribute="leading" secondItem="SII-eW-lZg" secondAttribute="leading" id="lFn-nW-5df"/>
                     <constraint firstAttribute="bottomMargin" secondItem="xsP-Lv-pRl" secondAttribute="bottom" constant="8" id="vYs-9L-IWI"/>
                     <constraint firstItem="SII-eW-lZg" firstAttribute="top" secondItem="fmR-zY-65R" secondAttribute="top" id="ysY-5z-2av"/>
                 </constraints>

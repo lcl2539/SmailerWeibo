@@ -18,7 +18,9 @@
     __weak IBOutlet UILabel *_surplus;
     __weak IBOutlet UIButton *_imageBtn;
     __weak IBOutlet UIView *_imgView;
+    __weak IBOutlet UIButton *_sendBtn;
     __weak ShowImgCollectionView *_imgShowView;
+    __weak IBOutlet NSLayoutConstraint *_imageShowViewHeight;
 }
 @property (nonatomic,strong)FaceKeyBoard *faceKeyBoard;
 
@@ -50,6 +52,8 @@
     [super awakeFromNib];
     [self loadText];
     [self loadImgShow];
+    [_sendBtn setTintColor:ThemeColor];
+    _surplus.textColor = ThemeColor;
 }
 
 - (void)beginEdit{
@@ -59,6 +63,10 @@
 - (void)loadSomeSetting{
     _text.delegate = self;
     _text.placeholderText = @"写点什么吧....";
+}
+
+- (void)changeTypeToMini{
+    _imageShowViewHeight.constant = 0;
 }
 
 - (void)loadText{
@@ -121,7 +129,7 @@
     _text.inputView = (_text.inputView == self.faceKeyBoard) ? nil : self.faceKeyBoard;
     [_text resignFirstResponder];
     [_text becomeFirstResponder];
-    _imageBtn.tintColor = (_imageBtn.tintColor == [UIColor darkGrayColor]) ? [UIColor orangeColor] : [UIColor darkGrayColor];
+    _imageBtn.tintColor = (_imageBtn.tintColor == ThemeColor) ? [UIColor darkGrayColor] : ThemeColor;
 }
 
 - (IBAction)sendStatus:(id)sender {

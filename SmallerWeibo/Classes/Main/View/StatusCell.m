@@ -18,6 +18,7 @@
 #import "UserShowViewController.h"
 #import "UIView+extend.h"
 #import "HttpRequest.h"
+#import "WebViewController.h"
 #define lineCount 3
 #define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -8)
 #define constants(layout) layout.constant
@@ -67,10 +68,15 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
+    _nicknName.textColor = ThemeColor;
     _userImg.layer.cornerRadius = 25;
     _userImg.clipsToBounds = YES;
     _status.delegate = self;
     _status.lineSpacing = 5;
+    [_likeBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_repateBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_supportBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+    [_commentsBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
     _status.font = [UIFont systemFontOfSize:17];
     _status.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineSpacing = 3;
@@ -79,6 +85,8 @@
     _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
+    _status.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};
+    _repeatStatus.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};
 }
 
 - (void)setModel:(id)model{
@@ -98,10 +106,6 @@
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)model;
         [self updataWithCommentsModle:modelTemp];
     }
-    _imgView.layer.cornerRadius = 5;
-    _repeatImgView.layer.cornerRadius = 5;
-    _imgView.clipsToBounds = YES;
-    _repeatImgView.clipsToBounds = YES;
 }
 
 - (void)updataWithStatusModle:(StatusModel *)model{
@@ -119,7 +123,7 @@
     }
     if (model.retweetedStatus) {
         NSMutableAttributedString *strTemp = [model.retweetedStatus.attributedStr mutableCopy];
-        [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.user.strScreenName]] atIndex:0];
+        [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.retweetedStatus.user.strScreenName]] atIndex:0];
         //[self shortUrlWithStr:strTemp];
         _repeatStatus.attributedText = strTemp;
         if (model.retweetedStatus.arrPicUrls){
@@ -141,7 +145,7 @@
     [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.status.repostsCount] forState:UIControlStateNormal];
     [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.status.attitudesCount] forState:UIControlStateNormal];
     NSMutableAttributedString *strTemp = [model.status.attributedStr mutableCopy];
-    [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.user.strScreenName]] atIndex:0];
+    [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.status.user.strScreenName]] atIndex:0];
     _repeatStatus.attributedText = strTemp;
     if (model.status.arrPicUrls) {
         [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:model.status.arrPicUrls];
@@ -275,6 +279,10 @@
 - (void)imgDidTouch:(UIButton *)btn{
     NSArray *arr;
     NSMutableArray *frameArr = [NSMutableArray array];
+    NSMutableArray *placeHoldImages = [NSMutableArray array];
+    for (UIButton *btnTemp in btn.superview.subviews) {
+        [placeHoldImages addObject:btnTemp.currentBackgroundImage];
+    }
     for (UIView *view in btn.superview.subviews) {
         [frameArr addObject:[NSValue valueWithCGRect:[self.window convertRect:view.frame fromView:view.superview]]];
     }
@@ -289,15 +297,22 @@
         CommentsStatusModel *modelTemp = (CommentsStatusModel *)self.model;
         arr = modelTemp.status.arrPicUrls;
     }
-    [self showReViewImgVCWithImageArr:arr frameArr:frameArr button:btn];
+    [self showReViewImgVCWithImageArr:arr frameArr:frameArr placeHoldImages:placeHoldImages button:btn];
 }
 
 - (IBAction)repateAndCommentBtnClick:(UIButton *)sender {
-    
+    [self showNewStatusVcWithType:sender.tag + 1 StatusId:[self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr];
 }
 
 - (IBAction)likeAndSupportBtnClick:(UIButton *)sender {
-    
+    __weak typeof(self) weakSelf = self;
+    NSString *statusId = [self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr;
+    [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:sender.tag success:^(id object) {
+        [weakSelf toastWithString:sender.tag == 0 ? @"已收藏！" : @"已赞！" type:kLabPostionTypeBottom];
+        [sender setTitle:sender.tag == 0 ? @"已收藏" : @"已赞"  forState:UIControlStateNormal];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didClickLink:(MLLink *)link linkText:(NSString *)linkText linkLabel:(MLLinkLabel *)linkLabel{
@@ -307,7 +322,7 @@
     }else if([linkText hasPrefix:@"@"]){
         [self showUserShowVcWithUserName:[linkText substringWithRange:NSMakeRange(1, linkText.length-1)]];
     }else{
-        NSLog(@"link");
+        [self showWebVcWithUrl:linkText];
     }
 }
 

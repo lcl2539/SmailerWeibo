@@ -73,6 +73,7 @@
         [[UIApplication sharedApplication].keyWindow toastWithString:@"发送失败！请检查网络" type:kLabPostionTypeBottom];
     }];
 }
+
 - (void)sendImgStatus:(NewStatusModel *)model{
     NSMutableArray *arrTemp = [[NSMutableArray alloc]init];
     __weak typeof(self) weakSelf = self;
@@ -84,13 +85,14 @@
                     [[UIApplication sharedApplication].keyWindow toastWithString:@"发送成功！" type:kLabPostionTypeBottom];
                     [weakSelf.status removeObject:model];
                 } failure:^(NSError *error) {
-                    NSLog(@"%@",error);
+                    [[UIApplication sharedApplication].keyWindow toastWithString:@"发送失败！请检查网络" type:kLabPostionTypeBottom];
                 }];
             }
         } failurl:^(NSError *error) {
             NSLog(@"%@",error);
         }];
     }
+
 }
 
 - (void)dealloc{

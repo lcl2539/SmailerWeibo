@@ -19,7 +19,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [AFHTTPSessionManager manager];
-        manager.requestSerializer.timeoutInterval = 10;
+        manager.requestSerializer.timeoutInterval = 30;
     });
     return manager;
 }
@@ -82,13 +82,13 @@
     } isGET:YES type:type_json];
 }
 
-+ (void)likeStatusHttpRequestWithStatusId:(NSInteger)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure{
++ (void)likeStatusHttpRequestWithStatusId:(NSString *)statusId type:(NSInteger)type success:(success)sucess failure:(failure)faliure{
     static NSArray *urlArr;
     urlArr = @[@"https://api.weibo.com/2/favorites/create.json",//收藏
-               @"https://api.weibo.com/2/statuses/repost.json"//转发
+               @"https://api.weibo.com/2/attitudes/create.json"//点赞
                ];
-    NSDictionary *dict = @{@"id":[NSNumber numberWithInteger:statusId]};
-    [self httpRequestWithUrl:urlArr[type - 1] parameter:dict success:^(id object) {
+    NSDictionary *dict = (type == 0) ? @{@"id":statusId} : @{@"id":statusId,@"attitude":@"heart"};
+    [self httpRequestWithUrl:urlArr[type] parameter:dict success:^(id object) {
         sucess(object);
     } failure:^(NSError *error) {
         faliure(error);
@@ -111,13 +111,11 @@
 
 + (void)userShowHttpRequestWithId:(NSString *)uid page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"http://api.weibo.cn/2/statuses/user_timeline";
+    url = @"https://api.weibo.com/2/statuses/user_timeline.json";
     NSDictionary *dict = @{@"uid":uid,
                            @"page":[NSNumber numberWithInteger:page],
                            @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
+                           @"access_token":weiboXToken};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {
@@ -213,41 +211,14 @@
 
 + (void)searchForUserWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"http://api.weibo.cn/2/search/users";
+    url = @"https://api.weibo.com/2/search/users.json";
     NSDictionary *dict = @{@"q":text,
                            @"page":[NSNumber numberWithInteger:page],
                            @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
-    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
-        success(object);
-    } failure:^(NSError *error) {
-        failure(error);
-    } isGET:YES type:type_json];
-}
-
-+ (void)searchForStatusWithText:(NSString *)text page:(NSInteger)page success:(success)success failure:(failure)failure{
-    static NSString *url;
-    url = @"http://api.weibo.cn/2/search/statuses";
-    NSDictionary *dict = @{@"q":text,
-                           @"page":[NSNumber numberWithInteger:page],
-                           @"count":@20,
-                           @"s":@"dd9d1bb3",
-                           @"c":@"weicoandroid",
-                           @"gsid":gsid};
-    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
-        success(object);
-    } failure:^(NSError *error) {
-        failure(error);
-    } isGET:YES type:type_json];
-}
-
-+ (void)userInfoWithToken:(NSString *)token userID:(NSString *)uid success:(success)success failure:(failure)failure{
-    __weak AFHTTPSessionManager *manager = [self shareManger];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_json, nil];
-    [manager GET:@"https://api.weibo.com/2/users/show.json" parameters:@{@"access_token":token,
-@"uid":uid} progress:^(NSProgress * _Nonnull downloadProgress) {
+                           @"access_token":myToken};
+    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    manger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_html, nil];
+    [manger GET:url parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         success(responseObject);
@@ -256,4 +227,42 @@
     }];
 }
 
++ (void)userInfoWithToken:(NSString *)token userID:(NSString *)uid success:(success)success failure:(failure)failure{
+    static NSString *url;
+    url = @"https://api.weibo.com/2/users/show.json";
+    NSDictionary *dict = @{@"uid":uid};
+    [self httpRequestWithUrl:url parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:YES type:type_json];
+}
+
++ (void)repateAndCommentsWithstatusId:(NSString *)statusId status:(NSString *)status success:(success)success failure:(failure)failure isComment:(BOOL)isComment{
+    static NSArray *url;
+    url = @[@"https://api.weibo.com/2/statuses/repost.json",
+            @"https://api.weibo.com/2/comments/create.json"];
+    NSDictionary *dictRepate = @{@"id":statusId,
+                           @"status":status,
+                           @"is_comment":@"0"};
+    NSDictionary *dictComment = @{@"comment":status,
+                                  @"id":statusId};
+    [self httpRequestWithUrl:isComment ? url[1] : url[0] parameter:isComment ? dictComment : dictRepate success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:NO type:type_json];
+}
+
++ (void)followUserWithUserId:(NSString *)uid isFollowed:(BOOL)isFollowed success:(success)success failure:(failure)failure{
+    static NSArray *url;
+    url = @[@"https://api.weibo.com/2/friendships/create.json",
+            @"https://api.weibo.com/2/friendships/destroy.json"];
+    NSDictionary *dict = @{@"uid":uid};
+    [self httpRequestWithUrl:isFollowed ? url[1] : url[0] parameter:dict success:^(id object) {
+        success(object);
+    } failure:^(NSError *error) {
+        failure(error);
+    } isGET:NO type:type_json];
+}
 @end

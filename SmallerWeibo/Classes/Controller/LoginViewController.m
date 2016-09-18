@@ -14,17 +14,15 @@
 #import "HttpRequest.h"
 #import "NSString+Extend.h"
 #import "UserModel.h"
-
-#define baseUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&scope=all&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
-#define gsidUrl [NSString stringWithFormat:@"http://api.weibo.cn/2/account/login?access_token=%@&source=%d",self.token,3]
-
+#import "UIView+extend.h"
+#define baseUrl [NSString stringWithFormat:@"https://api.weibo.com/oauth2/authorize?forcelogin=true&scope=all&client_id=%@&response_type=code&redirect_uri=%@",weiboXClient_Id,weiboXredirect_Url]
+#define weicoUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&scope=all&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
 @interface LoginViewController ()<UIWebViewDelegate>
 {
     __weak UIWebView *_web;
 }
 @property (nonatomic,strong)NSMutableArray *allUser;
 @property (nonatomic,strong)NSMutableDictionary *user;
-@property (nonatomic,copy)NSString *token;
 @property (nonatomic,assign)BOOL isHave;
 @end
 
@@ -50,7 +48,7 @@
 }
 
 - (void)loadSomeSetting{
-    self.view.backgroundColor = Color(255, 255, 255, 1);
+    self.view.backgroundColor =[UIColor whiteColor];
     if (self.navigationController) {
         [self loadNavbar];
     }
@@ -58,8 +56,15 @@
     [self.view addSubview:web];
     web.delegate = self;
     _web = web;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:baseUrl]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:weicoUrl]];
     [web loadRequest:request];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (self.allUser.count == 0){
+        [self.view toastWithString:@"首次使用，请登录！" type:kLabPostionTypeBottom];
+    }
 }
 
 - (void)loadNavbar{
@@ -67,11 +72,12 @@
     self.title = @"添加账号";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:0 target:self action:@selector(back)];
+    btn.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = btn;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    __weak typeof(self) weakSelf = self;
+    if ([request.URL.absoluteString containsString:weiboXredirect_Url])return YES;
     if ([request.URL.absoluteString containsString:@"access_token"]) {
         [webView loadHTMLString:@"\n请稍等" baseURL:nil];
         NSArray *arr = [[request.URL.absoluteString componentsSeparatedByString:@"?"].lastObject componentsSeparatedByString:@"&"];
@@ -80,32 +86,40 @@
                 NSArray *arr = [str componentsSeparatedByString:@"="];
                 [self.user setObject:arr.lastObject forKey:arr.firstObject];
                 if ([str containsString:@"access"]) {
-                    self.token = arr.lastObject;
+                    for ( NSDictionary *dict in self.allUser) {
+                        if ([dict[@"uid"] isEqualToString:arr.lastObject]) {
+                            self.isHave = YES;
+                        }
+                    }
                 }
             }
         }
-        AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
-        manger.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:type_json, nil];
-        [manger POST:gsidUrl parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [weakSelf.user setObject:responseObject[@"gsid"] forKey:@"gsid"];
-            for (NSDictionary *user in weakSelf.allUser) {
-                if ([user[@"uid"] isEqualToString:self.user[@"uid"]]) {
-                    weakSelf.isHave = YES;
-                }
-            }
-            if (!weakSelf.isHave) {
-                [weakSelf.allUser addObject:weakSelf.user];
-            }
-            [weakSelf successForAccess_Token];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
-        return NO;
+        [_web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:baseUrl]]];
+        [self.view toastWithString:@"请再次登录以获取高级授权" type:kLabPostionTypeBottom];
     }
     
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *jsToGetHTMLSource = @"document.getElementsByTagName('html')[0].innerHTML";
+    NSString *responseObject = [webView stringByEvaluatingJavaScriptFromString:jsToGetHTMLSource];
+    if ([responseObject containsString:@"验证成功"]) {
+        NSRange left = [responseObject rangeOfString:@"done?"];
+        NSRange right = [responseObject rangeOfString:@"setTime"];
+        NSRange range = NSMakeRange(left.location + left.length,right.location - left.location + left.length -right.length -6);
+        NSArray *Temp = [[responseObject substringWithRange:range]componentsSeparatedByString:@"&"];
+        for (NSString *str in Temp) {
+            if ([str containsString:@"access"]) {
+                NSArray *arr = [str componentsSeparatedByString:@"="];
+                [self.user setObject:arr.lastObject forKey:@"access_token_weiboX"];
+            }
+        }
+        [self.allUser addObject:self.user];
+        [self.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
+        [self successForAccess_Token];
+        [_web removeFromSuperview];
+    }
 }
 
 - (void)back{
@@ -115,8 +129,6 @@
 
 - (void)successForAccess_Token{
     [NSString writeUserInfoWithKey:@"AllUser" value:self.allUser];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
     if (self.addUserFinish) {
         if (!self.isHave) {
             self.addUserFinish(self.user);
@@ -128,5 +140,7 @@
         AppDelegate *appDeleagte = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [appDeleagte loadMainViewController];
     }
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

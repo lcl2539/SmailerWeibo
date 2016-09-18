@@ -17,6 +17,8 @@
 #import "TopicViewController.h"
 #import "NewStatusViewController.h"
 #import "SearchViewController.h"
+#import "WebViewController.h"
+#import "HttpRequest.h"
 @implementation UIView (extend)
 - (void)toastWithString:(NSString *)str type:(LabPostionType)type{
     UILabel *lab = [[UILabel alloc]init];
@@ -71,7 +73,7 @@
     return nil;
 }
 
-- (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr button:(UIButton *)btn {
+- (void)showReViewImgVCWithImageArr:(NSArray *)arr frameArr:(NSArray *)frameArr placeHoldImages:(NSArray *)placeHoldImages button:(UIButton *)btn {
     ReviewImgController *vc = [[ReviewImgController alloc]init];
     vc.picArr = arr;
     vc.showWhichImg = btn.tag;
@@ -84,6 +86,7 @@
     vc.fromVc = [self superViewController];
     vc.fromVc.navigationController.delegate = vc;
     vc.navigationController.delegate = vc;
+    vc.placeHoldImages = placeHoldImages;
     [vc show];
 }
 
@@ -140,15 +143,31 @@
 
 }
 
-- (void)showNewStatusVc{
+- (void)showNewStatusVcWithType:(NSInteger)type StatusId:(NSString *)statusId{
     NewStatusViewController *vc = [[NewStatusViewController alloc]init];
     vc.lastPoint = [self.window convertPoint:self.center fromView:self.superview];
     vc.fromVc = [self superViewController];
+    vc.type = type;
+    vc.statusId = statusId ? statusId : nil;
     [vc show];
 }
 
 - (void)showSearchVc{
     SearchViewController *vc = [[SearchViewController alloc]init];
     [[self superViewController].navigationController pushViewController:vc animated:YES];
+}
+
+- (void)showWebVcWithUrl:(NSString *)url{
+    WebViewController *vc = [[WebViewController alloc]init];
+    vc.url = url;
+    [self.superViewController.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)followUser:(NSString *)uid isFollowed:(BOOL)isFollowed success:(void (^)())success{
+    [HttpRequest followUserWithUserId:uid isFollowed:isFollowed success:^(id object) {
+        success();
+    } failure:^(NSError *error) {
+        
+    }];
 }
 @end
