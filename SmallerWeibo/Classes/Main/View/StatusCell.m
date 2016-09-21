@@ -326,5 +326,9 @@
     }
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    UITouch *touch = [touches anyObject];
+    NSLog(@"%f",touch.force);
+}
 
 @end
