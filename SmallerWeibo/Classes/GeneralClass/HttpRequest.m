@@ -114,8 +114,7 @@
     url = @"https://api.weibo.com/2/statuses/user_timeline.json";
     NSDictionary *dict = @{@"uid":uid,
                            @"page":[NSNumber numberWithInteger:page],
-                           @"count":@20,
-                           @"access_token":weiboXToken};
+                           @"count":@20};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {

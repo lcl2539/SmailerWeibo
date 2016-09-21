@@ -455,9 +455,9 @@
 		36C5EF521D57161F006511B9 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				36994D491D57136C0078372C /* AppDelegate.h */,
 				36994D4A1D57136C0078372C /* AppDelegate.m */,
 				CC9372CC1D7FDD9A00ADDBDF /* SendStatus.h */,
-				36994D491D57136C0078372C /* AppDelegate.h */,
 				CC9372CD1D7FDD9A00ADDBDF /* SendStatus.m */,
 			);
 			name = AppDelegate;

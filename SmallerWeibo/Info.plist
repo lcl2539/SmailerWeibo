@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -31,6 +31,19 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>比较小的微博需要保存图片到相册，请授予权限</string>
+	<key>UIA</key>
+	<string></string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>send</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>发微博</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string></string>
+		</dict>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

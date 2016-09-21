@@ -15,8 +15,7 @@
 #import "NSString+Extend.h"
 #import "UserModel.h"
 #import "UIView+extend.h"
-#define baseUrl [NSString stringWithFormat:@"https://api.weibo.com/oauth2/authorize?forcelogin=true&scope=all&client_id=%@&response_type=code&redirect_uri=%@",weiboXClient_Id,weiboXredirect_Url]
-#define weicoUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&scope=all&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
+#define weicoUrl [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&redirect_uri=%@&response_type=code&display=mobile&packagename=com.eico.weico&key_hash=1e6e33db08f9192306c4afa0a61ad56c",client_Id,redirect_Url]
 @interface LoginViewController ()<UIWebViewDelegate>
 {
     __weak UIWebView *_web;
@@ -24,6 +23,7 @@
 @property (nonatomic,strong)NSMutableArray *allUser;
 @property (nonatomic,strong)NSMutableDictionary *user;
 @property (nonatomic,assign)BOOL isHave;
+@property (nonatomic,strong)NSURL *url;
 @end
 
 @implementation LoginViewController
@@ -56,8 +56,20 @@
     [self.view addSubview:web];
     web.delegate = self;
     _web = web;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:weicoUrl]];
-    [web loadRequest:request];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:weicoUrl parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSMutableString *html = [NSMutableString stringWithString:[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        [html replaceOccurrencesOfString:@"Weico.Android" withString:@"比较小的微博" options:0 range:NSMakeRange(0, html.length)];
+        [_web loadHTMLString:html baseURL:[NSURL URLWithString:weicoUrl]];
+        NSLog(@"%@",html);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -77,6 +89,7 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    self.url = request.URL;
     if ([request.URL.absoluteString containsString:weiboXredirect_Url])return YES;
     if ([request.URL.absoluteString containsString:@"access_token"]) {
         [webView loadHTMLString:@"\n请稍等" baseURL:nil];
@@ -94,32 +107,13 @@
                 }
             }
         }
-        [_web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:baseUrl]]];
-        [self.view toastWithString:@"请再次登录以获取高级授权" type:kLabPostionTypeBottom];
-    }
-    
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    NSString *jsToGetHTMLSource = @"document.getElementsByTagName('html')[0].innerHTML";
-    NSString *responseObject = [webView stringByEvaluatingJavaScriptFromString:jsToGetHTMLSource];
-    if ([responseObject containsString:@"验证成功"]) {
-        NSRange left = [responseObject rangeOfString:@"done?"];
-        NSRange right = [responseObject rangeOfString:@"setTime"];
-        NSRange range = NSMakeRange(left.location + left.length,right.location - left.location + left.length -right.length -6);
-        NSArray *Temp = [[responseObject substringWithRange:range]componentsSeparatedByString:@"&"];
-        for (NSString *str in Temp) {
-            if ([str containsString:@"access"]) {
-                NSArray *arr = [str componentsSeparatedByString:@"="];
-                [self.user setObject:arr.lastObject forKey:@"access_token_weiboX"];
-            }
-        }
         [self.allUser addObject:self.user];
         [self.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
         [self successForAccess_Token];
         [_web removeFromSuperview];
+        return NO;
     }
+    return YES;
 }
 
 - (void)back{

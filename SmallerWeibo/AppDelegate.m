@@ -12,6 +12,7 @@
 #import "UIView+extend.h"
 #import "LoginViewController.h"
 #import "SendStatus.h"
+#import "NewStatusViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -64,6 +65,14 @@
 - (void)loadMainViewController{
     ViewController *mainVc= [[ViewController alloc]init];
     [_window setRootViewController:[[UINavigationController alloc]initWithRootViewController:mainVc]];
-    //[vc.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler{
+    if (!myToken)return;
+    if ([shortcutItem.localizedTitle isEqualToString:@"发微博"]) {
+        NewStatusViewController *vc = [[NewStatusViewController alloc]init];
+        vc.fromVc = ((UINavigationController *)self.window.rootViewController).viewControllers.firstObject;
+        [vc show];
+    }
 }
 @end
