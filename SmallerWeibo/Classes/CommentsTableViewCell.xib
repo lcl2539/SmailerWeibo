@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -12,13 +12,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="167"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="166"/>
+                <frame key="frameInset" width="320" height="166.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmR-zY-65R">
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="Tf3-G0-Vwy"/>
-                            <constraint firstAttribute="height" constant="50" id="jun-bO-5fC"/>
+                            <constraint firstAttribute="width" constant="40" id="Tf3-G0-Vwy"/>
+                            <constraint firstAttribute="height" constant="40" id="jun-bO-5fC"/>
                         </constraints>
                         <color key="tintColor" white="0.63" alpha="1" colorSpace="calibratedWhite"/>
                         <state key="normal" image="UserHeadPlaceHold"/>
@@ -27,12 +27,12 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SII-eW-lZg">
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-Lv-pRl" customClass="MLLinkLabel">
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -51,7 +51,7 @@
                     <constraint firstItem="xsP-Lv-pRl" firstAttribute="top" secondItem="SII-eW-lZg" secondAttribute="bottom" constant="10" id="fQ7-Fe-rDV"/>
                     <constraint firstItem="fmR-zY-65R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="gZD-G1-p07"/>
                     <constraint firstItem="SII-eW-lZg" firstAttribute="leading" secondItem="fmR-zY-65R" secondAttribute="trailing" constant="16" id="hhE-f6-07G"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="xsP-Lv-pRl" secondAttribute="bottom" constant="8" id="vYs-9L-IWI"/>
+                    <constraint firstAttribute="bottom" secondItem="xsP-Lv-pRl" secondAttribute="bottom" constant="8" id="vYs-9L-IWI"/>
                     <constraint firstItem="SII-eW-lZg" firstAttribute="top" secondItem="fmR-zY-65R" secondAttribute="top" id="ysY-5z-2av"/>
                 </constraints>
             </tableViewCellContentView>

@@ -55,13 +55,13 @@
             NSRange rangeResult = NSMakeRange(rangeLeft.location + 10, str.length - 4 - rangeLeft.location - 10);
             for (NSString *picId in dicData[@"pic_ids"]) {
                 NSMutableString *strPic = [[NSMutableString alloc]initWithString:str];
-                [arr addObject:[strPic stringByReplacingCharactersInRange:rangeResult withString:picId]];
+                [arr addObject:[[strPic stringByReplacingCharactersInRange:rangeResult withString:picId] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"thumb150"]];
             }
         }
     }else{
         for (NSDictionary *dict in arrPicUrls) {
             NSString *strPic = dict[@"thumbnail_pic"];
-            [arr addObject:strPic];
+            [arr addObject:[strPic stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"thumb150"]];
         }
     }
     arrPicUrls = arr;

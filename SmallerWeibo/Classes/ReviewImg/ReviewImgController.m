@@ -106,18 +106,23 @@
         ImgScroll.tag = 100 + index;
         [ImgScroll setBackgroundColor:[UIColor clearColor]];
         NSMutableString *imgURL = [[NSMutableString alloc]initWithString:self.picArr[index]];
-        [imgURL replaceOccurrencesOfString:@"thumbnail" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
+        [imgURL replaceOccurrencesOfString:@"thumb150" withString:@"large" options:0 range:NSMakeRange(0, imgURL.length)];
         NSURL *bigImgURL = [NSURL URLWithString:imgURL];
         [scroll addSubview:ImgScroll];
         UIProgressView *progress = [self creatProgress];
         [ImgScroll addSubview:progress];
-        UIImageView *image = [weakSelf creatImg:(UIImage *)self.placeHoldImages[index] scrollView:ImgScroll];
-        [image sd_setImageWithURL:bigImgURL placeholderImage:self.placeHoldImages[index] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        UIImageView *imageView = [weakSelf creatImg:(UIImage *)self.placeHoldImages[index] scrollView:ImgScroll];
+        [ImgScroll addSubview:imageView];
+        [imageView sd_setImageWithURL:bigImgURL placeholderImage:self.placeHoldImages[index] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             [progress setProgress:(CGFloat)receivedSize/expectedSize animated:YES];
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            cacheType = SDImageCacheTypeDisk;
             [progress removeFromSuperview];
+            [imageView sizeToFit];
+            imageView.frame = [weakSelf imageFrameWithImage:imageView.frame];
+            UIScrollView *scroll = (UIScrollView *)imageView.superview;
+            scroll.contentSize = imageView.frame.size;
         }];
-        [ImgScroll addSubview:image];
         [ImgScroll bringSubviewToFront:progress];
         [self creatGeature:ImgScroll];
     }
@@ -152,18 +157,21 @@
 - (UIImageView *)creatImg:(UIImage *)image scrollView:(UIScrollView *)scrollView{
     if (!image)return nil;
     UIImageView * img = [[UIImageView alloc]initWithImage:image];
-    CGRect frame = img.frame;
-    CGFloat proportion = (CGFloat)screenSize.width/frame.size.width;
-    frame.size.width = frame.size.width*proportion;
-    frame.size.height = frame.size.height*proportion;
-    if (frame.size.height >= screenSize.height) {
-        frame.origin.y = 0;
-    }else{
-        frame.origin.y = screenSize.height/2 - frame.size.height/2;
-    }
+    CGRect frame = [self imageFrameWithImage:img.frame];
     img.frame = frame;
-    scrollView.contentSize = frame.size;
     return img;
+}
+
+- (CGRect)imageFrameWithImage:(CGRect)imgFrame{
+    CGFloat proportion = (CGFloat)screenSize.width/imgFrame.size.width;
+    imgFrame.size.width = imgFrame.size.width*proportion;
+    imgFrame.size.height = imgFrame.size.height*proportion;
+    if (imgFrame.size.height >= screenSize.height) {
+        imgFrame.origin.y = 0;
+    }else{
+        imgFrame.origin.y = screenSize.height/2 - imgFrame.size.height/2;
+    }
+    return imgFrame;
 }
 
 - (void)creatGeature:(UIView *)view{

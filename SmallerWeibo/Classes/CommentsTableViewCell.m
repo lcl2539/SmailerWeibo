@@ -27,7 +27,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _userImg.layer.cornerRadius = 25;
+    _userImg.layer.cornerRadius = 20;
     _comments.delegate = self;
     _userName.textColor = ThemeColor;
     _comments.linkTextAttributes = @{NSForegroundColorAttributeName:ThemeColor};

@@ -62,7 +62,7 @@
     UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.view addSubview:tab];
     _tab = tab;
-    _tab.estimatedRowHeight = 40;
+    _tab.rowHeight = 56;
     tab.delegate = self;
     tab.dataSource = self;
     [_tab mas_makeConstraints:^(MASConstraintMaker *make) {

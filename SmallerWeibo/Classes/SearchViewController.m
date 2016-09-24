@@ -7,7 +7,6 @@
 //
 
 #import "SearchViewController.h"
-#import "StatusCell.h"
 #import <Masonry.h>
 #import "UserModel.h"
 #import "HttpRequest.h"
@@ -17,6 +16,7 @@
 #import "UIView+extend.h"
 #import "UserTableViewCell.h"
 #import "TitleView.h"
+#import "LStatusTableVC.h"
 @interface SearchUserCell ()
 {
     __weak IBOutlet UIButton *_userImg;
@@ -134,17 +134,19 @@
 }
 @end
 
-@interface SearchViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
+
+
+
+@interface SearchViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
 {
     __weak UICollectionView *_userList;
-    __weak UITableView *_statusList;
+    __weak LStatusTableVC *_statusList;
     __weak IBOutlet UISearchBar *_searchBar;
     __weak IBOutlet UIView *_bgView;
     __weak IBOutlet UIButton *_searchBtn;
     __weak IBOutlet UIButton *_backBtn;
 }
 @property (nonatomic,copy)NSArray *userData;
-@property (nonatomic,copy)NSArray *statusData;
 @property (nonatomic,copy)NSString *text;
 @end
 
@@ -155,13 +157,6 @@
         _userData = [[NSArray alloc]init];
     }
     return _userData;
-}
-
-- (NSArray *)statusData{
-    if (!_statusData) {
-        _statusData = [[NSArray alloc]init];
-    }
-    return _statusData;
 }
 
 - (void)awakeFromNib{
@@ -180,19 +175,24 @@
 }
 
 - (void)loadStatusList{
-    UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    [self.view addSubview:tab];
+    LStatusTableVC *tab = [[LStatusTableVC alloc]initWithStyle:UITableViewStyleGrouped];
+    [self addChildViewController:tab];
+    [self.view addSubview:tab.view];
     _statusList = tab;
-    [_statusList mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_statusList.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bgView.mas_bottom);
         make.leading.trailing.bottom.equalTo(self.view);
     }];
-    _statusList.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(httpRequest)];
-    _statusList.delegate = self;
-    _statusList.dataSource = self;
-    _statusList.estimatedRowHeight = 50;
-    _statusList.separatorInset = UIEdgeInsetsMake(0, 66, 0, 0);
-    _statusList.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    _statusList.haveReload = NO;
+    __weak typeof(self) weakSelf = self;
+    tab.reloadDate = ^(LStatusTableVC *vc,BOOL isReload){
+        [weakSelf httpRequest];
+    };
+    tab.didScroll = ^{
+        if (_searchBar.isFirstResponder) {
+            [_searchBar resignFirstResponder];
+        }
+    };
     [self loadUserList];
 }
 
@@ -207,27 +207,12 @@
     view.delegate = self;
     view.backgroundColor = [UIColor whiteColor];
     view.dataSource = self;
-    _statusList.tableHeaderView = view;
+    _statusList.tableView.tableHeaderView = view;
     _userList = view;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     _searchBtn.userInteractionEnabled = (_searchBar.text.length > 0);
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.statusData.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-    StatusModel *model = self.statusData[indexPath.row];
-    cell.model = model;
-    return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -263,7 +248,7 @@
 }
 
 - (IBAction)search:(id)sender {
-    self.statusData = nil;
+    _statusList.dataArr = nil;
     self.userData = nil;
     self.text = _searchBar.text;
     __weak typeof(self) weakSelf = self;
@@ -279,8 +264,8 @@
 - (void)httpRequest{
     __weak typeof(self) weakSelf = self;
     NSInteger page = 1;
-    page = self.statusData.count/20 + 1;
-    page = (self.statusData.count%20 > 0) ? page + 1 : page;
+    page = _statusList.dataArr.count/20 + 1;
+    page = (_statusList.dataArr.count%20 > 0) ? page + 1 : page;
     [HttpRequest topicStatusWithTopic:_searchBar.text page:page success:^(id object) {
         [weakSelf loadStatusWithArr:object[@"statuses"]];
     } failure:^(NSError *error) {
@@ -299,19 +284,19 @@
 }
 
 - (void)loadStatusWithArr:(NSArray *)arr{
-    NSMutableArray *arrTemp = [self.statusData mutableCopy];
+    NSMutableArray *arrTemp = [_statusList.dataArr mutableCopy];
     for (NSDictionary *dict in arr) {
         StatusModel *model = [StatusModel statusModelWithDictionary:dict];
         [arrTemp addObject:model];
     }
-    if (arrTemp.count == self.statusData.count) {
-        [_statusList.mj_footer endRefreshingWithNoMoreData];
-    }else{
-        [_statusList.mj_footer endRefreshing];
-    }
-    [_statusList.mj_header endRefreshing];
-    self.statusData = arrTemp;
-    [_statusList reloadData];
+//    if (arrTemp.count == self.statusData.count) {
+//        [_statusList.mj_footer endRefreshingWithNoMoreData];
+//    }else{
+//        [_statusList.mj_footer endRefreshing];
+//    }
+    //[_statusList.mj_header endRefreshing];
+    _statusList.dataArr = arrTemp;
+    
 }
 
 - (IBAction)back:(id)sender {

@@ -10,7 +10,7 @@
 #define dictKey(index) [NSString stringWithFormat:@"%ld",index]
 #import "ViewController.h"
 #import "NavigationScroll.h"
-#import "StatusTableViewController.h"
+#import "LStatusTableVC.h"
 #import "HttpRequest.h"
 #import "StatusModel.h"
 #import <Masonry.h>
@@ -210,7 +210,7 @@
 }
 
 - (void)loadVisibleTableViewData:(NSInteger)index{
-    for (StatusTableViewController *vc in self.visibleTabViewControllers) {
+    for (LStatusTableVC *vc in self.visibleTabViewControllers) {
         if (vc.index == index) {
             NSArray *arr = [self.allData valueForKey:dictKey((long)index)];
             if (arr) {
@@ -224,7 +224,7 @@
     }
 }
 
-- (void)tableViewLoadData:(StatusTableViewController *)vc isReLoad:(BOOL)isReLoad{
+- (void)tableViewLoadData:(LStatusTableVC *)vc isReLoad:(BOOL)isReLoad{
     __weak typeof(self) weakSelf = self;
     NSInteger page = 0;
     NSArray *arrTemp = self.allData[[NSString stringWithFormat:@"%ld",(long)vc.index]];
@@ -260,7 +260,7 @@
     }];
 }
 
-- (void)loadDataWithArr:(NSArray *)arr tableView:(StatusTableViewController *)vc {
+- (void)loadDataWithArr:(NSArray *)arr tableView:(LStatusTableVC *)vc {
     NSArray *arrOrigin = self.allData[dictKey((long)vc.index)];
     NSMutableArray *arrTemp = [arrOrigin mutableCopy];
     if (!arrTemp || arrTemp.count == 0) {
@@ -303,7 +303,7 @@
     if (lastIndex >= 6) {
         lastIndex = 5;
     }
-    for (StatusTableViewController *vc in self.visibleTabViewControllers) {
+    for (LStatusTableVC *vc in self.visibleTabViewControllers) {
         if (vc.index < firstIndex || vc.index > lastIndex) {
             [self.reusedTableViewControllers addObject:vc];
             [vc removeFromParentViewController];
@@ -313,7 +313,7 @@
     [self.visibleTabViewControllers minusSet:self.reusedTableViewControllers];
     for (NSInteger index = firstIndex; index <= lastIndex; index++) {
         BOOL isShow = NO;
-        for (StatusTableViewController *vc in self.visibleTabViewControllers) {
+        for (LStatusTableVC *vc in self.visibleTabViewControllers) {
             if (vc.index == index) {
                 isShow = YES;
             }
@@ -326,13 +326,13 @@
 
 - (void)showSatusViewAtIndex:(NSInteger)index{
     __weak typeof(self) weakSelf = self;
-    StatusTableViewController *vc = [self.reusedTableViewControllers anyObject];
+    LStatusTableVC *vc = [self.reusedTableViewControllers anyObject];
     if (vc) {
         [self.reusedTableViewControllers removeObject:vc];
     }else{
-        StatusTableViewController *childVc = [[StatusTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
+        LStatusTableVC *childVc = [[LStatusTableVC alloc]initWithStyle:UITableViewStyleGrouped];
         vc = childVc;
-        vc.reloadDate = ^(StatusTableViewController *vc,BOOL isReLoad){
+        vc.reloadDate = ^(LStatusTableVC *vc,BOOL isReLoad){
             [weakSelf tableViewLoadData:vc isReLoad:isReLoad];
         };
         vc.changeTop = ^(NSInteger value,NSInteger vcIndex){

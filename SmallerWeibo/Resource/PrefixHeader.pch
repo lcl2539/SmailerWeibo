@@ -20,7 +20,7 @@
 
 #define client_Secret @"72d4545a28a46a6f329c4f2b1e949e6a"
 #define myToken [[NSUserDefaults standardUserDefaults]objectForKey:@"CurrentUser"][@"access_token"]
-#define weiboXToken [[NSUserDefaults standardUserDefaults]objectForKey:@"CurrentUser"][@"access_token_weiboX"]
+#define Gsid [[NSUserDefaults standardUserDefaults]objectForKey:@"CurrentUser"][@"gsid"]
 #define type_text @"text/plain"
 #define type_html @"text/html"
 #define type_json @"application/json"

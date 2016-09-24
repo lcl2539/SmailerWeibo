@@ -23,7 +23,6 @@
 @property (nonatomic,strong)NSMutableArray *allUser;
 @property (nonatomic,strong)NSMutableDictionary *user;
 @property (nonatomic,assign)BOOL isHave;
-@property (nonatomic,strong)NSURL *url;
 @end
 
 @implementation LoginViewController
@@ -89,7 +88,6 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    self.url = request.URL;
     if ([request.URL.absoluteString containsString:weiboXredirect_Url])return YES;
     if ([request.URL.absoluteString containsString:@"access_token"]) {
         [webView loadHTMLString:@"\n请稍等" baseURL:nil];
@@ -107,13 +105,26 @@
                 }
             }
         }
-        [self.allUser addObject:self.user];
-        [self.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
-        [self successForAccess_Token];
-        [_web removeFromSuperview];
+        __weak typeof(self) weakSelf = self;
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer.acceptableContentTypes  =[NSSet setWithObjects:type_json, nil];
+        [manager POST:@"http://api.weibo.cn/2/account/login" parameters:@{@"access_token":self.user[@"access_token"],@"source":@"112675"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [weakSelf.user setObject:responseObject[@"gsid"] forKey:@"gsid"];
+            [weakSelf loginSuccess];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
+        
         return NO;
     }
     return YES;
+}
+
+- (void)loginSuccess{
+    [self.allUser addObject:self.user];
+    [self.view toastWithString:@"登陆成功" type:kLabPostionTypeBottom];
+    [self successForAccess_Token];
+    [_web removeFromSuperview];
 }
 
 - (void)back{

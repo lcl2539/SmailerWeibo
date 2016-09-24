@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FansUserCell" rowHeight="73" id="G8Y-qS-e4V" customClass="UserTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="73"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G8Y-qS-e4V" id="cDr-Gy-lF7">
+                <frame key="frameInset" width="375" height="72"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Fu-64-OeK">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="6zN-pR-vTZ"/>
+                            <constraint firstAttribute="width" constant="40" id="uGE-Wu-WPm"/>
+                        </constraints>
+                        <state key="normal" image="UserHeadPlaceHold"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inC-Ek-vpI">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQb-vq-zaQ">
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRH-ge-SoH">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="62" id="YW4-3G-bIZ"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KRH-ge-SoH" firstAttribute="centerY" secondItem="3Fu-64-OeK" secondAttribute="centerY" id="0yg-Yf-7Wk"/>
+                    <constraint firstItem="inC-Ek-vpI" firstAttribute="leading" secondItem="3Fu-64-OeK" secondAttribute="trailing" constant="16" id="E3f-qR-FJZ"/>
+                    <constraint firstItem="3Fu-64-OeK" firstAttribute="leading" secondItem="cDr-Gy-lF7" secondAttribute="leadingMargin" constant="8" id="IMu-uD-InR"/>
+                    <constraint firstItem="3Fu-64-OeK" firstAttribute="top" secondItem="cDr-Gy-lF7" secondAttribute="top" constant="8" id="OdT-fu-9rd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KRH-ge-SoH" secondAttribute="trailing" id="U6U-W9-wP8"/>
+                    <constraint firstItem="tQb-vq-zaQ" firstAttribute="bottom" secondItem="3Fu-64-OeK" secondAttribute="bottom" id="dEG-eO-NYb"/>
+                    <constraint firstItem="inC-Ek-vpI" firstAttribute="top" secondItem="3Fu-64-OeK" secondAttribute="top" id="eru-H2-Pkg"/>
+                    <constraint firstItem="tQb-vq-zaQ" firstAttribute="leading" secondItem="inC-Ek-vpI" secondAttribute="leading" id="o63-Id-Wnw"/>
+                    <constraint firstItem="tQb-vq-zaQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="KRH-ge-SoH" secondAttribute="leading" constant="-8" id="xsl-zJ-FLc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_cancelFansBtn" destination="KRH-ge-SoH" id="dgS-S4-3wN"/>
+                <outlet property="_userImg" destination="3Fu-64-OeK" id="yJb-mC-e0g"/>
+                <outlet property="_userInfo" destination="tQb-vq-zaQ" id="n89-CN-dc8"/>
+                <outlet property="_userName" destination="inC-Ek-vpI" id="YfY-3k-NvM"/>
+            </connections>
+            <point key="canvasLocation" x="-19.5" y="-91.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="UserHeadPlaceHold" width="100" height="100"/>
+    </resources>
+</document>

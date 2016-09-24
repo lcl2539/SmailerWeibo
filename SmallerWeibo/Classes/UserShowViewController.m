@@ -10,18 +10,16 @@
 #import "UserInfoHeadView.h"
 #import <Masonry.h>
 #import "HttpRequest.h"
-#import "StatusCell.h"
 #import "StatusModel.h"
 #import "UserModel.h"
 #import "ReViewImgAnimation.h"
-#import <MJRefresh.h>
-@interface UserShowViewController ()<UITableViewDelegate,UITableViewDataSource,UserHeadDelegate>
+#import "LStatusTableVC.h"
+@interface UserShowViewController ()<UserHeadDelegate>
 {
-    __weak UITableView *_statusList;
+    __weak LStatusTableVC *_statusList;
     __weak UserInfoHeadView *_head;
 }
 @property (nonatomic,assign)BOOL isFinish;
-@property (nonatomic,copy)NSArray *data;
 @property (nonatomic,assign)CGRect lastFrame;
 @property (nonatomic,assign)NSInteger height;
 @property (nonatomic,assign)CGFloat lastOffsetY;
@@ -30,13 +28,6 @@
 @end
 
 @implementation UserShowViewController
-
-- (NSArray *)data{
-    if (!_data) {
-        _data = [NSArray array];
-    }
-    return _data;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,18 +40,18 @@
     if (self.model) {
         [self loadHeadView];
         [self loadTableView];
-        [self httpRequest];
+        [self httpRequestWithIsReload:YES];
         if (self.placeHoldView) {
             _head.userImage = self.placeHoldView.image;
             _head.alpha = 0;
-            _statusList.alpha = 0;
+            _statusList.tableView.alpha = 0;
             [self.view addSubview:self.placeHoldView];
         }else{
             [_head userImgShow];
             CGRect frame = CGRectMake(0, 0, 0, CGFLOAT_MIN);
-            _statusList.tableHeaderView = [[UIView alloc]initWithFrame:frame];
+            _statusList.tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
         }
-        [self.view sendSubviewToBack:_statusList];
+        [self.view sendSubviewToBack:_statusList.tableView];
     }else{
         __weak typeof(self) weakSelf = self;
         [HttpRequest userModelFromUserName:self.name success:^(id object) {
@@ -82,10 +73,10 @@
         self.lastFrame = self.placeHoldView.frame;
     }
     [UIView animateWithDuration:0.5 animations:^{
-        self.placeHoldView.transform = CGAffineTransformMakeScale(1.4, 1.4);
+        self.placeHoldView.transform = CGAffineTransformMakeScale(1.75, 1.75);
         self.placeHoldView.center = CGPointMake(self.view.center.x, 55);
         _head.alpha = 1;
-        _statusList.alpha = 1;
+        _statusList.tableView.alpha = 1;
     } completion:^(BOOL finished) {
         [_head userImgShow];
         if (self.isFinish) {
@@ -105,35 +96,6 @@
 - (void)show{
     [self.fromVc.navigationController pushViewController:self animated:YES];
 }
-
-- (void)httpRequest{
-    __weak typeof(self) weakSelf = self;
-    NSInteger page = 1;
-    page = self.data.count/20 + 1;
-    page = (self.data.count%20 > 0) ? page + 1 : page;
-    [HttpRequest userShowHttpRequestWithId:self.model.strIdstr page:page success:^(id object) {
-        [weakSelf loadDataWithArr:object[@"statuses"]];
-    } failure:^(NSError *error) {
-        NSLog(@"%@",error);
-    }];
-}
-
-- (void)loadDataWithArr:(NSArray *)arr{
-    NSMutableArray *arrTemp = [self.data mutableCopy];
-    for (NSDictionary *dict in arr) {
-        StatusModel *model = [StatusModel statusModelWithDictionary:dict];
-        [arrTemp addObject:model];
-    }
-    if (arrTemp.count == self.data.count) {
-        [_statusList.mj_footer endRefreshingWithNoMoreData];
-    }else{
-        [_statusList.mj_footer endRefreshing];
-    }
-    [_statusList.mj_header endRefreshing];
-    self.data = arrTemp;
-    [_statusList reloadData];
-}
-
 - (void)loadHeadView{
     UserInfoHeadView *head = [UserInfoHeadView headView];
     [self.view addSubview:head];
@@ -157,25 +119,63 @@
 
 - (void)loadTableView{
     __weak typeof(self) weakSelf = self;
-    UITableView *tab = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    [self.view addSubview:tab];
-    [tab mas_makeConstraints:^(MASConstraintMaker *make) {
+    LStatusTableVC *tab = [[LStatusTableVC alloc]initWithStyle:UITableViewStyleGrouped];
+    [self addChildViewController:tab];
+    [self.view addSubview:tab.tableView];
+    [tab.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_head.mas_bottom);
         make.leading.trailing.bottom.equalTo(self.view);
     }];
     _statusList = tab;
-    tab.delegate = self;
-    tab.dataSource = self;
-    tab.estimatedRowHeight = 100;
-    tab.separatorInset  =UIEdgeInsetsMake(0, 66, 0, 0);
-    tab.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
-    tab.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        weakSelf.data = [[NSArray alloc]init];
-        [weakSelf httpRequest];
+    _statusList.reloadDate = ^(LStatusTableVC *vc,BOOL isReLoad){
+        [weakSelf httpRequestWithIsReload:isReLoad];
+    };
+    _statusList.didScroll = ^{
+        if(_statusList.tableView.contentOffset.y < 0 || _statusList.tableView.contentOffset.y > [UIScreen mainScreen].bounds.size.height )return;
+        NSInteger value = self.lastOffsetY - _statusList.tableView.contentOffset.y;
+        self.height += value;
+        if (self.height < 50) {
+            self.height = 50;
+        }
+        if (self.height > 200) {
+            self.height = 200;
+        }
+        [_head mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.leading.trailing.equalTo(self.view);
+            make.height.mas_equalTo(self.height);
+        }];
+        CGFloat alpha = (self.height - 50) / 150.0;
+        [_head changeAlpha:alpha];
+        CGFloat scale = ((20.0 * alpha) + 50) / 70.0;
+        if (self.placeHoldView) {
+            self.placeHoldView.transform = CGAffineTransformMakeScale(scale+0.4, scale+0.4);
+            self.placeHoldView.center = CGPointMake(self.view.center.x, 20 + 35.0 *scale);
+        }
+        self.lastOffsetY = _statusList.tableView.contentOffset.y;
+    };
+}
+
+- (void)httpRequestWithIsReload:(BOOL)isReload{
+    __weak typeof(self) weakSelf = self;
+    NSInteger page = 1;
+    if (!isReload) {
+        page = _statusList.dataArr.count/20 + 1;
+        page = (_statusList.dataArr.count%20 > 0) ? page + 1 : page;
+    }
+    [HttpRequest userShowHttpRequestWithId:self.model.strIdstr page:page success:^(id object) {
+        [weakSelf loadDataWithArr:object[@"statuses"]];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
     }];
-    tab.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [weakSelf httpRequest];
-    }];
+}
+
+- (void)loadDataWithArr:(NSArray *)arr{
+    NSMutableArray *arrTemp = [_statusList.dataArr mutableCopy];
+    for (NSDictionary *dict in arr) {
+        StatusModel *model = [StatusModel statusModelWithDictionary:dict];
+        [arrTemp addObject:model];
+    }
+    _statusList.dataArr = arrTemp;
 }
 
 - (void)back{
@@ -184,56 +184,13 @@
         [_head userImgShow];
         [UIView animateWithDuration:0.3 animations:^{
             _head.alpha = 0;
-            _statusList.alpha = 0;
+            _statusList.tableView.alpha = 0;
             self.placeHoldView.transform = CGAffineTransformMakeScale(1, 1);
             self.placeHoldView.center = self.lastCenter;
         }];
         self.navigationController.delegate = self;
     }
     [self.fromVc.navigationController popViewControllerAnimated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 0.1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.data.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    id model = self.data[indexPath.row];
-    StatusCell *cell = [StatusCell statusCellWithTableView:tableView];
-    cell.model = model;
-    return cell;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if(scrollView.contentOffset.y < 0 || scrollView.contentOffset.y > [UIScreen mainScreen].bounds.size.height )return;
-    NSInteger value = self.lastOffsetY - scrollView.contentOffset.y;
-    self.height += value;
-    if (self.height < 50) {
-        self.height = 50;
-    }
-    if (self.height > 200) {
-        self.height = 200;
-    }
-    [_head mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.leading.trailing.equalTo(self.view);
-        make.height.mas_equalTo(self.height);
-    }];
-    CGFloat alpha = (self.height - 50) / 150.0;
-    [_head changeAlpha:alpha];
-    CGFloat scale = ((20.0 * alpha) + 50) / 70.0;
-    if (self.placeHoldView) {
-        self.placeHoldView.transform = CGAffineTransformMakeScale(scale+0.4, scale+0.4);
-        self.placeHoldView.center = CGPointMake(self.view.center.x, 20 + 35.0 *scale);
-    }
-    self.lastOffsetY = scrollView.contentOffset.y;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{

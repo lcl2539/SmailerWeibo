@@ -21,9 +21,9 @@
 @implementation UserTableViewCell
 
 + (instancetype)userCellWithTableView:(UITableView *)tableview{
-    UserTableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"userCell"];
+    UserTableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"FansUserCell"];
     if (!cell) {
-        cell = [[NSBundle mainBundle]loadNibNamed:@"UserTableViewCell" owner:nil options:nil].firstObject;
+        cell = [[NSBundle mainBundle]loadNibNamed:@"UserCell" owner:nil options:nil].firstObject;
     }
     return cell;
 }
@@ -31,7 +31,7 @@
 - (void)awakeFromNib{
     [super awakeFromNib];
     _userImg.clipsToBounds = YES;
-    _userImg.layer.cornerRadius = 25;
+    _userImg.layer.cornerRadius = 20;
     _userName.textColor = ThemeColor;
     _userInfo.textColor = ThemeColor;
     _userInfo.alpha = 0.8;

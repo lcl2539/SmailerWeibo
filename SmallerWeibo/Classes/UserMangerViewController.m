@@ -119,7 +119,7 @@
 }
 
 - (void)loadAddUserBtn{
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 0, 30)];
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 0, 50)];
     [btn setTitle:@"添加用户" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor whiteColor]];
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];

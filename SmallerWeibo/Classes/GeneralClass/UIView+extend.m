@@ -91,7 +91,7 @@
 }
 
 - (void)showUserShowVcWithUserModel:(UserModel *)model button:(UIButton *)sender{
-    if ([[self superViewController] isKindOfClass:[UserShowViewController class]])return;
+    if ([[self superViewController].parentViewController isKindOfClass:[UserShowViewController class]])return;
     UserShowViewController *vc = [[UserShowViewController alloc]init];
     vc.model = model;
     UIImageView *view = [[UIImageView alloc]init];
@@ -109,7 +109,7 @@
 }
 
 - (void)showUserShowVcWithUserName:(NSString *)name{
-    if ([[self superViewController] isKindOfClass:[UserShowViewController class]]){
+    if ([[self superViewController].parentViewController isKindOfClass:[UserShowViewController class]]){
         if ([((UserShowViewController *)[self superViewController]).model.strScreenName isEqualToString:name])return;
     }
     UserShowViewController *vc = [[UserShowViewController alloc]init];

@@ -19,9 +19,30 @@
 #import "UIView+extend.h"
 #import "HttpRequest.h"
 #import "WebViewController.h"
-#define lineCount 3
-#define imgViewWidth ([UIScreen mainScreen].bounds.size.width - 16 - 50 -8)
+#define imgViewWidth(line) ([UIScreen mainScreen].bounds.size.width - 16 - 40 - 8 - 2*line)
 #define constants(layout) layout.constant
+
+@implementation StatusBtn
+
+- (void)setSelected:(BOOL)selected{
+    [super setSelected:selected];
+    if (selected) {
+        self.tintColor = ThemeColor;
+    }else{
+        self.tintColor = [UIColor grayColor];
+    }
+}
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    CGPoint center = self.titleLabel.center;
+    center.y = 10;
+    center.x += 3;
+    self.titleLabel.center = center;
+}
+
+@end
+
 @interface StatusCell ()<MLLinkLabelDelegate>
 {
     __weak IBOutlet UIButton *_userImg;
@@ -34,10 +55,10 @@
     __weak IBOutlet MLLinkLabel *_repeatStatus;
     __weak IBOutlet UIView *_repeatImgView;
     __weak IBOutlet NSLayoutConstraint *_repeatImgViewHeight;
-    __weak IBOutlet UIButton *_likeBtn;
-    __weak IBOutlet UIButton *_repateBtn;
-    __weak IBOutlet UIButton *_commentsBtn;
-    __weak IBOutlet UIButton *_supportBtn;
+    __weak IBOutlet StatusBtn *_likeBtn;
+    __weak IBOutlet StatusBtn *_repateBtn;
+    __weak IBOutlet StatusBtn *_commentsBtn;
+    __weak IBOutlet StatusBtn *_supportBtn;
     
 }
 @end
@@ -69,19 +90,19 @@
 - (void)awakeFromNib{
     [super awakeFromNib];
     _nicknName.textColor = ThemeColor;
-    _userImg.layer.cornerRadius = 25;
+    _userImg.layer.cornerRadius = 20;
     _userImg.clipsToBounds = YES;
     _status.delegate = self;
     _status.lineSpacing = 5;
-    [_likeBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
-    [_repateBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
-    [_supportBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
-    [_commentsBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
-    _status.font = [UIFont systemFontOfSize:17];
+    [_likeBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    [_repateBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    [_supportBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    [_commentsBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    _status.font = [UIFont systemFontOfSize:15];
     _status.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
-    _repeatStatus.lineSpacing = 3;
-    _repeatStatus.textInsets = UIEdgeInsetsMake(4, 0, 0, 0);
-    _repeatStatus.font = [UIFont systemFontOfSize:15];
+    _repeatStatus.lineSpacing = 2;
+    _repeatStatus.textInsets = UIEdgeInsetsMake(2, 0, 0, 0);
+    _repeatStatus.font = [UIFont systemFontOfSize:13];
     _repeatStatus.dataDetectorTypes = MLDataDetectorTypeHashtag | MLDataDetectorTypeURL | MLDataDetectorTypeUserHandle;
     _repeatStatus.lineBreakMode = NSLineBreakByCharWrapping;
     _repeatStatus.delegate = self;
@@ -91,6 +112,10 @@
 
 - (void)setModel:(id)model{
     _model = model;
+    _likeBtn.selected = NO;
+    _repateBtn.selected = NO;
+    _commentsBtn.selected = NO;
+    _supportBtn.selected = NO;
     _statusImgViewHeight.constant = 0;
     _repeatImgViewHeight.constant = 0;
     for (UIView *view in _imgView.subviews) {
@@ -108,23 +133,43 @@
     }
 }
 
+- (void)changeBtnStatuWithType:(BtnType)type{
+    switch (type) {
+        case kBtnLikeType:
+            _likeBtn.selected = YES;
+            break;
+        case kBtnRepeatType:
+            _repateBtn.selected = YES;
+            break;
+        case kBtnCommentType:
+            _commentsBtn.selected = YES;
+            break;
+        case kBtnSupportType:
+            _supportBtn.selected = YES;
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)updataWithStatusModle:(StatusModel *)model{
+    if (model.favorited) {
+        _likeBtn.selected = YES;
+    }
     [_userImg sd_setImageWithURL:[NSURL URLWithString:model.user.strAvatarLarge] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"UserHeadPlaceHold"]];
     _creatTime.text = [NSString dateFromString:model.strCreatedAt];
     _nicknName.text = model.user.strName;
     _from.text = model.strSourceDes;
     _status.attributedText = model.attributedStr;
-    //[self shortUrlWithStr:_status.attributedText];
-    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",(long)model.commentsCount] forState:UIControlStateNormal];
-    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.repostsCount] forState:UIControlStateNormal];
-    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.attitudesCount] forState:UIControlStateNormal];
+    [_commentsBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.commentsCount] forState:UIControlStateNormal];
+    [_repateBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.repostsCount] forState:UIControlStateNormal];
+    [_supportBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.attitudesCount] forState:UIControlStateNormal];
     if (model.arrPicUrls){
         [self setImageView:_imgView layoutHeight:_statusImgViewHeight viewOffset:0 ImgArr:model.arrPicUrls];
     }
     if (model.retweetedStatus) {
         NSMutableAttributedString *strTemp = [model.retweetedStatus.attributedStr mutableCopy];
         [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.retweetedStatus.user.strScreenName]] atIndex:0];
-        //[self shortUrlWithStr:strTemp];
         _repeatStatus.attributedText = strTemp;
         if (model.retweetedStatus.arrPicUrls){
             [self setImageView:_repeatImgView layoutHeight:_repeatImgViewHeight viewOffset:0 ImgArr:model.retweetedStatus.arrPicUrls];
@@ -141,9 +186,9 @@
     _nicknName.text = model.user.strScreenName;
     _from.text = model.strSource;
     _status.attributedText = model.attributedStr;
-    [_commentsBtn setTitle:[NSString stringWithFormat:@"评论(%ld)",(long)model.status.commentsCount] forState:UIControlStateNormal];
-    [_repateBtn setTitle:[NSString stringWithFormat:@"转发(%ld)",(long)model.status.repostsCount] forState:UIControlStateNormal];
-    [_supportBtn setTitle:[NSString stringWithFormat:@"赞(%ld)",(long)model.status.attitudesCount] forState:UIControlStateNormal];
+    [_commentsBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.status.commentsCount] forState:UIControlStateNormal];
+    [_repateBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.status.repostsCount] forState:UIControlStateNormal];
+    [_supportBtn setTitle:[NSString stringWithFormat:@"%ld",(long)model.status.attitudesCount] forState:UIControlStateNormal];
     NSMutableAttributedString *strTemp = [model.status.attributedStr mutableCopy];
     [strTemp insertAttributedString:[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"@%@:",model.status.user.strScreenName]] atIndex:0];
     _repeatStatus.attributedText = strTemp;
@@ -152,106 +197,34 @@
     }
 }
 
-- (void)shortUrlWithStr:(NSAttributedString *)str{
-    NSArray *arr = [str.string shortUrlResult];
-    if(arr.count > 0){
-        for (NSTextCheckingResult *result in arr) {
-            NSString *url = [str.string substringWithRange:result.range];
-            NSLog(@"%@",url);
-        }
-    }
-}
-
 - (void)setImageView:(UIView *)view layoutHeight:(NSLayoutConstraint *)height viewOffset:(NSInteger)offset ImgArr:(NSArray *)arr{
-    switch (arr.count) {
-        case 1:
-            height.constant = [self haveOneImgWithArr:arr view:view];
-            break;
-        case 2:
-            height.constant = [self haveTwoImgWithArr:arr view:view];
-            break;
-        case 3:
-            height.constant = [self haveThreeImgWithArr:arr view:view];
-            break;
-        case 4:
-            height.constant = [self haveFourImgWithArr:arr view:view];
-            break;
-        case 6:
-            height.constant = [self haveSixImgWithArr:arr view:view];
-            break;
-        default:
-            height.constant = [self haveOtherImgWithArr:arr view:view];
-            break;
+    NSInteger count = arr.count;
+    if (count%3 == 0 || count < 3) {
+        height.constant = [self haveThreeImgWithArr:arr view:view];
+    }else{
+        height.constant = [self haveFourImgWithArr:arr view:view];
     }
-}
-
-- (NSInteger)haveOneImgWithArr:(NSArray *)arr view:(UIView *)view{
-    UIButton *image = [self creatImgBtnWith:arr[0] index:0];
-    CGRect frame = CGRectZero;
-    frame.size = CGSizeMake(imgViewWidth, imgViewWidth/2);
-    image.frame = frame;
-    [view addSubview:image];
-    return imgViewWidth/2;
-}
-
-- (NSInteger)haveTwoImgWithArr:(NSArray *)arr view:(UIView *)view{
-    NSInteger width = imgViewWidth/2;
-    for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
-        image.frame = CGRectMake(width*(index%2), 0, width, width);
-        [view addSubview:image];
-    }
-    return width;
 }
 
 - (NSInteger)haveThreeImgWithArr:(NSArray *)arr view:(UIView *)view{
-    NSInteger width = imgViewWidth/2;
+    NSInteger width = imgViewWidth(3)/3;
     for (NSInteger index = 0; index < arr.count; index++) {
         UIButton *image = [self creatImgBtnWith:arr[index] index:index];
-        if (index == 0) {
-            image.frame = CGRectMake(0, 0, width, imgViewWidth);
-        }else{
-            image.frame = CGRectMake(width, width*(index/2), width, width);
-        }
+        image.frame = CGRectMake((width + 2) *(index%3), 3+(width + 2)*(index/3), width, width);
         [view addSubview:image];
     }
-    return imgViewWidth;
+    NSInteger height = (arr.count%3 > 0) ? (width * ((arr.count/3)+1)) : width*(arr.count/3) + 6;
+    return height;
 }
 
 - (NSInteger)haveFourImgWithArr:(NSArray *)arr view:(UIView *)view{
-    NSInteger width = imgViewWidth/2;
+    NSInteger width = imgViewWidth(4)/4;
     for (NSInteger index = 0; index < arr.count; index++) {
         UIButton *image = [self creatImgBtnWith:arr[index] index:index];
-        image.frame = CGRectMake(width*(index%2), width*(index/2), width, width);
+        image.frame = CGRectMake((width + 2) *(index%4), 3+(width + 2)*(index/4), width, width);
         [view addSubview:image];
     }
-    return imgViewWidth;
-}
-
-- (NSInteger)haveSixImgWithArr:(NSArray *)arr view:(UIView *)view{
-    NSInteger width = imgViewWidth/3;
-    for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
-        if (index == 0) {
-            image.frame = CGRectMake(0, 0, width*2, width*2);
-        }else if(index == 1 || index == 2){
-            image.frame = CGRectMake(width*2, width*(index/2), width, width);
-        }else{
-            image.frame = CGRectMake(width*((index-3)%3), width*2, width, width);
-        }
-        [view addSubview:image];
-    }
-    return imgViewWidth;
-}
-
-- (NSInteger)haveOtherImgWithArr:(NSArray *)arr view:(UIView *)view{
-    NSInteger width = imgViewWidth/3;
-    for (NSInteger index = 0; index < arr.count; index++) {
-        UIButton *image = [self creatImgBtnWith:arr[index] index:index];
-        image.frame = CGRectMake(width*(index%3), width*(index/3), width, width);
-        [view addSubview:image];
-    }
-    NSInteger height = (arr.count%3 > 0) ? (width * ((arr.count/3)+1)) : width*(arr.count/3);
+    NSInteger height = (arr.count%4 > 0) ? (width * ((arr.count/4)+1)) : width*(arr.count/4) + 6;
     return height;
 }
 
@@ -301,15 +274,19 @@
 }
 
 - (IBAction)repateAndCommentBtnClick:(UIButton *)sender {
+    if (sender.selected)return;
+    [self changeBtnStatu:sender.tag+1];
+    sender.selected = !sender.isSelected;
     [self showNewStatusVcWithType:sender.tag + 1 StatusId:[self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr];
 }
 
 - (IBAction)likeAndSupportBtnClick:(UIButton *)sender {
+    sender.selected = !sender.isSelected;
+    [self changeBtnStatu:(sender.tag == 0 ? 0 : 3)];
     __weak typeof(self) weakSelf = self;
     NSString *statusId = [self.model isKindOfClass:[StatusModel class]] ? ((StatusModel *)self.model).strIdstr : ((CommentsStatusModel *)self.model).status.strIdstr;
     [HttpRequest likeStatusHttpRequestWithStatusId:statusId type:sender.tag success:^(id object) {
         [weakSelf toastWithString:sender.tag == 0 ? @"已收藏！" : @"已赞！" type:kLabPostionTypeBottom];
-        [sender setTitle:sender.tag == 0 ? @"已收藏" : @"已赞"  forState:UIControlStateNormal];
     } failure:^(NSError *error) {
         
     }];
@@ -326,9 +303,70 @@
     }
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    UITouch *touch = [touches anyObject];
-    NSLog(@"%f",touch.force);
+- (void)changeBtnStatu:(NSInteger)index{
+    if (self.btnDidClick) {
+        self.btnDidClick(self,index);
+    }
 }
+
+- (void)imageWithLocotion:(CGPoint)point result:(void (^)(CGRect frame,NSString *url))result{
+    if (_repeatImgView.subviews.count == 0 && _imgView.subviews == 0) {
+        result(CGRectZero,nil);
+        return;
+    }else{
+        if (_imgView.subviews.count>0) {
+            if (!CGRectContainsPoint(_imgView.frame, point)) {
+                result(CGRectZero,nil);
+                return;
+            }
+        }else{
+            if (!CGRectContainsPoint(_repeatImgView.frame, point)) {
+                result(CGRectZero,nil);
+                return;
+            }
+        }
+    }
+    
+    CGRect frame = CGRectZero;
+    NSString *url = [[NSString alloc]init];
+    if (_imgView.subviews.count > 0) {
+        for (UIButton *btn in _imgView.subviews) {
+            if (CGRectContainsPoint(btn.frame, [_imgView convertPoint:point fromView:self])) {
+                frame = [self.window convertRect:btn.frame fromView:btn.superview];
+                url = [self urlWithIndex:btn.tag];
+                break;
+            }
+        }
+    }else{
+        for (UIButton *btn in _repeatImgView.subviews) {
+            if (CGRectContainsPoint(btn.frame,  [_repeatImgView convertPoint:point fromView:self])) {
+                frame = [self.window convertRect:btn.frame fromView:btn.superview];
+                url = [self urlWithIndex:btn.tag];
+                break;
+            }
+        }
+    }
+    if (url.length == 0) {
+        result(CGRectZero,nil);
+        return;
+    }
+    result(frame,url);
+}
+
+- (NSString *)urlWithIndex:(NSInteger)index{
+    if ([self.model isKindOfClass:[StatusModel class]]) {
+        StatusModel *model = (StatusModel *)self.model;
+        if (model.arrPicUrls) {
+            return model.arrPicUrls[index];
+        }else{
+            return model.retweetedStatus.arrPicUrls[index];
+        }
+    }else{
+        CommentsStatusModel *model = (CommentsStatusModel *)self.model;
+        return model.status.arrPicUrls[index];
+    }
+    return nil;
+}
+
 
 @end

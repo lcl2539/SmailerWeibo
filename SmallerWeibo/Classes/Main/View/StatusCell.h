@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+@interface StatusBtn : UIButton
+
+@end
+typedef enum : NSUInteger {
+    kBtnLikeType,
+    kBtnRepeatType,
+    kBtnCommentType,
+    kBtnSupportType
+} BtnType;
 @interface StatusCell : UITableViewCell
 @property (nonatomic,strong)id model;
+@property (nonatomic,copy) void (^btnDidClick)(StatusCell *,BtnType);
+- (void)changeBtnStatuWithType:(BtnType)type;
+- (void)imageWithLocotion:(CGPoint)point result:(void (^)(CGRect frame,NSString *url))result;
 + (instancetype)statusCellWithTableView:(UITableView *)tableView;
 @end

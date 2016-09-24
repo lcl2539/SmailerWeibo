@@ -111,10 +111,13 @@
 
 + (void)userShowHttpRequestWithId:(NSString *)uid page:(NSInteger)page success:(success)success failure:(failure)failure{
     static NSString *url;
-    url = @"https://api.weibo.com/2/statuses/user_timeline.json";
+    url = @"http://api.weibo.cn/2/statuses/user_timeline";
     NSDictionary *dict = @{@"uid":uid,
                            @"page":[NSNumber numberWithInteger:page],
-                           @"count":@20};
+                           @"count":@20,
+                           @"c":@"weicoandroid",
+                           @"gsid":Gsid,
+                           @"source":@"123"};
     [self httpRequestWithUrl:url parameter:dict success:^(id object) {
         success(object);
     } failure:^(NSError *error) {

@@ -1,16 +1,18 @@
 //
-//  StatusTableViewController.h
+//  LStatusTableVC.h
 //  SmallerWeibo
 //
-//  Created by 鲁成龙 on 16/8/12.
+//  Created by qingyun on 2016/9/20.
 //  Copyright © 2016年 鲁成龙. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface StatusTableViewController : UITableViewController
+@interface LStatusTableVC : UITableViewController
 @property (nonatomic,assign)NSInteger index;
 @property (nonatomic,copy)NSArray *dataArr;
-@property (nonatomic,copy)void (^reloadDate)(StatusTableViewController *,BOOL);
+@property (nonatomic,copy)void (^reloadDate)(LStatusTableVC *,BOOL);
+@property (nonatomic,copy)void (^didScroll)();
 @property (nonatomic,copy)void (^changeTop)(NSInteger,NSInteger);
+@property (nonatomic,assign)BOOL haveReload;
 @end
